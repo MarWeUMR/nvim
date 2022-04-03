@@ -1,0 +1,147 @@
+vim.cmd([[packadd packer.nvim]])
+
+return require("packer").startup(function(use)
+	-- packer
+	use("wbthomason/packer.nvim")
+
+	-- themes
+	use("navarasu/onedark.nvim")
+	use("folke/tokyonight.nvim")
+	use({ "Th3Whit3Wolf/space-nvim" })
+	use({
+		"NTBBloodbath/doom-one.nvim",
+	})
+
+	-- rest
+	use({
+		"nvim-telescope/telescope.nvim",
+		requires = { { "nvim-lua/plenary.nvim" } },
+	})
+	use({
+		"phaazon/hop.nvim",
+		event = "BufRead",
+		config = function()
+			require("hop").setup()
+			vim.api.nvim_set_keymap("n", "s", ":HopWord<cr>", { silent = true })
+		end,
+	})
+	-- use({ "stevearc/dressing.nvim" })
+
+	use("nvim-telescope/telescope-media-files.nvim")
+	use("kyazdani42/nvim-web-devicons")
+	-- use("tamton-aquib/staline.nvim")
+	use("nvim-lua/popup.nvim") -- An implementation of the Popup API from vim in Neovim
+	use("nvim-lua/plenary.nvim") -- Useful lua functions used ny lots of plugins
+	use("kyazdani42/nvim-tree.lua")
+
+	-- LSP
+	use("neovim/nvim-lspconfig")
+	use("williamboman/nvim-lsp-installer")
+	use("jose-elias-alvarez/null-ls.nvim") -- for formatters and linters
+	use("ray-x/lsp_signature.nvim")
+	use("onsails/lspkind-nvim")
+	use({
+		"rmagatti/goto-preview",
+		config = function()
+			require("goto-preview").setup({})
+		end,
+	})
+
+	-- Completion
+	use("hrsh7th/nvim-cmp")
+	use("hrsh7th/cmp-nvim-lsp")
+	use("hrsh7th/cmp-buffer")
+	use("hrsh7th/cmp-path")
+	use("hrsh7th/cmp-cmdline")
+	use("saadparwaiz1/cmp_luasnip")
+	use("L3MON4D3/LuaSnip")
+	use("numToStr/Comment.nvim")
+	use("JoosepAlviste/nvim-ts-context-commentstring")
+	use("windwp/nvim-ts-autotag")
+	use("windwp/nvim-autopairs")
+	-- Treesitter
+	use({
+		"nvim-treesitter/nvim-treesitter",
+		run = ":TSUpdate",
+	})
+	use({ "lewis6991/gitsigns.nvim", opt = true })
+	use("akinsho/bufferline.nvim")
+	use("akinsho/toggleterm.nvim")
+	use({
+		"goolord/alpha-nvim",
+		requires = { "kyazdani42/nvim-web-devicons" },
+		config = function()
+			require("alpha").setup(require("alpha.themes.dashboard").config)
+		end,
+	})
+	use("folke/which-key.nvim")
+	use("ahmedkhalf/project.nvim")
+	use({
+		"sudormrfbin/cheatsheet.nvim",
+
+		requires = {
+			{ "nvim-telescope/telescope.nvim" },
+			{ "nvim-lua/popup.nvim" },
+			{ "nvim-lua/plenary.nvim" },
+		},
+
+		config = function()
+			local keys = require("which-key.keys")
+
+			local user_maps = {}
+			for _, tree in pairs(keys.mappings) do
+				tree.tree:walk(function(node)
+					if
+						-- node.mapping -- only include real mappings
+						node.mapping.label -- with a label
+						-- and not node.mapping.group -- no groups
+						-- and not node.mapping.preset -- no presets
+						and node.mapping.label ~= "which_key_ignore" -- no ignored keymaps
+					then
+						table.insert(user_maps, {
+							keys = table.concat(node.mapping.keys.nvim, ""),
+							mode = node.mapping.mode,
+							label = node.mapping.label,
+							buf = node.mapping.buf,
+							group = node.mapping.group,
+							real_mapping = node.mapping
+								and node.mapping.label
+								and not node.mapping.group
+								and not node.mapping.preset
+								and node.mapping.label ~= "which_key_ignore",
+						})
+					end
+				end)
+			end
+
+			local cheatsheet = require("cheatsheet")
+
+			-- This loop goes over the table (generated at the top of this file) of all user which-key mappings.
+			-- It then adds these mappings to the list of cheatsheet entries.
+
+			local last_grp = ""
+
+			for _, data in pairs(user_maps) do
+				if data["group"] == true then
+					last_grp = data["label"]
+				end
+
+				if data["real_mapping"] == true then
+					-- print(string.format("group: %s\nlabel: %s\nkeys: %s", last_grp, data["label"], data["keys"]))
+
+					cheatsheet.add_cheat(data["label"], data["keys"], string.format("WK-%s", last_grp))
+				end
+			end
+		end,
+	})
+
+	use({
+		"nvim-lualine/lualine.nvim",
+		requires = { "kyazdani42/nvim-web-devicons", opt = true },
+	})
+	use({ "simrat39/rust-tools.nvim" })
+	use({ "andymass/vim-matchup" })
+	use({ "romgrk/nvim-treesitter-context" })
+	use({ "machakann/vim-sandwich" })
+	-- use({ "TimUntersberger/neogit", requires = "nvim-lua/plenary.nvim" })
+end)
