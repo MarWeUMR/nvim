@@ -161,4 +161,5 @@ return require("packer").startup(function(use)
 			require("scrollbar").setup()
 		end,
 	})
+	use({ "github/copilot.vim" })
 end)
