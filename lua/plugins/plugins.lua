@@ -2,11 +2,12 @@ vim.cmd([[packadd packer.nvim]])
 
 return require("packer").startup(function(use)
 	-- packer
-	use("wbthomason/packer.nvim")
+	use({ "wbthomason/packer.nvim" })
 
 	-- themes
-	use("navarasu/onedark.nvim")
-	use("folke/tokyonight.nvim")
+	use({ "navarasu/onedark.nvim" })
+	use({ "sainnhe/everforest" })
+	use({ "folke/tokyonight.nvim" })
 	use({ "Th3Whit3Wolf/space-nvim" })
 	use({
 		"NTBBloodbath/doom-one.nvim",
@@ -25,6 +26,13 @@ return require("packer").startup(function(use)
 			vim.api.nvim_set_keymap("n", "s", ":HopWord<cr>", { silent = true })
 		end,
 	})
+
+	-- use({
+	-- 	"ggandor/leap.nvim",
+	-- 	config = function()
+	-- 		require("leap").setup({})
+	-- 	end,
+	-- })
 	use({ "stevearc/dressing.nvim" })
 
 	use("nvim-telescope/telescope-media-files.nvim")
