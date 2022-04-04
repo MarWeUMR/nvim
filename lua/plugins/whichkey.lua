@@ -135,14 +135,7 @@ local mappings = {
 		a = { "<cmd>lua vim.lsp.buf.code_action()<cr>", "Code Action" },
 		h = { "<cmd>lua vim.lsp.buf.hover()<cr>", "Hover" },
 		H = { "<cmd>lua vim.lsp.buf.signature_help()<cr>", "Signature Help" },
-		d = {
-			"<cmd>Telescope diagnostics bufnr=0<cr>",
-			"Document Diagnostics",
-		},
-		w = {
-			"<cmd>Telescope diagnostics<cr>",
-			"Workspace Diagnostics",
-		},
+
 		f = { "<cmd>lua vim.lsp.buf.formatting()<cr>", "Format" },
 		F = { "<cmd>lua vim.diagnostic.open_float()<cr>", "Open Float" },
 		i = { "<cmd>LspInfo<cr>", "Info" },
@@ -159,15 +152,25 @@ local mappings = {
 		x = { "<cmd>lua require('goto-preview').close_all_win()<CR>", "Close preview" },
 		q = { "<cmd>lua vim.diagnostic.setloclist()<cr>", "Quickfix" },
 		r = { "<cmd>lua vim.lsp.buf.rename()<cr>", "Rename" },
-		D = { "<cmd>lua vim.lsp.buf.type_definition()<cr>", "Type Definition" },
-		R = { "<cmd>lua vim.lsp.buf.references()<cr>", "References" },
 		s = { "<cmd>Telescope lsp_document_symbols<cr>", "Document Symbols" },
-    
-		R = { "<cmd>lua require('goto-preview').goto_preview_references()<CR>", "Preview references" },
-		d = { "<cmd>lua require('goto-preview').goto_preview_definition()<CR>", "Preview definition" },
 		S = {
 			"<cmd>Telescope lsp_dynamic_workspace_symbols<cr>",
 			"Workspace Symbols",
+		},
+		p = {
+			name = "Peek",
+			r = { "<cmd>lua require('goto-preview').goto_preview_references()<CR>", "Preview references" },
+			R = { "<cmd>lua vim.lsp.buf.references()<cr>", "References" },
+			d = { "<cmd>lua require('goto-preview').goto_preview_definition()<CR>", "Preview definition" },
+			D = { "<cmd>lua vim.lsp.buf.type_definition()<cr>", "Type Definition" },
+			i = {
+				"<cmd>Telescope diagnostics bufnr=0<cr>",
+				"Document Diagnostics",
+			},
+			w = {
+				"<cmd>Telescope diagnostics<cr>",
+				"Workspace Diagnostics",
+			},
 		},
 	},
 	s = {
@@ -180,6 +183,10 @@ local mappings = {
 		R = { "<cmd>Telescope registers<cr>", "Registers" },
 		k = { "<cmd>Telescope keymaps<cr>", "Keymaps" },
 		C = { "<cmd>Telescope commands<cr>", "Commands" },
+		p = {
+			"<cmd>lua require('telescope.builtin.internal').colorscheme({enable_preview = true})<cr>",
+			"Colorscheme with Preview",
+		},
 	},
 
 	t = {

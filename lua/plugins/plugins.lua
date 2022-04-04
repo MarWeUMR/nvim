@@ -25,11 +25,10 @@ return require("packer").startup(function(use)
 			vim.api.nvim_set_keymap("n", "s", ":HopWord<cr>", { silent = true })
 		end,
 	})
-	-- use({ "stevearc/dressing.nvim" })
+	use({ "stevearc/dressing.nvim" })
 
 	use("nvim-telescope/telescope-media-files.nvim")
 	use("kyazdani42/nvim-web-devicons")
-	-- use("tamton-aquib/staline.nvim")
 	use("nvim-lua/popup.nvim") -- An implementation of the Popup API from vim in Neovim
 	use("nvim-lua/plenary.nvim") -- Useful lua functions used ny lots of plugins
 	use("kyazdani42/nvim-tree.lua")
@@ -64,7 +63,12 @@ return require("packer").startup(function(use)
 		"nvim-treesitter/nvim-treesitter",
 		run = ":TSUpdate",
 	})
-	use({ "lewis6991/gitsigns.nvim", opt = true })
+	use({
+		"lewis6991/gitsigns.nvim",
+		config = function()
+			require("gitsigns").setup()
+		end,
+	})
 	use("akinsho/bufferline.nvim")
 	use("akinsho/toggleterm.nvim")
 	use({
@@ -143,5 +147,10 @@ return require("packer").startup(function(use)
 	use({ "andymass/vim-matchup" })
 	use({ "romgrk/nvim-treesitter-context" })
 	use({ "machakann/vim-sandwich" })
-	-- use({ "TimUntersberger/neogit", requires = "nvim-lua/plenary.nvim" })
+	use({
+		"petertriho/nvim-scrollbar",
+		config = function()
+			require("scrollbar").setup()
+		end,
+	})
 end)

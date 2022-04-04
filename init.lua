@@ -17,6 +17,6 @@ require("plugins.lsp_signature")
 require("configs.mappings")
 require("plugins.alpha")
 require("plugins.cheatsheet")
-require("plugins.lualine")
+require("plugins.lualine_conf")
 require("plugins.rust_tools")
 
