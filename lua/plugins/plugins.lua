@@ -9,30 +9,34 @@ return require("packer").startup(function(use)
 	use({ "sainnhe/everforest" })
 	use({ "folke/tokyonight.nvim" })
 	use({ "Th3Whit3Wolf/space-nvim" })
+  use({"sainnhe/edge",
+config = function ()
+  vim.g.edge_style = 'neon'
+end
+  })
 	use({
 		"NTBBloodbath/doom-one.nvim",
 	})
-
 	-- rest
 	use({
 		"nvim-telescope/telescope.nvim",
 		requires = { { "nvim-lua/plenary.nvim" } },
 	})
-	use({
-		"phaazon/hop.nvim",
-		event = "BufRead",
-		config = function()
-			require("hop").setup()
-			vim.api.nvim_set_keymap("n", "s", ":HopWord<cr>", { silent = true })
-		end,
-	})
-
 	-- use({
-	-- 	"ggandor/leap.nvim",
+	-- 	"phaazon/hop.nvim",
+	-- 	event = "BufRead",
 	-- 	config = function()
-	-- 		require("leap").setup({})
+	-- 		require("hop").setup()
+	-- 		vim.api.nvim_set_keymap("n", "s", ":HopWord<cr>", { silent = true })
 	-- 	end,
 	-- })
+
+	use({
+		"ggandor/leap.nvim",
+		config = function()
+			require("leap").setup({})
+		end,
+	})
 	use({ "stevearc/dressing.nvim" })
 
 	use("nvim-telescope/telescope-media-files.nvim")
@@ -55,7 +59,11 @@ return require("packer").startup(function(use)
 	})
 
 	-- Completion
-	use("hrsh7th/nvim-cmp")
+	use({
+		"hrsh7th/nvim-cmp",
+		branch = "dev", --float menu
+		requires = { "onsails/lspkind-nvim" },
+	})
 	use("hrsh7th/cmp-nvim-lsp")
 	use("hrsh7th/cmp-buffer")
 	use("hrsh7th/cmp-path")
@@ -161,5 +169,64 @@ return require("packer").startup(function(use)
 			require("scrollbar").setup()
 		end,
 	})
-	use({ "github/copilot.vim" })
+
+	-- COPILTO
+	-- use({ "github/copilot.vim" })
+
+	use({
+		"zbirenbaum/copilot.lua",
+	   after={"lualine.nvim"},
+		config = function()
+			    vim.defer_fn(
+	       function() require("copilot").setup()
+	       end,
+	       100
+	     )
+		end,
+	})
+
+	use({
+		"zbirenbaum/copilot-cmp",
+		after = { "copilot.lua", "nvim-cmp" },
+	})
+
+	use({
+		"beauwilliams/focus.nvim",
+		config = function()
+			require("focus").setup()
+		end,
+	})
+	use({
+		"sindrets/winshift.nvim",
+
+		config = function()
+			require("winshift").setup({
+				highlight_moving_win = true, -- Highlight the window being moved
+				focused_hl_group = "Visual", -- The highlight group used for the moving window
+				moving_win_options = {
+					-- These are local options applied to the moving window while it's
+					-- being moved. They are unset when you leave Win-Move mode.
+					wrap = false,
+					cursorline = false,
+					cursorcolumn = false,
+					colorcolumn = "",
+				},
+				-- The window picker is used to select a window while swapping windows with
+				-- ':WinShift swap'.
+				-- A string of chars used as identifiers by the window picker.
+				window_picker_chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890",
+				window_picker_ignore = {
+					-- This table allows you to indicate to the window picker that a window
+					-- should be ignored if its buffer matches any of the following criteria.
+					filetype = { -- List of ignored file types
+						"NvimTree",
+					},
+					buftype = { -- List of ignored buftypes
+						"terminal",
+						"quickfix",
+					},
+				},
+			})
+		end,
+	})
 end)

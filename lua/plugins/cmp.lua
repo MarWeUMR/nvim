@@ -110,10 +110,16 @@ cmp.setup({
 		end,
 	},
 	sources = {
-		{ name = "nvim_lsp" },
-		{ name = "buffer" },
-		{ name = "path" },
-		{ name = "luasnip" },
+		-- { name = "nvim_lsp" },
+		-- { name = "buffer" },
+		-- { name = "path" },
+		-- { name = "luasnip" },
+		{ name = "copilot", group_index = 2 },
+		{ name = "nvim_lsp", group_index = 2 },
+		{ name = "path", group_index = 2 },
+		-- { name = "luasnip", group_index = 2 },
+		{ name = "buffer", group_index = 5 },
+		{ name = "nvim_lua", group_index = 2 },
 	},
 	confirm_opts = {
 		behavior = cmp.ConfirmBehavior.Replace,
@@ -121,8 +127,38 @@ cmp.setup({
 	},
 	documentation = {
 		border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
+		winhighlight = "NormalFloat:NormalFloat,FloatBorder:FloatBorder",
+		scrollbar = "║",
 	},
 	experimental = {
+		native_menu = false,
 		ghost_text = true,
 	},
+  window={
+    completion={
+      border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
+      scrollbar = "║",
+      autocomplete={
+require("cmp.types").cmp.TriggerEvent.InsertEnter,
+        require("cmp.types").cmp.TriggerEvent.TextChanged,
+
+      }
+    }
+  },
+	style = {
+		winhighlight = "NormalFloat:NormalFloat,FloatBorder:FloatBorder",
+	},
+	sorting = {
+		comparators = {
+			cmp.config.compare.recently_used,
+			cmp.config.compare.offset,
+			cmp.config.compare.score,
+			cmp.config.compare.sort_text,
+			cmp.config.compare.length,
+			cmp.config.compare.order,
+		},
+	},
+	preselect = cmp.PreselectMode.Item,
 })
+
+vim.api.nvim_set_hl(0, "CmpBorderedWindow_FloatBorder", { fg = "#565c64" })
