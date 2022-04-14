@@ -138,7 +138,9 @@ local mappings = {
 
 	l = {
 		name = "LSP",
-		a = { "<cmd>lua vim.lsp.buf.code_action()<cr>", "Code Action" },
+		-- a = { "<cmd>lua vim.lsp.buf.code_action()<cr>", "Code Action" },
+		a = { "<cmd> lua require('navigator.codeAction').code_action() <cr>", "Code Action" },
+		d = { "", "Preview definition" },
 		h = { "<cmd>lua vim.lsp.buf.hover()<cr>", "Hover" },
 		H = { "<cmd>lua vim.lsp.buf.signature_help()<cr>", "Signature Help" },
 
@@ -157,7 +159,8 @@ local mappings = {
 		l = { "<cmd>lua vim.lsp.codelens.run()<cr>", "CodeLens Action" },
 		x = { "<cmd>lua require('goto-preview').close_all_win()<CR>", "Close preview" },
 		q = { "<cmd>lua vim.diagnostic.setloclist()<cr>", "Quickfix" },
-		r = { "<cmd>lua vim.lsp.buf.rename()<cr>", "Rename" },
+		r = { "", "Rename" },
+		R = { "", "Show References" },
 		s = { "<cmd>Telescope lsp_document_symbols<cr>", "Document Symbols" },
 		S = {
 			"<cmd>Telescope lsp_dynamic_workspace_symbols<cr>",

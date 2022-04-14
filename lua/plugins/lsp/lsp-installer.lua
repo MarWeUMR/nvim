@@ -3,51 +3,80 @@ if not status_ok then
 	return
 end
 
--- Register a handler that will be called for all installed servers.
--- Alternatively, you may also register handlers on specific server instances instead (see example below).
+opts = {
+	on_attach = require("plugins.lsp.handlers").on_attach,
+	capabilities = require("plugins.lsp.handlers").capabilities,
+}
+
+local enhance_server_opts = {
+	-- Provide settings that should only apply to the "eslintls" server
+	["eslintls"] = function(opts)
+		opts.settings = {
+			format = {
+				enable = true,
+			},
+		}
+	end,
+
+	["emmet_ls"] = function(opts)
+		local emmet_opts = require("plugins.lsp.settings.emmet")
+		opts.filetypes = emmet_opts.filetypes
+	end,
+
+	["sumneko_lua"] = function(opts)
+		local sumneko_opts = require("plugins.lsp.settings.sumneko_lua")
+		opts.settings = sumneko_opts.settings
+	end,
+}
+
 lsp_installer.on_server_ready(function(server)
+	-- Specify the default options which we'll use to setup all servers
 	local opts = {
-		on_attach = require("plugins.lsp.handlers").on_attach,
-		capabilities = require("plugins.lsp.handlers").capabilities,
+		on_attach = on_attach,
+		capabilities = capabilities,
 	}
 
-	if server.name == "rust_analyzer" then
-		-- Initialize the LSP via rust-tools instead
-		require("rust-tools").setup({
-			-- The "server" property provided in rust-tools setup function are the
-			-- settings rust-tools will provide to lspconfig during init.            --
-			-- We merge the necessary settings from nvim-lsp-installer (server:get_default_options())
-			-- with the user's own settings (opts).
-			server = vim.tbl_deep_extend("force", server:get_default_options(), opts),
-		})
-		server:attach_buffers()
-		-- Only if standalone support is needed
-		require("rust-tools").start_standalone_if_required()
-
-		-- if server.name == "jsonls" then
-		-- 	local jsonls_opts = require("plugins.lsp.settings.jsonls")
-		-- 	opts = vim.tbl_deep_extend("force", jsonls_opts, opts)
-		-- end
-		--
-	elseif server.name == "sumneko_lua" then
-		local sumneko_opts = require("plugins.lsp.settings.sumneko_lua")
-		opts = vim.tbl_deep_extend("force", sumneko_opts, opts)
-
-		--
-		-- if server.name == "pyright" then
-		-- 	local pyright_opts = require("plugins.lsp.settings.pyright")
-		-- 	opts = vim.tbl_deep_extend("force", pyright_opts, opts)
-		-- end
-		--
-		-- if server.name == "angularls" then
-		-- 	local angularls_opts = require("plugins.lsp.settings.angularls")
-		-- 	opts = vim.tbl_deep_extend("force", angularls_opts, opts)
-		-- end
-
-		-- This setup() function is exactly the same as lspconfig's setup function.
-		-- Refer to https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
-	else
+	if enhance_server_opts[server.name] then
+		-- Enhance the default opts with the server-specific ones
+		enhance_server_opts[server.name](opts)
 	end
 
+	if server.name == "rust_analyzer" then
+		local rustopts = {
+			tools = {
+				autoSetHints = true,
+				hover_with_actions = false,
+				executor = require("rust-tools/executors").termopen,
+				inlay_hints = {
+					show_parameter_hints = true,
+					parameter_hints_prefix = "<- ",
+					other_hints_prefix = "=> ",
+					highlight = "comment",
+				},
+				hover_actions = {
+					auto_focus = true,
+				},
+			},
+			server = vim.tbl_deep_extend("force", server:get_default_options(), opts, {
+				-- settings = {
+				-- 	["rust-analyzer"] = {
+				-- 		completion = {
+				-- 			postfix = {
+				-- 				enable = true,
+				-- 			},
+				-- 		},
+				-- 		checkOnSave = {
+				-- 			command = "clippy",
+				-- 		},
+				-- 	},
+				-- },
+			}),
+		}
+		require("rust-tools").setup(rustopts)
+		server:attach_buffers()
+	else
+		--
+
 		server:setup(opts)
+	end
 end)
