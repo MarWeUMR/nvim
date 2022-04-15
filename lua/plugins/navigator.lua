@@ -25,11 +25,15 @@ navigator.setup({
   lsp_signature_help = true,
 
   lsp = {
-    disable_lsp = { 'denols', 'angularls', 'graphql' },
+    disable_lsp = { 'denols', 'angularls', 'graphql', 'rust_analyzer' },
     code_lens = true,
     code_action = { enable = true, sign = true, sign_priority = 40, virtual_text = true },
     code_lens_action = { enable = true, sign = true, sign_priority = 40, virtual_text = true },
-    -- servers = { "sumneko_lua", "tsserver", "emmet_ls", "rust_analyzer"},
+    -- servers = {
+      -- "sumneko_lua", 
+      -- "tsserver", 
+      -- "emmet_ls", 
+      -- "rust-analyzer"},
 
     diagnostic = {
       underline = true,
@@ -37,10 +41,6 @@ navigator.setup({
       update_in_insert = false, -- update diagnostic message in insert mode
     },
 
-rust_analyzer = {
-      -- cmd = {install_root_dir .. '/rust'}
-      rust_analyzer_binary = vim.fn.expand("$HOME") .. "/.local/share/nvim/lsp_servers/rust/rust-analyzer"
-    },
 
   },
 
