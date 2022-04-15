@@ -3,9 +3,13 @@ if not status_ok then
   return
 end
 
+
+local path = require 'nvim-lsp-installer.path'
+local install_root_dir = path.concat {vim.fn.stdpath 'data', 'lsp_servers'}
+
 navigator.setup({
 
-  lsp_installer = false,
+  lsp_installer = true,
   treesitter_analysis = true,
   default_mapping = true,
   keymaps = {
@@ -19,13 +23,13 @@ navigator.setup({
   },
 
   lsp_signature_help = true,
-  
+
   lsp = {
-    disable_lsp={'denols', 'angularls', 'graphql'},
+    disable_lsp = { 'denols', 'angularls', 'graphql' },
     code_lens = true,
     code_action = { enable = true, sign = true, sign_priority = 40, virtual_text = true },
     code_lens_action = { enable = true, sign = true, sign_priority = 40, virtual_text = true },
-    servers = { "sumneko_lua", "rust_analyzer", "tsserver", "emmet_ls" },
+    -- servers = { "sumneko_lua", "tsserver", "emmet_ls", "rust_analyzer"},
 
     diagnostic = {
       underline = true,
@@ -33,11 +37,10 @@ navigator.setup({
       update_in_insert = false, -- update diagnostic message in insert mode
     },
 
-
-    function()
-
-    end
-
+rust_analyzer = {
+      -- cmd = {install_root_dir .. '/rust'}
+      rust_analyzer_binary = vim.fn.expand("$HOME") .. "/.local/share/nvim/lsp_servers/rust/rust-analyzer"
+    },
 
   },
 

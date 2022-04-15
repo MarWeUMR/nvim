@@ -3,10 +3,10 @@ if not status_ok then
 	return
 end
 
-opts = {
-	on_attach = require("plugins.lsp.handlers").on_attach,
-	capabilities = require("plugins.lsp.handlers").capabilities,
-}
+-- opts = {
+-- 	on_attach = require("plugins.lsp.handlers").on_attach,
+-- 	capabilities = require("plugins.lsp.handlers").capabilities,
+-- }
 
 local enhance_server_opts = {
 	-- Provide settings that should only apply to the "eslintls" server
@@ -32,8 +32,8 @@ local enhance_server_opts = {
 lsp_installer.on_server_ready(function(server)
 	-- Specify the default options which we'll use to setup all servers
 	local opts = {
-		on_attach = on_attach,
-		capabilities = capabilities,
+		-- on_attach = on_attach,
+		-- capabilities = capabilities,
 	}
 
 	if enhance_server_opts[server.name] then
