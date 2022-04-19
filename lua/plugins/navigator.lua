@@ -11,7 +11,7 @@ navigator.setup({
 
   lsp_installer = true,
   treesitter_analysis = true,
-  default_mapping = true,
+  default_mapping = false,
   keymaps = {
     { key = "<Space>lr", func = "require('navigator.rename').rename()" },
     { key = "<Space>la", func = "require('navigator.codeAction').code_action()" },
@@ -25,15 +25,19 @@ navigator.setup({
   lsp_signature_help = true,
 
   lsp = {
-    disable_lsp = { 'denols', 'angularls', 'graphql', 'rust_analyzer' },
+
+    --  pyright = {
+    --   cmd = { "/home/arch/.local/share/nvim/lsp_servers/python/node_modules/.bin/pyright-langserver", "--stdio" }
+    -- },
+
+    -- jedi_language_server = {
+    --   cmd = { "/home/arch/.local/share/nvim/lsp_servers/jedi_language_server/venv/bin/jedi-language-server" }
+    -- },
+
+    disable_lsp = { 'denols', 'angularls', 'graphql', 'jedi_language_server', 'pyright', 'rust_analyzer', 'pylsp'},
     code_lens = true,
     code_action = { enable = true, sign = true, sign_priority = 40, virtual_text = true },
     code_lens_action = { enable = true, sign = true, sign_priority = 40, virtual_text = true },
-    -- servers = {
-      -- "sumneko_lua", 
-      -- "tsserver", 
-      -- "emmet_ls", 
-      -- "rust-analyzer"},
 
     diagnostic = {
       underline = true,

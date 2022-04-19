@@ -7,6 +7,18 @@ return require("packer").startup(function(use)
   use({ "navarasu/onedark.nvim" })
   use({ "sainnhe/everforest" })
   use({ "folke/tokyonight.nvim" })
+  use({ "sainnhe/sonokai",
+    config = function()
+      vim.g.sonokai_style = 'atlantis'
+    end
+  })
+
+  use({ "marko-cerovac/material.nvim",
+    config = function()
+      vim.g.material_style = 'palenight'
+    end
+
+  })
   use({ "Th3Whit3Wolf/space-nvim" })
   use({
     "sainnhe/edge",
@@ -22,6 +34,8 @@ return require("packer").startup(function(use)
     "nvim-telescope/telescope.nvim",
     requires = { { "nvim-lua/plenary.nvim" } },
   })
+
+  use({"Pocco81/TrueZen.nvim"})
 
   use({
     "ggandor/leap.nvim",

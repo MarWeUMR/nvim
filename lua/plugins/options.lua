@@ -43,4 +43,13 @@ end
 
 vim.cmd "set whichwrap+=<,>,[,],h,l"
 vim.cmd [[set iskeyword+=-]]
-vim.cmd [[set formatoptions-=cro]] -- TODO: this doesn't seem to work
+vim.cmd [[
+
+augroup _general_settings
+    autocmd!
+    autocmd BufWinEnter * :set formatoptions-=cro
+  augroup end
+
+]] -- TODO: this doesn't seem to work
+
+

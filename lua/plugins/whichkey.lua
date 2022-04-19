@@ -96,6 +96,7 @@ local mappings = {
 	},
 	["F"] = { "<cmd>Telescope live_grep theme=ivy<cr>", "Find Text" },
 	["P"] = { "<cmd>Telescope projects<cr>", "Projects" },
+	["z"] = { "<cmd>TZAtaraxis<cr>", "Zen-Mode" },
 
 	w = {
 		name = "Window",
@@ -138,9 +139,8 @@ local mappings = {
 
 	l = {
 		name = "LSP",
-		-- a = { "<cmd>lua vim.lsp.buf.code_action()<cr>", "Code Action" },
 		a = { "<cmd> lua require('navigator.codeAction').code_action() <cr>", "Code Action" },
-		d = { "", "Preview definition" },
+		d = { "<cmd> lua require('navigator.definition').definition_preview() <CR>", "Preview definition" },
 		h = { "<cmd>lua vim.lsp.buf.hover()<cr>", "Hover" },
 		H = { "<cmd>lua vim.lsp.buf.signature_help()<cr>", "Signature Help" },
 
@@ -159,7 +159,7 @@ local mappings = {
 		l = { "<cmd>lua vim.lsp.codelens.run()<cr>", "CodeLens Action" },
 		x = { "<cmd>lua require('goto-preview').close_all_win()<CR>", "Close preview" },
 		q = { "<cmd>lua vim.diagnostic.setloclist()<cr>", "Quickfix" },
-		r = { "", "Rename" },
+		r = { "<cmd> lua require('navigator.rename').rename() <CR>", "Rename" },
 		R = { "", "Show References" },
 		s = { "<cmd>Telescope lsp_document_symbols<cr>", "Document Symbols" },
 		S = {
