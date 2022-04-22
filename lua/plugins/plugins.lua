@@ -1,4 +1,12 @@
-vim.cmd([[packadd packer.nvim]])
+-- Install packer
+local install_path = vim.fn.stdpath 'data' .. '/site/pack/packer/start/packer.nvim'
+
+if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
+  vim.fn.execute('!git clone https://github.com/wbthomason/packer.nvim ' .. install_path)
+end
+
+local packer_group = vim.api.nvim_create_augroup('Packer', { clear = true })
+vim.api.nvim_create_autocmd('BufWritePost', { command = 'source <afile> | PackerCompile', group = packer_group, pattern = 'init.lua' })
 
 return require("packer").startup(function(use)
   -- packer
@@ -47,28 +55,17 @@ return require("packer").startup(function(use)
 
   use("nvim-telescope/telescope-media-files.nvim")
   use("kyazdani42/nvim-web-devicons")
-  use("nvim-lua/popup.nvim") -- An implementation of the Popup API from vim in Neovim
+  -- use("nvim-lua/popup.nvim") -- An implementation of the Popup API from vim in Neovim
   use("nvim-lua/plenary.nvim") -- Useful lua functions used ny lots of plugins
   use("kyazdani42/nvim-tree.lua")
 
   -- LSP
 
 
-
-  use({ "ray-x/navigator.lua", requires = { "ray-x/guihua.lua", run = "cd lua/fzy && make" },
-  })
-
   use("neovim/nvim-lspconfig")
-  use("williamboman/nvim-lsp-installer")
-  -- use("jose-elias-alvarez/null-ls.nvim") -- for formatters and linters
+  -- use("williamboman/nvim-lsp-installer")
+  use("jose-elias-alvarez/null-ls.nvim") -- for formatters and linters
   use("ray-x/lsp_signature.nvim")
-  -- use("onsails/lspkind-nvim")
-  -- use({
-  --   "rmagatti/goto-preview",
-  --   config = function()
-  --     require("goto-preview").setup({})
-  --   end,
-  -- })
 
   -- Completion
   use({
@@ -109,69 +106,70 @@ return require("packer").startup(function(use)
   })
   use("folke/which-key.nvim")
   use("ahmedkhalf/project.nvim")
-  use({
-    "sudormrfbin/cheatsheet.nvim",
-
-    requires = {
-      { "nvim-telescope/telescope.nvim" },
-      { "nvim-lua/popup.nvim" },
-      { "nvim-lua/plenary.nvim" },
-    },
-
-    config = function()
-      local keys = require("which-key.keys")
-
-      local user_maps = {}
-      for _, tree in pairs(keys.mappings) do
-        tree.tree:walk(function(node)
-          if -- node.mapping -- only include real mappings
-          node.mapping.label -- with a label
-              -- and not node.mapping.group -- no groups
-              -- and not node.mapping.preset -- no presets
-              and node.mapping.label ~= "which_key_ignore" -- no ignored keymaps
-          then
-            table.insert(user_maps, {
-              keys = table.concat(node.mapping.keys.nvim, ""),
-              mode = node.mapping.mode,
-              label = node.mapping.label,
-              buf = node.mapping.buf,
-              group = node.mapping.group,
-              real_mapping = node.mapping
-                  and node.mapping.label
-                  and not node.mapping.group
-                  and not node.mapping.preset
-                  and node.mapping.label ~= "which_key_ignore",
-            })
-          end
-        end)
-      end
-
-      local cheatsheet = require("cheatsheet")
-
-      -- This loop goes over the table (generated at the top of this file) of all user which-key mappings.
-      -- It then adds these mappings to the list of cheatsheet entries.
-
-      local last_grp = ""
-
-      for _, data in pairs(user_maps) do
-        if data["group"] == true then
-          last_grp = data["label"]
-        end
-
-        if data["real_mapping"] == true then
-          -- print(string.format("group: %s\nlabel: %s\nkeys: %s", last_grp, data["label"], data["keys"]))
-
-          cheatsheet.add_cheat(data["label"], data["keys"], string.format("WK-%s", last_grp))
-        end
-      end
-    end,
-  })
-
+  -- use({
+  --   "sudormrfbin/cheatsheet.nvim",
+  --
+  --   requires = {
+  --     { "nvim-telescope/telescope.nvim" },
+  --     { "nvim-lua/popup.nvim" },
+  --     { "nvim-lua/plenary.nvim" },
+  --   },
+  --
+  --   config = function()
+  --     local keys = require("which-key.keys")
+  --
+  --     local user_maps = {}
+  --     for _, tree in pairs(keys.mappings) do
+  --       tree.tree:walk(function(node)
+  --         if -- node.mapping -- only include real mappings
+  --         node.mapping.label -- with a label
+  --             -- and not node.mapping.group -- no groups
+  --             -- and not node.mapping.preset -- no presets
+  --             and node.mapping.label ~= "which_key_ignore" -- no ignored keymaps
+  --         then
+  --           table.insert(user_maps, {
+  --             keys = table.concat(node.mapping.keys.nvim, ""),
+  --             mode = node.mapping.mode,
+  --             label = node.mapping.label,
+  --             buf = node.mapping.buf,
+  --             group = node.mapping.group,
+  --             real_mapping = node.mapping
+  --                 and node.mapping.label
+  --                 and not node.mapping.group
+  --                 and not node.mapping.preset
+  --                 and node.mapping.label ~= "which_key_ignore",
+  --           })
+  --         end
+  --       end)
+  --     end
+  --
+  --     local cheatsheet = require("cheatsheet")
+  --
+  --     -- This loop goes over the table (generated at the top of this file) of all user which-key mappings.
+  --     -- It then adds these mappings to the list of cheatsheet entries.
+  --
+  --     local last_grp = ""
+  --
+  --     for _, data in pairs(user_maps) do
+  --       if data["group"] == true then
+  --         last_grp = data["label"]
+  --       end
+  --
+  --       if data["real_mapping"] == true then
+  --         -- print(string.format("group: %s\nlabel: %s\nkeys: %s", last_grp, data["label"], data["keys"]))
+  --
+  --         cheatsheet.add_cheat(data["label"], data["keys"], string.format("WK-%s", last_grp))
+  --       end
+  --     end
+  --   end,
+  -- })
+  --
   use({
     "nvim-lualine/lualine.nvim",
     requires = { "kyazdani42/nvim-web-devicons", opt = true },
   })
-  use({ "simrat39/rust-tools.nvim" })
+  use({ "matze/rust-tools.nvim", branch = "fix-175-migrate-to-lsp-hints" })
+  -- use({ "simrat39/rust-tools.nvim" })
   use({ "andymass/vim-matchup" })
   use({ "romgrk/nvim-treesitter-context" })
   use({ "machakann/vim-sandwich" })
@@ -182,7 +180,7 @@ return require("packer").startup(function(use)
     end,
   })
 
-  -- COPILTO
+  -- COPILOT
   use({ "github/copilot.vim" })
   use({ "hrsh7th/cmp-copilot" })
 

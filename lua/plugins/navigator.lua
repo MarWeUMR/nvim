@@ -4,9 +4,6 @@ if not status_ok then
 end
 
 
-local path = require 'nvim-lsp-installer.path'
-local install_root_dir = path.concat {vim.fn.stdpath 'data', 'lsp_servers'}
-
 navigator.setup({
 
   lsp_installer = true,
@@ -26,15 +23,7 @@ navigator.setup({
 
   lsp = {
 
-    --  pyright = {
-    --   cmd = { "/home/arch/.local/share/nvim/lsp_servers/python/node_modules/.bin/pyright-langserver", "--stdio" }
-    -- },
-
-    -- jedi_language_server = {
-    --   cmd = { "/home/arch/.local/share/nvim/lsp_servers/jedi_language_server/venv/bin/jedi-language-server" }
-    -- },
-
-    disable_lsp = { 'denols', 'angularls', 'graphql', 'jedi_language_server', 'pyright', 'rust_analyzer', 'pylsp'},
+    disable_lsp = { 'denols', 'angularls', 'graphql', 'jedi_language_server', 'pyright', 'rust_analyzer', 'pylsp' },
     code_lens = true,
     code_action = { enable = true, sign = true, sign_priority = 40, virtual_text = true },
     code_lens_action = { enable = true, sign = true, sign_priority = 40, virtual_text = true },
