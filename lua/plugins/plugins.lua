@@ -181,24 +181,24 @@ return require("packer").startup(function(use)
   })
 
   -- COPILOT
-  use({ "github/copilot.vim" })
-  use({ "hrsh7th/cmp-copilot" })
+  -- use({ "github/copilot.vim" })
+  -- use({ "hrsh7th/cmp-copilot" })
 
   -------
-  --  use({
-  -- 	"zbirenbaum/copilot.lua",
-  -- 	event = { "VimEnter" },
-  -- 	config = function()
-  -- 		vim.defer_fn(function()
-  -- 			require("copilot").setup()
-  -- 		end, 100)
-  -- 	end,
-  -- })
-  --
-  -- use({
-  -- 	"zbirenbaum/copilot-cmp",
-  -- 	after = { "copilot.lua", "nvim-cmp" },
-  -- })
+   use({
+  	"zbirenbaum/copilot.lua",
+  	event = { "VimEnter" },
+  	config = function()
+  		vim.defer_fn(function()
+  			require("copilot").setup()
+  		end, 100)
+  	end,
+  })
+
+  use({
+  	"zbirenbaum/copilot-cmp",
+  	after = { "copilot.lua", "nvim-cmp" },
+  })
 
   use({
     "beauwilliams/focus.nvim",
