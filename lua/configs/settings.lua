@@ -1,3 +1,3 @@
 vim.cmd([[ set bg=dark ]])
 vim.cmd([[ set termguicolors ]])
-vim.cmd([[ colorscheme space-nvim ]])
+vim.cmd([[ colorscheme catppuccin ]])

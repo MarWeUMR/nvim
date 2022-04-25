@@ -13,8 +13,12 @@ return require("packer").startup(function(use)
   use({ "wbthomason/packer.nvim" })
   -- themes
   use({ "navarasu/onedark.nvim" })
+  use({"yashguptaz/calvera-dark.nvim"})
+  use({"shaunsingh/moonlight.nvim"})
   use({"rebelot/kanagawa.nvim"})
   use({"catppuccin/nvim"})
+  use({"olimorris/onedarkpro.nvim"})
+  use({"FrenzyExists/aquarium-vim"})
   use({ "folke/tokyonight.nvim" })
   use({ "sainnhe/sonokai",
     config = function()
