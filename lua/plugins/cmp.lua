@@ -110,11 +110,11 @@ cmp.setup({
 			-- Kind icons
 			vim_item.kind = string.format("%s", kind_icons[vim_item.kind])
 			vim_item.menu = ({
-				copilot = "[COP]",
-				nvim_lsp = "[LSP]",
-				buffer = "[Buffer]",
-				path = "[Path]",
-				treesitter = "[TS]",
+				copilot = "",
+				nvim_lsp = "",
+				buffer = "",
+				path = "數",
+				treesitter = "",
 			})[entry.source.name]
 			return vim_item
 		end,
@@ -133,7 +133,7 @@ cmp.setup({
 	},
 
 	view = {
-		entires = "native",
+		entries = "custom", -- can be "custom", "wildmenu" or "native"
 	},
 	experimental = {
 		ghost_text = true,
