@@ -16,6 +16,7 @@ return require("packer").startup(function(use)
 	use({ "wbthomason/packer.nvim" })
 	-- themes
 	use({ "navarasu/onedark.nvim" })
+
 	use({ "yashguptaz/calvera-dark.nvim" })
 	use({ "shaunsingh/moonlight.nvim" })
 	use({ "rebelot/kanagawa.nvim" })
@@ -45,6 +46,26 @@ return require("packer").startup(function(use)
 	})
 	use({
 		"NTBBloodbath/doom-one.nvim",
+		require("doom-one").setup({
+			cursor_coloring = true,
+			terminal_colors = true,
+			italic_comments = true,
+			enable_treesitter = true,
+			plugins_integrations = {
+				bufferline = true,
+				gitgutter = false,
+				gitsigns = true,
+				telescope = true,
+				neogit = true,
+				nvim_tree = true,
+				dashboard = true,
+				startify = true,
+				whichkey = true,
+				indent_blankline = true,
+				vim_illuminate = true,
+				lspsaga = true,
+			},
+		}),
 	})
 	-- rest
 	use({
@@ -183,12 +204,6 @@ return require("packer").startup(function(use)
 	-- })
 	--
 
-	use({
-		"declancm/cinnamon.nvim",
-		config = function()
-			require("cinnamon").setup()
-		end,
-	})
 	use({
 		"nvim-lualine/lualine.nvim",
 		requires = { "kyazdani42/nvim-web-devicons", opt = true },
