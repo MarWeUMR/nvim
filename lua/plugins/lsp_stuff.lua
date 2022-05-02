@@ -8,6 +8,30 @@ local on_attach = function(_, bufnr)
 	vim.api.nvim_create_user_command("Format", vim.lsp.buf.formatting, {})
 end
 
+local signs = {
+		{ name = "DiagnosticSignError", text = "" },
+		{ name = "DiagnosticSignWarn", text = "" },
+		{ name = "DiagnosticSignHint", text = "" },
+		{ name = "DiagnosticSignInfo", text = "" },
+	}
+
+	for _, sign in ipairs(signs) do
+		vim.fn.sign_define(sign.name, { texthl = sign.name, text = sign.text, numhl = "" })
+	end
+
+
+local config = {
+		-- disable virtual text
+		virtual_text = true,
+		-- show signs
+		signs = {
+			active = signs,
+		},
+		update_in_insert = true,
+		underline = true,
+		severity_sort = true,
+}
+
 lspconfig.emmet_ls.setup{
     filetypes = {'html', 'css', 'typescriptreact', 'javascriptreact', 'jsx', 'tsx'}
 }

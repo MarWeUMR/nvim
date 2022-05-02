@@ -38,6 +38,7 @@ return require("packer").startup(function(use)
 		end,
 	})
 	use({ "Th3Whit3Wolf/space-nvim" })
+  
 	use({
 		"sainnhe/edge",
 		config = function()
@@ -98,7 +99,7 @@ return require("packer").startup(function(use)
 	-- use("nvim-lua/popup.nvim") -- An implementation of the Popup API from vim in Neovim
 	use("nvim-lua/plenary.nvim") -- Useful lua functions used ny lots of plugins
 	use("kyazdani42/nvim-tree.lua")
-
+use({"nvim-pack/nvim-spectre"})
 	-- LSP
 
 	use("neovim/nvim-lspconfig")
