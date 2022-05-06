@@ -74,6 +74,7 @@ return require("packer").startup(function(use)
 		requires = { { "nvim-lua/plenary.nvim" } },
 	})
 
+  use ({"lukas-reineke/indent-blankline.nvim"})
 	use({ "Pocco81/TrueZen.nvim" })
 	use({
 		"folke/zen-mode.nvim",
