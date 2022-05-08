@@ -69,6 +69,12 @@ return require("packer").startup(function(use)
 		}),
 	})
 	-- rest
+
+  use({"stevearc/aerial.nvim", 
+config = function()
+      require('aerial').setup({})
+    end
+  })
 	use({
 		"nvim-telescope/telescope.nvim",
 		requires = { { "nvim-lua/plenary.nvim" } },
@@ -214,7 +220,7 @@ use({"nvim-pack/nvim-spectre"})
 	use({ "simrat39/rust-tools.nvim" })
 	use({ "andymass/vim-matchup" })
 	use({ "romgrk/nvim-treesitter-context" })
-	use({ "machakann/vim-sandwich" })
+	-- use({ "machakann/vim-sandwich" })
 	use({
 		"petertriho/nvim-scrollbar",
 		config = function()
