@@ -137,7 +137,15 @@ local mappings = {
 			"Diff",
 		},
 	},
+  x = {
 
+		x = { "<cmd>TroubleToggle<cr>", "Trouble Toggle" },
+		w = { "<cmd>TroubleToggle workspace_diagnostics<cr>", "Workspace Diagnostics" },
+		d = { "<cmd>TroubleToggle document_diagnostics<cr>", "Document Diagnostics" },
+		q = { "<cmd>TroubleToggle quickfix<cr>", "Quickfix" },
+		l = { "<cmd>TroubleToggle loclist<cr>", "Loc List" },
+		r = { "<cmd>TroubleToggle lsp_references<cr>", "LSP References" },
+  },
 	l = {
 		name = "LSP",
 		a = { "<cmd>lua vim.lsp.buf.code_action()<cr>", "Code action" },
@@ -155,7 +163,7 @@ local mappings = {
 		name = "Search",
 		b = { "<cmd>Telescope git_branches<cr>", "Checkout branch" },
 		c = { "<cmd>Telescope colorscheme<cr>", "Colorscheme" },
-		h = { "<cmd>Telescope help_tags<cr>", "Find Help" },
+		h = { "<cmd>Telescope current_buffer_fuzzy_find<cr>", "Search here" },
 		M = { "<cmd>Telescope man_pages<cr>", "Man Pages" },
 		r = { "<cmd>Telescope oldfiles<cr>", "Open Recent File" },
 		R = { "<cmd>Telescope registers<cr>", "Registers" },

@@ -92,6 +92,8 @@ return require("packer").startup(function(use)
 		requires = { { "nvim-lua/plenary.nvim" } },
 	})
 
+	use({ "nvim-telescope/telescope-fzf-native.nvim", run = "make" })
+
 	use({ "lukas-reineke/indent-blankline.nvim" })
 	use({ "Pocco81/TrueZen.nvim" })
 	use({
@@ -111,7 +113,7 @@ return require("packer").startup(function(use)
 			require("leap").setup({})
 		end,
 	})
-	use({ "stevearc/dressing.nvim" })
+	-- use({ "stevearc/dressing.nvim" })
 
 	use("nvim-telescope/telescope-media-files.nvim")
 	use("kyazdani42/nvim-web-devicons")
@@ -123,6 +125,21 @@ return require("packer").startup(function(use)
 	------------------------------------------------------
 	-- LSP RELATED
 	------------------------------------------------------
+	use("folke/lsp-colors.nvim")
+	use({
+		"folke/trouble.nvim",
+		requires = "kyazdani42/nvim-web-devicons",
+		config = function()
+			require("trouble").setup({
+				position = "right",
+				width = 100,
+				-- your configuration comes here
+				-- or leave it empty to use the default settings
+				-- refer to the configuration section below
+			})
+		end,
+	})
+
 	use({
 		"SmiteshP/nvim-gps",
 		requires = "nvim-treesitter/nvim-treesitter",
@@ -208,10 +225,10 @@ return require("packer").startup(function(use)
 	use("folke/which-key.nvim")
 	use("ahmedkhalf/project.nvim")
 
-	use({
-		"nvim-lualine/lualine.nvim",
-		requires = { "kyazdani42/nvim-web-devicons", opt = true },
-	})
+	-- use({
+	-- 	"nvim-lualine/lualine.nvim",
+	-- 	requires = { "kyazdani42/nvim-web-devicons", opt = true },
+	-- })
 
 	use({ "simrat39/rust-tools.nvim" })
 	use({ "andymass/vim-matchup" })

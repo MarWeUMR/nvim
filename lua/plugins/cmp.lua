@@ -15,6 +15,17 @@ end
 
 lspkind.init()
 
+local border = {
+	"╔",
+	"═",
+	"╗",
+	"║",
+	"╝",
+	"═",
+	"╚",
+	"║",
+}
+
 require("luasnip/loaders/from_vscode").lazy_load()
 
 local check_backspace = function()
@@ -126,6 +137,7 @@ cmp.setup({
 		{ name = "path" },
 		{ name = "buffer" },
 		{ name = "nvim_lua" },
+		{ name = "nvim_lsp_signature_help", priority = 10 },
 	},
 	confirm_opts = {
 		behavior = cmp.ConfirmBehavior.Replace,
@@ -140,12 +152,12 @@ cmp.setup({
 	},
 	window = {
 		documentation = {
-			border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
+			border = border,
 			winhighlight = "NormalFloat:NormalFloat,FloatBorder:FloatBorder",
 			scrollbar = "║",
 		},
 		completion = {
-			border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
+			border = border,
 			scrollbar = "║",
 			autocomplete = {
 				require("cmp.types").cmp.TriggerEvent.InsertEnter,

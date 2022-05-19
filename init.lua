@@ -16,10 +16,10 @@ require("plugins.leap")
 require("configs.mappings")
 require("plugins.alpha")
 require("plugins.winbar")
--- require("plugins.lualine_conf")
 
 --------- LSP RELATED
 require("plugins.lsp_stuff")
 require("plugins.lsp_signature")
 require("plugins.cmp")
+require("plugins.lsp")
 
