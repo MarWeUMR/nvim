@@ -49,7 +49,7 @@ return require("packer").startup(function(use)
 		"NTBBloodbath/doom-one.nvim",
 		require("doom-one").setup({
 			cursor_coloring = true,
-			transparent_background = true,
+			transparent_background = false,
 			terminal_colors = true,
 			italic_comments = true,
 			enable_treesitter = true,
@@ -70,6 +70,8 @@ return require("packer").startup(function(use)
 		}),
 	})
 	-- rest
+
+	use({ "rebelot/heirline.nvim" })
 
 	use({ "mfussenegger/nvim-dap" })
 

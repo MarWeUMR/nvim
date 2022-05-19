@@ -148,7 +148,7 @@ local mappings = {
 		D = { "<cmd>lua vim.lsp.buf.definition()<cr>", "Definition" },
 		R = { "<cmd>lua vim.lsp.buf.references()<cr>", "References" },
 		r = { "<cmd>lua vim.lsp.buf.rename()<cr>", "Rename" },
-		f = { "<cmd>lua vim.lsp.buf.formatting()<cr>", "Format" },
+		f = { "<cmd>lua vim.lsp.buf.format()<cr>", "Format" },
 		F = { "<cmd>lua vim.diagnostic.open_float()<cr>", "Open float" },
 			},
 	s = {
