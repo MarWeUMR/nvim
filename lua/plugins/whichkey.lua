@@ -104,7 +104,7 @@ local mappings = {
 		v = { "<C-W>v", "VSplit" },
 		h = { "<C-W>s", "HSplit" },
 		q = { "<cmd>:q<CR>", "Quit" },
-			},
+	},
 
 	p = {
 		name = "Packer",
@@ -140,7 +140,7 @@ local mappings = {
 
 	l = {
 		name = "LSP",
-				a = { "<cmd>lua vim.lsp.buf.code_action()<cr>", "Code action" },
+		a = { "<cmd>lua vim.lsp.buf.code_action()<cr>", "Code action" },
 		s = { "<cmd>lua vim.lsp.buf.signature_help()<cr>", "Signature help" },
 		h = { "<cmd>lua vim.lsp.buf.hover()<cr>", "Hover" },
 		d = { "<cmd>lua vim.lsp.buf.declaration()<cr>", "Declaration" },
@@ -150,7 +150,7 @@ local mappings = {
 		r = { "<cmd>lua vim.lsp.buf.rename()<cr>", "Rename" },
 		f = { "<cmd>lua vim.lsp.buf.format()<cr>", "Format" },
 		F = { "<cmd>lua vim.diagnostic.open_float()<cr>", "Open float" },
-			},
+	},
 	s = {
 		name = "Search",
 		b = { "<cmd>Telescope git_branches<cr>", "Checkout branch" },

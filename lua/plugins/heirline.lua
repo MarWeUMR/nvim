@@ -87,13 +87,6 @@ local FileNameBlock = {
 	end,
 }
 
-local FileType = {
-	provider = function()
-		return string.upper(vim.bo.filetype)
-	end,
-	hl = { fg = utils.get_highlight("Type").fg, italic = true },
-}
-
 local FileIcon = {
 	init = function(self)
 		self.mode = vim.fn.mode(1)
@@ -190,10 +183,10 @@ local FileIconSurroundB = {
 local FileNameSurround = {
 	{
 		provider = function()
-			return ""
+			return ""
 		end,
 		hl = function(_)
-			return { fg = colors.blue, bg = "none" }
+			return { fg = colors.blue, bg = colors.blue }
 		end,
 		condition = function()
 			return not vim.tbl_contains(vim.tbl_keys(file_icons), vim.bo.ft)
@@ -298,7 +291,15 @@ local RoundWorkDir = {
 		provider = function()
 			return ""
 		end,
-		hl = { fg = colors.dark_blue, bg = colors.vibrant_green },
+		hl = function(self)
+			if conditions.buffer_matches({
+				filetype = { "startup", "Telescope", "NvimTree" },
+			}) then
+				return { fg = colors.blue, bg = colors.vibrant_green }
+			else
+				return { fg = colors.dark_blue, bg = colors.vibrant_green }
+			end
+		end,
 	},
 	{
 		RoundFileNameBlock,
@@ -391,7 +392,7 @@ local round_mode_icon = {
 			self.mode = vim.fn.mode(1)
 		end,
 		provider = function()
-			return ""
+			return ""
 		end,
 		hl = function(self)
 			local mode = self.mode:sub(1, 1)
@@ -478,7 +479,7 @@ local lsp_progress = {
 		return spinners[frame + 1] .. " " .. table.concat(status, " | ")
 	end,
 }
--- 
+
 local LSPActive = {
 	condition = conditions.lsp_attached,
 	{
@@ -501,7 +502,6 @@ local LSPActive = {
 			local mode = self.mode:sub(1, 1)
 			return { fg = colors.purple, bg = mode_colors[mode] or colors.blue }
 		end,
-
 	},
 }
 

@@ -10,7 +10,7 @@ bufferline.setup {
     indicator_icon = '﨣 ',
     color_icons = true,
     show_buffer_icons = true,
-    separator_style = "thick",
+    separator_style = "slant",
   }
   -- options = {
   --   numbers = "none", -- | "ordinal" | "buffer_id" | "both" | function({ ordinal, id, lower, raise }): string,
