@@ -14,7 +14,11 @@ vim.api.nvim_create_autocmd(
 return require("packer").startup(function(use)
 	-- packer
 	use({ "wbthomason/packer.nvim" })
-	-- themes
+
+	------------------------------------------------------
+	-- THEMES
+	------------------------------------------------------
+
 	use({ "navarasu/onedark.nvim" })
 
 	use({ "yashguptaz/calvera-dark.nvim" })
@@ -69,21 +73,14 @@ return require("packer").startup(function(use)
 			},
 		}),
 	})
-	-- rest
 
-	use({
-		"SmiteshP/nvim-gps",
-		requires = "nvim-treesitter/nvim-treesitter",
-
-		config = function()
-			require("nvim-gps").setup()
-		end,
-	})
-
+	------------------------------------------------------
+	-- REST
+	------------------------------------------------------
+	use("numToStr/Comment.nvim")
+	use("windwp/nvim-autopairs")
 	use({ "rebelot/heirline.nvim" })
-
 	use({ "mfussenegger/nvim-dap" })
-
 	use({
 		"stevearc/aerial.nvim",
 		config = function()
@@ -124,9 +121,16 @@ return require("packer").startup(function(use)
 	use({ "nvim-pack/nvim-spectre" })
 
 	------------------------------------------------------
-	-- LSP
+	-- LSP RELATED
 	------------------------------------------------------
+	use({
+		"SmiteshP/nvim-gps",
+		requires = "nvim-treesitter/nvim-treesitter",
 
+		config = function()
+			require("nvim-gps").setup()
+		end,
+	})
 	use({
 		"j-hui/fidget.nvim",
 		config = function()
@@ -141,6 +145,24 @@ return require("packer").startup(function(use)
 	use("jose-elias-alvarez/null-ls.nvim") -- for formatters and linters
 	use("ray-x/lsp_signature.nvim")
 
+	-----------------------------
+	-- COPILOT
+
+	use({
+		"zbirenbaum/copilot.lua",
+		event = { "VimEnter" },
+		config = function()
+			vim.defer_fn(function()
+				require("copilot").setup()
+			end, 100)
+		end,
+	})
+
+	use({
+		"zbirenbaum/copilot-cmp",
+		after = { "copilot.lua", "nvim-cmp" },
+	})
+
 	------------------------------------------------------
 	-- COMPLETION
 	------------------------------------------------------
@@ -154,14 +176,16 @@ return require("packer").startup(function(use)
 	use("hrsh7th/cmp-buffer")
 	use("hrsh7th/cmp-path")
 	use("hrsh7th/cmp-cmdline")
-	use({ "ray-x/cmp-treesitter" })
 	use("saadparwaiz1/cmp_luasnip")
 	use("L3MON4D3/LuaSnip")
-	use("numToStr/Comment.nvim")
+
+	------------------------------------------------------
+	-- TREESITTER
+	------------------------------------------------------
+	use({ "ray-x/cmp-treesitter" })
 	use("JoosepAlviste/nvim-ts-context-commentstring")
 	use("windwp/nvim-ts-autotag")
-	use("windwp/nvim-autopairs")
-	-- Treesitter
+
 	use({
 		"nvim-treesitter/nvim-treesitter",
 		run = ":TSUpdate",
@@ -183,70 +207,12 @@ return require("packer").startup(function(use)
 	})
 	use("folke/which-key.nvim")
 	use("ahmedkhalf/project.nvim")
-	-- use({
-	--   "sudormrfbin/cheatsheet.nvim",
-	--
-	--   requires = {
-	--     { "nvim-telescope/telescope.nvim" },
-	--     { "nvim-lua/popup.nvim" },
-	--     { "nvim-lua/plenary.nvim" },
-	--   },
-	--
-	--   config = function()
-	--     local keys = require("which-key.keys")
-	--
-	--     local user_maps = {}
-	--     for _, tree in pairs(keys.mappings) do
-	--       tree.tree:walk(function(node)
-	--         if -- node.mapping -- only include real mappings
-	--         node.mapping.label -- with a label
-	--             -- and not node.mapping.group -- no groups
-	--             -- and not node.mapping.preset -- no presets
-	--             and node.mapping.label ~= "which_key_ignore" -- no ignored keymaps
-	--         then
-	--           table.insert(user_maps, {
-	--             keys = table.concat(node.mapping.keys.nvim, ""),
-	--             mode = node.mapping.mode,
-	--             label = node.mapping.label,
-	--             buf = node.mapping.buf,
-	--             group = node.mapping.group,
-	--             real_mapping = node.mapping
-	--                 and node.mapping.label
-	--                 and not node.mapping.group
-	--                 and not node.mapping.preset
-	--                 and node.mapping.label ~= "which_key_ignore",
-	--           })
-	--         end
-	--       end)
-	--     end
-	--
-	--     local cheatsheet = require("cheatsheet")
-	--
-	--     -- This loop goes over the table (generated at the top of this file) of all user which-key mappings.
-	--     -- It then adds these mappings to the list of cheatsheet entries.
-	--
-	--     local last_grp = ""
-	--
-	--     for _, data in pairs(user_maps) do
-	--       if data["group"] == true then
-	--         last_grp = data["label"]
-	--       end
-	--
-	--       if data["real_mapping"] == true then
-	--         -- print(string.format("group: %s\nlabel: %s\nkeys: %s", last_grp, data["label"], data["keys"]))
-	--
-	--         cheatsheet.add_cheat(data["label"], data["keys"], string.format("WK-%s", last_grp))
-	--       end
-	--     end
-	--   end,
-	-- })
-	--
 
 	use({
 		"nvim-lualine/lualine.nvim",
 		requires = { "kyazdani42/nvim-web-devicons", opt = true },
 	})
-	-- use({ "matze/rust-tools.nvim", branch = "fix-175-migrate-to-lsp-hints" })
+
 	use({ "simrat39/rust-tools.nvim" })
 	use({ "andymass/vim-matchup" })
 	use({ "romgrk/nvim-treesitter-context" })
@@ -263,20 +229,6 @@ return require("packer").startup(function(use)
 	-- use({ "hrsh7th/cmp-copilot" })
 
 	-------
-	use({
-		"zbirenbaum/copilot.lua",
-		event = { "VimEnter" },
-		config = function()
-			vim.defer_fn(function()
-				require("copilot").setup()
-			end, 100)
-		end,
-	})
-
-	use({
-		"zbirenbaum/copilot-cmp",
-		after = { "copilot.lua", "nvim-cmp" },
-	})
 
 	use({
 		"beauwilliams/focus.nvim",
