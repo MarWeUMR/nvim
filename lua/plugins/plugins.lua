@@ -38,7 +38,7 @@ return require("packer").startup(function(use)
 		end,
 	})
 	use({ "Th3Whit3Wolf/space-nvim" })
-  
+
 	use({
 		"sainnhe/edge",
 		config = function()
@@ -49,12 +49,13 @@ return require("packer").startup(function(use)
 		"NTBBloodbath/doom-one.nvim",
 		require("doom-one").setup({
 			cursor_coloring = true,
+			transparent_background = true,
 			terminal_colors = true,
 			italic_comments = true,
 			enable_treesitter = true,
 			plugins_integrations = {
 				bufferline = true,
-				gitgutter = false,
+				gitgutter = true,
 				gitsigns = true,
 				telescope = true,
 				neogit = true,
@@ -70,17 +71,20 @@ return require("packer").startup(function(use)
 	})
 	-- rest
 
-  use({"stevearc/aerial.nvim", 
-config = function()
-      require('aerial').setup({})
-    end
-  })
+	use({ "mfussenegger/nvim-dap" })
+
+	use({
+		"stevearc/aerial.nvim",
+		config = function()
+			require("aerial").setup({})
+		end,
+	})
 	use({
 		"nvim-telescope/telescope.nvim",
 		requires = { { "nvim-lua/plenary.nvim" } },
 	})
 
-  use ({"lukas-reineke/indent-blankline.nvim"})
+	use({ "lukas-reineke/indent-blankline.nvim" })
 	use({ "Pocco81/TrueZen.nvim" })
 	use({
 		"folke/zen-mode.nvim",
@@ -106,7 +110,7 @@ config = function()
 	-- use("nvim-lua/popup.nvim") -- An implementation of the Popup API from vim in Neovim
 	use("nvim-lua/plenary.nvim") -- Useful lua functions used ny lots of plugins
 	use("kyazdani42/nvim-tree.lua")
-use({"nvim-pack/nvim-spectre"})
+	use({ "nvim-pack/nvim-spectre" })
 	-- LSP
 
 	use("neovim/nvim-lspconfig")
