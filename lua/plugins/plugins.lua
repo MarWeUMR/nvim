@@ -71,13 +71,6 @@ return require("packer").startup(function(use)
 	})
 	-- rest
 
-	-- use({
-	-- 	"j-hui/fidget.nvim",
-	-- 	config = function()
-	-- 		require("fidget").setup({})
-	-- 	end,
-	-- })
-
 	use({
 		"SmiteshP/nvim-gps",
 		requires = "nvim-treesitter/nvim-treesitter",
@@ -86,8 +79,6 @@ return require("packer").startup(function(use)
 			require("nvim-gps").setup()
 		end,
 	})
-
-	-- use({ "nvim-lua/lsp-status.nvim" })
 
 	use({ "rebelot/heirline.nvim" })
 
@@ -131,14 +122,29 @@ return require("packer").startup(function(use)
 	use("nvim-lua/plenary.nvim") -- Useful lua functions used ny lots of plugins
 	use("kyazdani42/nvim-tree.lua")
 	use({ "nvim-pack/nvim-spectre" })
-	-- LSP
 
-	use("neovim/nvim-lspconfig")
+	------------------------------------------------------
+	-- LSP
+	------------------------------------------------------
+
+	use({
+		"j-hui/fidget.nvim",
+		config = function()
+			require("fidget").setup({})
+		end,
+	})
+
+	use({
+		"neovim/nvim-lspconfig",
+	})
 	-- use("williamboman/nvim-lsp-installer")
 	use("jose-elias-alvarez/null-ls.nvim") -- for formatters and linters
 	use("ray-x/lsp_signature.nvim")
 
-	-- Completion
+	------------------------------------------------------
+	-- COMPLETION
+	------------------------------------------------------
+
 	use({
 		"hrsh7th/nvim-cmp",
 		branch = "main", --float menu

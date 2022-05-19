@@ -8,43 +8,73 @@ local on_attach = function(_, bufnr)
 	vim.api.nvim_create_user_command("Format", vim.lsp.buf.formatting, {})
 end
 
-local signs = {
-	{ name = "DiagnosticSignError", text = "" },
-	{ name = "DiagnosticSignWarn", text = "" },
-	{ name = "DiagnosticSignHint", text = "" },
-	{ name = "DiagnosticSignInfo", text = "" },
-}
 
-for _, sign in ipairs(signs) do
-	vim.fn.sign_define(sign.name, { texthl = sign.name, text = sign.text, numhl = "" })
+local function create_capabilities()
+  local capabilities = vim.lsp.protocol.make_client_capabilities()
+  capabilities = require("cmp_nvim_lsp").update_capabilities(capabilities)
+  return capabilities
 end
 
-local config = {
-	-- disable virtual text
-	virtual_text = true,
-	-- show signs
-	signs = {
-		active = signs,
-	},
-	update_in_insert = true,
-	underline = true,
-	severity_sort = true,
-}
+
+local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
+
+for type, icon in pairs(signs) do
+  local hl = "DiagnosticSign" .. type
+  vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
+end
+
+local border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" }
+
+vim.diagnostic.config({
+  virtual_text = false,
+  signs = true,
+  underline = true,
+  update_in_insert = false,
+  severity_sort = false,
+  border = border,
+})
+
+-- local signs = {
+-- 	{ name = "DiagnosticSignError", text = "" },
+-- 	{ name = "DiagnosticSignWarn", text = "" },
+-- 	{ name = "DiagnosticSignHint", text = "" },
+-- 	{ name = "DiagnosticSignInfo", text = "" },
+-- }
+
+-- for _, sign in ipairs(signs) do
+-- 	vim.fn.sign_define(sign.name, { texthl = sign.name, text = sign.text, numhl = "" })
+-- end
+
+-- local config = {
+-- 	-- disable virtual text
+-- 	virtual_text = true,
+-- 	-- show signs
+-- 	signs = {
+-- 		active = signs,
+-- 	},
+-- 	update_in_insert = true,
+-- 	underline = true,
+-- 	severity_sort = true,
+-- }
 
 lspconfig.emmet_ls.setup({
 	filetypes = { "html", "css", "typescriptreact", "javascriptreact", "jsx", "tsx" },
 })
 
 -- nvim-cmp supports additional completion capabilities
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities = require("cmp_nvim_lsp").update_capabilities(capabilities)
+-- local capabilities = vim.lsp.protocol.make_client_capabilities()
+-- capabilities = require("cmp_nvim_lsp").update_capabilities(lsp_status.capabilities)
+
 
 -- Enable the following language servers
-local servers = { "tsserver", "jedi_language_server", "emmet_ls", "tailwindcss", "sumneko_lua", "vim-language-server" }
+local servers = { "tsserver", "jedi_language_server", "emmet_ls", "tailwindcss", "sumneko_lua", "vimls" }
 for _, lsp in ipairs(servers) do
 	lspconfig[lsp].setup({
 		on_attach = on_attach,
 		capabilities = capabilities,
+
+		-- on_attach = lsp_status.on_attach,
+		-- capabilities = lsp_status.capabilities,
 	})
 end
 
@@ -67,6 +97,11 @@ require("rust-tools").setup({
 		hover_actions = {
 			auto_focus = true,
 		},
+		inlay_hints = {
+			parameter_hints_prefix = "← ",
+			other_hints_prefix = "⇒ ",
+			highlight = "comment",
+		},
 	},
 }, opts)
 require("rust-tools.hover_actions").hover_actions()
@@ -82,10 +117,10 @@ require("null-ls").setup({
 
 ---------- DAP
 
-local dap = require('dap')
+local dap = require("dap")
 dap.adapters.lldb = {
-  type = 'executable',
-  command = '/usr/bin/lldb-vscode', -- adjust as needed
-  name = "lldb"
+	type = "executable",
+	command = "/usr/bin/lldb-vscode", -- adjust as needed
+	name = "lldb",
 }
 -- require("lspconfig").jedi_language_server.setup({})

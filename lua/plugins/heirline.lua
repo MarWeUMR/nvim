@@ -28,7 +28,6 @@ local utilities = require("heirline.utils")
 local utils = require("heirline.utils")
 local colors = require("colors").get()
 local align = { provider = "%=", hl = { fg = colors.dark_blue } }
-local space = { provider = " ", hl = { fg = colors.dark_blue } }
 
 local use_dev_icons = false
 
@@ -612,8 +611,6 @@ local default_statusline = {
 	utils.make_flexible_component(5, RoundWorkDir),
 	align,
 	utils.make_flexible_component(3, gps_lsp, { provider = "" }),
-	align,
-	lsp_progress,
 	align,
 	diagnostics,
 	align,
