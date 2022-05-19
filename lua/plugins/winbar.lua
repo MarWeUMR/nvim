@@ -9,7 +9,7 @@ winbar.eval = function()
         return ""
     end
     return "%#WinBarSeparator#"
-        .. ""
+        .. "█"
         .. "%*"
         .. "%#WinBarContent#"
         .. "%f"

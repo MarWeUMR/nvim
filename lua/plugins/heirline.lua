@@ -1,20 +1,36 @@
+-- M.separators = {--{{{
+--   vertical_bar       = '┃',
+--   vertical_bar_thin  = '│',
+--   left               = '',
+--   right              = '',
+--   block              = '█',
+--   left_filled        = '',
+--   right_filled       = '',
+--   slant_left         = '',
+--   slant_left_thin    = '',
+--   slant_right        = '',
+--   slant_right_thin   = '',
+--   slant_left_2       = '',
+--   slant_left_2_thin  = '',
+--   slant_right_2      = '',
+--   slant_right_2_thin = '',
+--   left_rounded       = '',
+--   left_rounded_thin  = '',
+--   right_rounded      = '',
+--   right_rounded_thin = '',
+--   circle             = '●',
+--   github_icon        = " ﯙ ",
+--   folder_icon        = " ",
+-- }
+
 local conditions = require("heirline.conditions")
 local utilities = require("heirline.utils")
 local utils = require("heirline.utils")
-local align = { provider = "%=" }
-local space = { provider = " " }
 local colors = require("colors").get()
+local align = { provider = "%=", hl = { fg = colors.dark_blue } }
+local space = { provider = " ", hl = { fg = colors.dark_blue } }
 
 local use_dev_icons = false
-
-local function word_counter()
-	local wc = vim.api.nvim_eval("wordcount()")
-	if wc["visual_words"] then
-		return wc["visual_words"]
-	else
-		return wc["words"]
-	end
-end
 
 local file_icons = {
 	typescript = " ",
@@ -69,17 +85,6 @@ local FileNameBlock = {
 		self.filename = vim.api.nvim_buf_get_name(0)
 		self.mode = vim.fn.mode(1)
 	end,
-}
-
-local HelpFileName = {
-	condition = function()
-		return vim.bo.filetype == "help"
-	end,
-	provider = function()
-		local filename = vim.api.nvim_buf_get_name(0)
-		return vim.fn.fnamemodify(filename, ":t")
-	end,
-	hl = { fg = colors.dark_blue },
 }
 
 local FileType = {
@@ -159,7 +164,7 @@ local FileFlags = {
 local FileIconSurroundF = {
 	{
 		provider = function()
-			return ""
+			return ""
 		end,
 		hl = function(_)
 			return { fg = colors.dark_blue, bg = "none" }
@@ -172,7 +177,7 @@ local FileIconSurroundF = {
 local FileIconSurroundB = {
 	{
 		provider = function()
-			return " "
+			return " "
 		end,
 		hl = function(_)
 			return { bg = colors.blue, fg = colors.dark_blue }
@@ -208,7 +213,7 @@ RoundFileNameBlock = utils.insert(
 		provider = "%<",
 	}
 )
-RoundFileNameBlock = utilities.surround({ "", "" }, colors.blue, RoundFileNameBlock)
+RoundFileNameBlock = utilities.surround({ "", "" }, colors.blue, RoundFileNameBlock)
 
 RoundFileNameBlock[1]["condition"] = function()
 	return not conditions.buffer_matches({
@@ -275,7 +280,7 @@ local RoundWorkDir = {
 	},
 	{
 		provider = function()
-			return ""
+			return ""
 		end,
 		hl = { fg = colors.dark_green, bg = colors.vibrant_green },
 	},
@@ -289,15 +294,21 @@ local RoundWorkDir = {
 		end,
 		hl = { bg = colors.vibrant_green, fg = colors.black },
 	},
+	{
+		provider = function()
+			return ""
+		end,
+		hl = { fg = colors.dark_blue, bg = colors.vibrant_green },
+	},
+	{
+		RoundFileNameBlock,
+	},
 }
 
 local round_mode_icon = {
 	{
 		init = function(self)
 			self.mode = vim.fn.mode(1)
-		end,
-		provider = function()
-			return ""
 		end,
 		hl = function(self)
 			local mode = self.mode:sub(1, 1)
@@ -389,56 +400,6 @@ local round_mode_icon = {
 	},
 }
 
-local function progress_bar()
-	local sbar = { "▁", "▂", "▃", "▄", "▅", "▆", "▇" }
-	local curr_line = vim.api.nvim_win_get_cursor(0)[1]
-	local lines = vim.api.nvim_buf_line_count(0)
-	local i = math.floor(curr_line / lines * (#sbar - 1)) + 1
-	return sbar[i]
-end
-
-local round_progress = {
-	{
-		provider = function()
-			return ""
-		end,
-		hl = function(_)
-			return { fg = colors.dark_purple, bg = "none" }
-		end,
-	},
-	{
-		provider = function()
-			return "%3(%P%)"
-		end,
-		hl = { bg = colors.dark_purple, fg = colors.black },
-	},
-	{
-		provider = function()
-			return ""
-		end,
-		hl = function(_)
-			return { fg = colors.dark_purple, bg = colors.purple }
-		end,
-	},
-	{
-		provider = function()
-			-- return "%3(%P%) " .. progress_bar() .. " "
-			return " " .. progress_bar() .. " "
-		end,
-		hl = function()
-			return { bg = colors.purple, fg = colors.black }
-		end,
-	},
-	{
-		provider = function()
-			return ""
-		end,
-		hl = function(_)
-			return { fg = colors.purple, bg = "none" }
-		end,
-	},
-}
-
 local diagnostics = {
 
 	condition = conditions.has_diagnostics,
@@ -517,85 +478,65 @@ local lsp_progress = {
 		return spinners[frame + 1] .. " " .. table.concat(status, " | ")
 	end,
 }
+-- 
+local LSPActive = {
+	condition = conditions.lsp_attached,
+	{
+		provider = function()
+			return ""
+		end,
+		hl = { fg = colors.purple },
+	},
 
-local coords = {
+	{ provider = "  ", hl = { fg = colors.black, bg = colors.purple, bold = true } },
 	{
 		provider = function()
-			return ""
+			return ""
 		end,
-		hl = { fg = colors.orange },
+
+		init = function(self)
+			self.mode = vim.fn.mode(1)
+		end,
+		hl = function(self)
+			local mode = self.mode:sub(1, 1)
+			return { fg = colors.purple, bg = mode_colors[mode] or colors.blue }
+		end,
+
 	},
+}
+
+local gps_lsp = {
+	condition = require("nvim-gps").is_available,
+	-- left enclosing
 	{
 		provider = function()
-			return "  "
+			if #require("nvim-gps").get_data() > 0 then
+				return " "
+			else
+				return ""
+			end
 		end,
-		hl = { fg = colors.black, bg = colors.orange },
+		hl = { fg = colors.purple },
 	},
+	-- actual content
 	{
-		provider = function()
-			return ""
-		end,
-		hl = { fg = colors.orange, bg = colors.yellow },
-	},
-	{
-		provider = function()
-			return "%4(%l%):%2c"
-		end,
+		provider = require("nvim-gps").get_location,
 		hl = function()
-			return { fg = colors.black, bg = colors.yellow }
+			return { fg = colors.purple, bg = colors.black }
 		end,
 	},
+	-- right enclosing
 	{
 		provider = function()
-			return ""
+			if #require("nvim-gps").get_data() > 0 then
+				return " "
+			else
+				return ""
+			end
 		end,
-		hl = { fg = colors.yellow },
+		hl = { fg = colors.purple },
 	},
 }
-local word_count = {
-	{
-		init = function(self)
-			self.mode = vim.fn.mode(1)
-		end,
-		provider = function()
-			return string.rep(" ", 5 - #tostring(word_counter())) .. ""
-		end,
-		hl = function(self)
-			local mode = self.mode:sub(1, 1)
-			return { fg = mode_colors[mode] or colors.blue }
-		end,
-	},
-	{
-		init = function(self)
-			self.mode = vim.fn.mode(1)
-		end,
-		provider = function()
-			return word_counter()
-		end,
-		hl = function(self)
-			local mode = self.mode:sub(1, 1)
-			return {
-				bg = mode_colors[mode] or colors.blue,
-				fg = colors.black,
-			}
-		end,
-		condition = conditions.is_active(),
-	},
-	{
-		init = function(self)
-			self.mode = vim.fn.mode(1)
-		end,
-		provider = function()
-			return ""
-		end,
-		hl = function(self)
-			local mode = self.mode:sub(1, 1)
-			return { fg = mode_colors[mode] or colors.blue }
-		end,
-	},
-}
-
-RoundWorkDir = utilities.surround({ "", "" }, colors.vibrant_green, RoundWorkDir)
 
 local inactive_statusline = {
 	condition = function()
@@ -610,39 +551,17 @@ local inactive_statusline = {
 local default_statusline = {
 	condition = conditions.is_active,
 	utils.make_flexible_component(5, RoundWorkDir),
-	space,
-	RoundFileNameBlock,
-	space,
-	git,
-	-- utils.make_flexible_component(1, option_value),
-	space,
+	align,
+	utils.make_flexible_component(3, gps_lsp, { provider = "" }),
+	align,
 	lsp_progress,
+	align,
 	diagnostics,
-	space,
 	align,
-	-- utils.make_flexible_component(2, dyn_help_available),
-	-- space,
-	utils.make_flexible_component(4, coords),
-	space,
+	git,
+	align,
+	LSPActive,
 	round_mode_icon,
-	space,
-	round_progress,
-	space,
-	utils.make_flexible_component(6, word_count),
-}
-
-local help_file_line = {
-	condition = function()
-		return conditions.buffer_matches({
-			buftype = { "help", "quickfix" },
-		})
-	end,
-	FileType,
-	space,
-	align,
-	HelpFileName,
-	align,
-	progress,
 }
 
 local startup_nvim_statusline = {
@@ -659,10 +578,9 @@ local startup_nvim_statusline = {
 local round_statuslines = {
 	init = utils.pick_child_on_condition,
 
-	startup_nvim_statusline,
-	help_file_line,
-	inactive_statusline,
+	-- startup_nvim_statusline,
+	-- inactive_statusline,
 	default_statusline,
 }
 
-require("heirline").setup(round_statuslines)
+require("heirline").setup(default_statusline)

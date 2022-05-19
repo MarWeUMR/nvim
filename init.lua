@@ -12,12 +12,14 @@ require("plugins.comments")
 require("plugins.gitsigns")
 require("plugins.autopairs")
 require("plugins.treesitter")
-require("plugins.cmp")
 require("plugins.leap")
-require("plugins.lsp_signature")
 require("configs.mappings")
 require("plugins.alpha")
--- require("plugins.lualine_conf")
-require("plugins.lsp_stuff")
 require("plugins.winbar")
+-- require("plugins.lualine_conf")
+
+--------- LSP RELATED
+require("plugins.lsp_stuff")
+require("plugins.lsp_signature")
+require("plugins.cmp")
 

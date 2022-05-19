@@ -40,13 +40,15 @@ local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require("cmp_nvim_lsp").update_capabilities(capabilities)
 
 -- Enable the following language servers
-local servers = { "tsserver", "jedi_language_server", "emmet_ls", "tailwindcss" }
+local servers = { "tsserver", "jedi_language_server", "emmet_ls", "tailwindcss", "sumneko_lua", "vim-language-server" }
 for _, lsp in ipairs(servers) do
 	lspconfig[lsp].setup({
 		on_attach = on_attach,
 		capabilities = capabilities,
 	})
 end
+
+---------------------- RUST SECTION
 
 local extension_path = vim.env.HOME .. "/home/arch/.vscode-server-insiders/extensions/vadimcn.vscode-lldb-1.7.0/"
 local codelldb_path = extension_path .. "adapter/codelldb"
@@ -69,6 +71,7 @@ require("rust-tools").setup({
 }, opts)
 require("rust-tools.hover_actions").hover_actions()
 
+------------------- NULL-LS
 require("null-ls").setup({
 	sources = {
 		require("null-ls").builtins.formatting.stylua,

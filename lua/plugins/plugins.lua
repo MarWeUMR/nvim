@@ -71,6 +71,24 @@ return require("packer").startup(function(use)
 	})
 	-- rest
 
+	-- use({
+	-- 	"j-hui/fidget.nvim",
+	-- 	config = function()
+	-- 		require("fidget").setup({})
+	-- 	end,
+	-- })
+
+	use({
+		"SmiteshP/nvim-gps",
+		requires = "nvim-treesitter/nvim-treesitter",
+
+		config = function()
+			require("nvim-gps").setup()
+		end,
+	})
+
+	-- use({ "nvim-lua/lsp-status.nvim" })
+
 	use({ "rebelot/heirline.nvim" })
 
 	use({ "mfussenegger/nvim-dap" })
