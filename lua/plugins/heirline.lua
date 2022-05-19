@@ -80,11 +80,40 @@ local mode_colors = {
 	t = vim.g.terminal_color_1,
 }
 
-local FileNameBlock = {
-	init = function(self)
-		self.filename = vim.api.nvim_buf_get_name(0)
-		self.mode = vim.fn.mode(1)
-	end,
+----------------------------------------------------------------------------------------
+--------------------------------------------
+--
+--      FILE PATH AND WORKDIR
+--
+--------------------------------------------
+----------------------------------------------------------------------------------------
+
+local FileIconSurroundF = {
+	{
+		provider = function()
+			return ""
+		end,
+		hl = function(_)
+			return { fg = colors.dark_blue, bg = "none" }
+		end,
+		condition = function()
+			return vim.tbl_contains(vim.tbl_keys(file_icons), vim.bo.ft)
+		end,
+	},
+}
+
+local FileIconSurroundB = {
+	{
+		provider = function()
+			return " "
+		end,
+		hl = function(_)
+			return { bg = colors.blue, fg = colors.dark_blue }
+		end,
+		condition = function()
+			return vim.tbl_contains(vim.tbl_keys(file_icons), vim.bo.ft)
+		end,
+	},
 }
 
 local FileIcon = {
@@ -114,6 +143,13 @@ local FileIcon = {
 	end,
 	condition = function()
 		return vim.tbl_contains(vim.tbl_keys(file_icons), vim.bo.ft)
+	end,
+}
+
+local FileNameBlock = {
+	init = function(self)
+		self.filename = vim.api.nvim_buf_get_name(0)
+		self.mode = vim.fn.mode(1)
 	end,
 }
 
@@ -154,32 +190,6 @@ local FileFlags = {
 	},
 }
 
-local FileIconSurroundF = {
-	{
-		provider = function()
-			return ""
-		end,
-		hl = function(_)
-			return { fg = colors.dark_blue, bg = "none" }
-		end,
-		condition = function()
-			return vim.tbl_contains(vim.tbl_keys(file_icons), vim.bo.ft)
-		end,
-	},
-}
-local FileIconSurroundB = {
-	{
-		provider = function()
-			return " "
-		end,
-		hl = function(_)
-			return { bg = colors.blue, fg = colors.dark_blue }
-		end,
-		condition = function()
-			return vim.tbl_contains(vim.tbl_keys(file_icons), vim.bo.ft)
-		end,
-	},
-}
 local FileNameSurround = {
 	{
 		provider = function()
@@ -224,6 +234,153 @@ RoundFileNameBlock[3]["condition"] = function()
 	})
 end
 
+local RoundWorkDir = {
+	{
+		provider = function()
+			return "  "
+		end,
+		hl = function(_)
+			return { fg = colors.black, bg = colors.dark_green }
+		end,
+	},
+	{
+		provider = function()
+			return ""
+		end,
+		hl = { fg = colors.dark_green, bg = colors.vibrant_green },
+	},
+	{
+		provider = function()
+			local cwd = vim.fn.getcwd(0)
+			cwd = vim.fn.fnamemodify(cwd, ":~")
+			cwd = vim.fn.pathshorten(cwd)
+			local trail = cwd:sub(-1) == "/" and "" or "/"
+			return " " .. cwd .. trail
+		end,
+		hl = { bg = colors.vibrant_green, fg = colors.black },
+	},
+	{
+		provider = function()
+			return ""
+		end,
+		hl = function(self)
+			if
+				conditions.buffer_matches({
+					filetype = { "startup", "Telescope", "NvimTree", "toggleterm" },
+				})
+			then
+				return { fg = colors.blue, bg = colors.vibrant_green }
+			else
+				return { fg = colors.dark_blue, bg = colors.vibrant_green }
+			end
+		end,
+	},
+	{
+		RoundFileNameBlock,
+	},
+}
+
+----------------------------------------------------------------------------------------
+--------------------------------------------
+--
+--      GPS INDICATOR
+--
+--------------------------------------------
+----------------------------------------------------------------------------------------
+
+local gps_lsp = {
+	condition = require("nvim-gps").is_available,
+	-- left enclosing
+	{
+		provider = function()
+			if #require("nvim-gps").get_data() > 0 then
+				return " "
+			else
+				return ""
+			end
+		end,
+		hl = { fg = colors.purple },
+	},
+	-- actual content
+	{
+		provider = require("nvim-gps").get_location,
+		hl = function()
+			return { fg = colors.purple, bg = colors.black }
+		end,
+	},
+	-- right enclosing
+	{
+		provider = function()
+			if #require("nvim-gps").get_data() > 0 then
+				return " "
+			else
+				return ""
+			end
+		end,
+		hl = { fg = colors.purple },
+	},
+}
+
+----------------------------------------------------------------------------------------
+--------------------------------------------
+--
+--      DIAGNOSTICS
+--
+--------------------------------------------
+----------------------------------------------------------------------------------------
+
+local diagnostics = {
+
+	condition = conditions.has_diagnostics,
+
+	static = {
+		error_icon = " ",
+		warn_icon = " ",
+		info_icon = " ",
+		hint_icon = " ",
+	},
+
+	init = function(self)
+		self.errors = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.ERROR })
+		self.warnings = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.WARN })
+		self.hints = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.HINT })
+		self.info = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.INFO })
+	end,
+
+	{
+		provider = function(self)
+			return self.errors > 0 and (self.error_icon .. self.errors .. " ")
+		end,
+		hl = { fg = utils.get_highlight("DiagnosticError").fg },
+	},
+	{
+		provider = function(self)
+			return self.warnings > 0 and (self.warn_icon .. self.warnings .. " ")
+		end,
+		hl = { fg = utils.get_highlight("DiagnosticWarn").fg },
+	},
+	{
+		provider = function(self)
+			return self.info > 0 and (self.info_icon .. self.info .. " ")
+		end,
+		hl = { fg = utils.get_highlight("DiagnosticInfo").fg },
+	},
+	{
+		provider = function(self)
+			return self.hints > 0 and (self.hint_icon .. self.hints)
+		end,
+		hl = { fg = utils.get_highlight("DiagnosticHint").fg },
+	},
+}
+
+----------------------------------------------------------------------------------------
+--------------------------------------------
+--
+--      GIT
+--
+--------------------------------------------
+----------------------------------------------------------------------------------------
+
 local git = {
 	condition = conditions.is_git_repo,
 
@@ -262,49 +419,90 @@ local git = {
 	},
 }
 
-local RoundWorkDir = {
-	{
-		provider = function()
-			return "  "
-		end,
-		hl = function(_)
-			return { fg = colors.black, bg = colors.dark_green }
-		end,
-	},
-	{
-		provider = function()
-			return ""
-		end,
-		hl = { fg = colors.dark_green, bg = colors.vibrant_green },
-	},
-	{
-		provider = function()
-			local cwd = vim.fn.getcwd(0)
-			cwd = vim.fn.fnamemodify(cwd, ":~")
-			cwd = vim.fn.pathshorten(cwd)
-			local trail = cwd:sub(-1) == "/" and "" or "/"
-			return " " .. cwd .. trail
-		end,
-		hl = { bg = colors.vibrant_green, fg = colors.black },
-	},
+----------------------------------------------------------------------------------------
+--------------------------------------------
+--
+--      LSP PROGRESS
+--      only shows initially, or whenever there are actual lsp progress msgs
+--
+--------------------------------------------
+----------------------------------------------------------------------------------------
+
+local lsp_progress = {
+	condition = function()
+		if #vim.lsp.get_active_clients() == 0 then
+			return false
+		end
+		return true
+	end,
+	hl = { fg = colors.blue },
+	provider = function()
+		local messages = vim.lsp.util.get_progress_messages()
+		if #messages == 0 then
+			return ""
+		end
+		local status = {}
+		for _, msg in pairs(messages) do
+			table.insert(status, msg.percentage or 0)
+		end
+		local spinners = {
+			"⠋",
+			"⠙",
+			"⠹",
+			"⠸",
+			"⠼",
+			"⠴",
+			"⠦",
+			"⠧",
+			"⠇",
+			"⠏",
+		}
+		local ms = vim.loop.hrtime() / 1000000
+		local frame = math.floor(ms / 120) % #spinners
+		return spinners[frame + 1] .. " " .. table.concat(status, " | ")
+	end,
+}
+
+----------------------------------------------------------------------------------------
+--------------------------------------------
+--
+--      LSP ACTIVE INDICATOR
+--
+--------------------------------------------
+----------------------------------------------------------------------------------------
+
+local LSPActive = {
+	condition = conditions.lsp_attached,
 	{
 		provider = function()
 			return ""
 		end,
+		hl = { fg = colors.purple },
+	},
+
+	{ provider = "  ", hl = { fg = colors.black, bg = colors.purple, bold = true } },
+	{
+		provider = function()
+			return ""
+		end,
+
+		init = function(self)
+			self.mode = vim.fn.mode(1)
+		end,
 		hl = function(self)
-			if conditions.buffer_matches({
-				filetype = { "startup", "Telescope", "NvimTree" },
-			}) then
-				return { fg = colors.blue, bg = colors.vibrant_green }
-			else
-				return { fg = colors.dark_blue, bg = colors.vibrant_green }
-			end
+			local mode = self.mode:sub(1, 1)
+			return { fg = colors.purple, bg = mode_colors[mode] or colors.blue }
 		end,
 	},
-	{
-		RoundFileNameBlock,
-	},
 }
+
+----------------------------------------------------------------------------------------
+--------------------------------------------
+--
+--      MODE INDICATOR
+--
+--------------------------------------------
+----------------------------------------------------------------------------------------
 
 local round_mode_icon = {
 	{
@@ -401,152 +599,13 @@ local round_mode_icon = {
 	},
 }
 
-local diagnostics = {
-
-	condition = conditions.has_diagnostics,
-
-	static = {
-		error_icon = " ",
-		warn_icon = " ",
-		info_icon = " ",
-		hint_icon = " ",
-	},
-
-	init = function(self)
-		self.errors = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.ERROR })
-		self.warnings = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.WARN })
-		self.hints = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.HINT })
-		self.info = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.INFO })
-	end,
-
-	{
-		provider = function(self)
-			return self.errors > 0 and (self.error_icon .. self.errors .. " ")
-		end,
-		hl = { fg = utils.get_highlight("DiagnosticError").fg },
-	},
-	{
-		provider = function(self)
-			return self.warnings > 0 and (self.warn_icon .. self.warnings .. " ")
-		end,
-		hl = { fg = utils.get_highlight("DiagnosticWarn").fg },
-	},
-	{
-		provider = function(self)
-			return self.info > 0 and (self.info_icon .. self.info .. " ")
-		end,
-		hl = { fg = utils.get_highlight("DiagnosticInfo").fg },
-	},
-	{
-		provider = function(self)
-			return self.hints > 0 and (self.hint_icon .. self.hints)
-		end,
-		hl = { fg = utils.get_highlight("DiagnosticHint").fg },
-	},
-}
-
-local lsp_progress = {
-	condition = function()
-		if #vim.lsp.get_active_clients() == 0 then
-			return false
-		end
-		return true
-	end,
-	hl = { fg = colors.blue },
-	provider = function()
-		local messages = vim.lsp.util.get_progress_messages()
-		if #messages == 0 then
-			return ""
-		end
-		local status = {}
-		for _, msg in pairs(messages) do
-			table.insert(status, msg.percentage or 0)
-		end
-		local spinners = {
-			"⠋",
-			"⠙",
-			"⠹",
-			"⠸",
-			"⠼",
-			"⠴",
-			"⠦",
-			"⠧",
-			"⠇",
-			"⠏",
-		}
-		local ms = vim.loop.hrtime() / 1000000
-		local frame = math.floor(ms / 120) % #spinners
-		return spinners[frame + 1] .. " " .. table.concat(status, " | ")
-	end,
-}
-
-local LSPActive = {
-	condition = conditions.lsp_attached,
-	{
-		provider = function()
-			return ""
-		end,
-		hl = { fg = colors.purple },
-	},
-
-	{ provider = "  ", hl = { fg = colors.black, bg = colors.purple, bold = true } },
-	{
-		provider = function()
-			return ""
-		end,
-
-		init = function(self)
-			self.mode = vim.fn.mode(1)
-		end,
-		hl = function(self)
-			local mode = self.mode:sub(1, 1)
-			return { fg = colors.purple, bg = mode_colors[mode] or colors.blue }
-		end,
-	},
-}
-
-local gps_lsp = {
-	condition = require("nvim-gps").is_available,
-	-- left enclosing
-	{
-		provider = function()
-			if #require("nvim-gps").get_data() > 0 then
-				return " "
-			else
-				return ""
-			end
-		end,
-		hl = { fg = colors.purple },
-	},
-	-- actual content
-	{
-		provider = require("nvim-gps").get_location,
-		hl = function()
-			return { fg = colors.purple, bg = colors.black }
-		end,
-	},
-	-- right enclosing
-	{
-		provider = function()
-			if #require("nvim-gps").get_data() > 0 then
-				return " "
-			else
-				return ""
-			end
-		end,
-		hl = { fg = colors.purple },
-	},
-}
-
-local inactive_statusline = {
-	condition = function()
-		return not conditions.is_active()
-	end,
-	RoundWorkDir,
-	space,
-	RoundFileNameBlock,
-	align,
-}
+----------------------------------------------------------------------------------------
+--------------------------------------------
+--
+--      FINALIZE STATUSLINE
+--
+--------------------------------------------
+----------------------------------------------------------------------------------------
 
 local default_statusline = {
 	condition = conditions.is_active,
@@ -562,25 +621,6 @@ local default_statusline = {
 	align,
 	LSPActive,
 	round_mode_icon,
-}
-
-local startup_nvim_statusline = {
-	condition = function()
-		return conditions.buffer_matches({
-			filetype = { "startup", "TelescopePrompt" },
-		})
-	end,
-	align,
-	provider = "",
-	align,
-}
-
-local round_statuslines = {
-	init = utils.pick_child_on_condition,
-
-	-- startup_nvim_statusline,
-	-- inactive_statusline,
-	default_statusline,
 }
 
 require("heirline").setup(default_statusline)
