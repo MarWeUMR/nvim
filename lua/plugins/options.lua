@@ -43,7 +43,7 @@ local options = {
 		verthoriz = "╬",
 	},
 	laststatus = 3,
-  
+
 	winbar = "%{%v:lua.require'plugins.winbar'.eval()%}",
 }
 

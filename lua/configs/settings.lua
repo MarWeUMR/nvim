@@ -1,3 +1,2 @@
 vim.cmd([[ set bg=dark ]])
-vim.cmd([[ set termguicolors ]])
-vim.cmd([[ colorscheme doom-one ]])
+-- vim.cmd([[ colorscheme material ]])

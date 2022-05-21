@@ -19,6 +19,29 @@ return require("packer").startup(function(use)
 	-- THEMES
 	------------------------------------------------------
 
+	use({
+		"themercorp/themer.lua",
+		config = function()
+			require("themer").setup({
+				colorscheme = "doom_one",
+				styles = {
+					["function"] = { style = "italic" },
+					functionbuiltin = { style = "italic" },
+					variable = { style = "italic" },
+					variableBuiltIn = { style = "italic" },
+					parameter = { style = "italic" },
+				},
+			})
+		end,
+	})
+	use({
+		"norcalli/nvim-colorizer.lua",
+		config = function()
+			require("colorizer").setup({})
+		end,
+	})
+
+	use({ "rafamadriz/neon" })
 	use({ "navarasu/onedark.nvim" })
 
 	use({ "yashguptaz/calvera-dark.nvim" })
@@ -49,30 +72,30 @@ return require("packer").startup(function(use)
 			vim.g.edge_style = "neon"
 		end,
 	})
-	use({
-		"NTBBloodbath/doom-one.nvim",
-		require("doom-one").setup({
-			cursor_coloring = true,
-			transparent_background = false,
-			terminal_colors = true,
-			italic_comments = true,
-			enable_treesitter = true,
-			plugins_integrations = {
-				bufferline = true,
-				gitgutter = true,
-				gitsigns = true,
-				telescope = true,
-				neogit = true,
-				nvim_tree = true,
-				dashboard = true,
-				startify = true,
-				whichkey = true,
-				indent_blankline = true,
-				vim_illuminate = true,
-				lspsaga = true,
-			},
-		}),
-	})
+	-- use({
+	-- 	"NTBBloodbath/doom-one.nvim",
+	-- 	require("doom-one").setup({
+	-- 		cursor_coloring = true,
+	-- 		transparent_background = false,
+	-- 		terminal_colors = true,
+	-- 		italic_comments = true,
+	-- 		enable_treesitter = true,
+	-- 		plugins_integrations = {
+	-- 			bufferline = true,
+	-- 			gitgutter = true,
+	-- 			gitsigns = true,
+	-- 			telescope = true,
+	-- 			neogit = true,
+	-- 			nvim_tree = true,
+	-- 			dashboard = true,
+	-- 			startify = true,
+	-- 			whichkey = true,
+	-- 			indent_blankline = true,
+	-- 			vim_illuminate = true,
+	-- 			lspsaga = true,
+	-- 		},
+	-- 	}),
+	-- })
 
 	------------------------------------------------------
 	-- REST
@@ -234,10 +257,17 @@ return require("packer").startup(function(use)
 	use({ "andymass/vim-matchup" })
 	use({ "romgrk/nvim-treesitter-context" })
 	-- use({ "machakann/vim-sandwich" })
+	-- use({
+	-- 	"petertriho/nvim-scrollbar",
+	-- 	config = function()
+	-- 		require("scrollbar").setup()
+	-- 	end,
+	-- })
+
 	use({
-		"petertriho/nvim-scrollbar",
+		"lewis6991/satellite.nvim",
 		config = function()
-			require("scrollbar").setup()
+			require("satellite").setup()
 		end,
 	})
 

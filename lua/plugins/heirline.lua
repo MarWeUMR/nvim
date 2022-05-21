@@ -23,11 +23,35 @@
 --   folder_icon        = " ",
 -- }
 
-local conditions = require("heirline.conditions")
-local utilities = require("heirline.utils")
 local utils = require("heirline.utils")
-local colors = require("colors").get()
-local align = { provider = "%=", hl = { fg = colors.dark_blue } }
+local colors = {
+	red = utils.get_highlight("DiagnosticError").fg,
+	dev_icon_tex = utils.get_highlight("DevIconTex").fg,
+	pastel_green = utils.get_highlight("DevIconStyl").bg,
+	blue = utils.get_highlight("Function").fg,
+	gray = utils.get_highlight("NonText").fg,
+	special_fg = utils.get_highlight("Special").fg,
+	special_bg = utils.get_highlight("Special").bg,
+	orange = utils.get_highlight("DiagnosticWarn").fg,
+	purple = utils.get_highlight("Statement").fg,
+	cyan = utils.get_highlight("Special").fg,
+	wild_fg = utils.get_highlight("WildMenu").fg,
+	wild_bg = utils.get_highlight("WildMenu").bg,
+	diag = {
+		warn = utils.get_highlight("DiagnosticWarn").fg,
+		error = utils.get_highlight("DiagnosticError").fg,
+		hint = utils.get_highlight("DiagnosticHint").fg,
+		info = utils.get_highlight("DiagnosticInfo").fg,
+	},
+}
+
+local themer = require("themer.modules.core.api").get_cp("doom_one")
+
+local conditions = require("heirline.conditions")
+local align = { provider = "%=", hl = { fg = themer.accent } }
+
+
+
 
 local use_dev_icons = false
 
@@ -93,7 +117,7 @@ local FileIconSurroundF = {
 			return ""
 		end,
 		hl = function(_)
-			return { fg = colors.dark_blue, bg = "none" }
+			return { fg = colors.blue, bg = "none" }
 		end,
 		condition = function()
 			return vim.tbl_contains(vim.tbl_keys(file_icons), vim.bo.ft)
@@ -107,7 +131,7 @@ local FileIconSurroundB = {
 			return " "
 		end,
 		hl = function(_)
-			return { bg = colors.blue, fg = colors.dark_blue }
+			return { bg = themer.syntax.conditional, fg = themer.search_result.bg }
 		end,
 		condition = function()
 			return vim.tbl_contains(vim.tbl_keys(file_icons), vim.bo.ft)
@@ -137,7 +161,7 @@ local FileIcon = {
 		if use_dev_icons then
 			return { fg = self.icon_color }
 		else
-			return { fg = colors.black, bg = colors.dark_blue }
+			return { fg = themer.bg.selected, bg = themer.search_result.bg }
 		end
 	end,
 	condition = function()
@@ -161,7 +185,7 @@ local FileName = {
 		return filename .. " "
 	end,
 	hl = function()
-		return { fg = colors.black }
+		return { fg = themer.bg.selected, bg = themer.syntax.conditional }
 	end,
 }
 
@@ -173,7 +197,7 @@ local FileFlags = {
 			end
 		end,
 		hl = function()
-			return { fg = colors.black }
+			return { fg = themer.bg.selected }
 		end,
 	},
 	{
@@ -203,7 +227,7 @@ local FileNameSurround = {
 	},
 }
 
-RoundFileNameBlock = utils.insert(
+FileNameBlock = utils.insert(
 	FileNameBlock,
 	FileIconSurroundF,
 	FileIcon,
@@ -215,38 +239,38 @@ RoundFileNameBlock = utils.insert(
 		provider = "%<",
 	}
 )
-RoundFileNameBlock = utilities.surround({ "", "" }, colors.blue, RoundFileNameBlock)
+FileNameBlock = utils.surround({ "", "" }, themer.syntax.conditional, FileNameBlock)
 
-RoundFileNameBlock[1]["condition"] = function()
+FileNameBlock[1]["condition"] = function()
 	return not conditions.buffer_matches({
 		filetype = { "dashboard" },
 	})
 end
-RoundFileNameBlock[2]["condition"] = function()
+FileNameBlock[2]["condition"] = function()
 	return not conditions.buffer_matches({
 		filetype = { "dashboard" },
 	})
 end
-RoundFileNameBlock[3]["condition"] = function()
+FileNameBlock[3]["condition"] = function()
 	return not conditions.buffer_matches({
 		filetype = { "dashboard" },
 	})
 end
 
-local RoundWorkDir = {
+local WorkDirIcon = {
 	{
 		provider = function()
 			return "  "
 		end,
 		hl = function(_)
-			return { fg = colors.black, bg = colors.dark_green }
+			return { fg = themer.bg.selected, bg = colors.dev_icon_tex }
 		end,
 	},
 	{
 		provider = function()
 			return ""
 		end,
-		hl = { fg = colors.dark_green, bg = colors.vibrant_green },
+		hl = { fg = colors.dev_icon_tex, bg = themer.syntax.string },
 	},
 	{
 		provider = function()
@@ -256,9 +280,10 @@ local RoundWorkDir = {
 			local trail = cwd:sub(-1) == "/" and "" or "/"
 			return " " .. cwd .. trail
 		end,
-		hl = { bg = colors.vibrant_green, fg = colors.black },
+		hl = { bg = themer.syntax.string, fg = themer.bg.selected },
 	},
 	{
+    -- right margin of cwd path
 		provider = function()
 			return ""
 		end,
@@ -270,12 +295,12 @@ local RoundWorkDir = {
 			then
 				return { fg = colors.blue, bg = colors.vibrant_green }
 			else
-				return { fg = colors.dark_blue, bg = colors.vibrant_green }
+				return {fg = themer.search_result.bg, bg = themer.syntax.string,  }
 			end
 		end,
 	},
 	{
-		RoundFileNameBlock,
+		FileNameBlock,
 	},
 }
 
@@ -293,30 +318,30 @@ local gps_lsp = {
 	{
 		provider = function()
 			if #require("nvim-gps").get_data() > 0 then
-				return " "
+				return "  "
 			else
 				return ""
 			end
 		end,
-		hl = { fg = colors.purple },
+		hl = { fg = themer.syntax.string },
 	},
 	-- actual content
 	{
 		provider = require("nvim-gps").get_location,
 		hl = function()
-			return { fg = colors.purple, bg = colors.black }
+			return { fg = themer.syntax.string}
 		end,
 	},
 	-- right enclosing
 	{
 		provider = function()
 			if #require("nvim-gps").get_data() > 0 then
-				return " "
+				return " "
 			else
 				return ""
 			end
 		end,
-		hl = { fg = colors.purple },
+		hl = { fg = themer.syntax.string },
 	},
 }
 
@@ -350,25 +375,25 @@ local diagnostics = {
 		provider = function(self)
 			return self.errors > 0 and (self.error_icon .. self.errors .. " ")
 		end,
-		hl = { fg = utils.get_highlight("DiagnosticError").fg },
+		hl = { fg = themer.diagnostic.error },
 	},
 	{
 		provider = function(self)
 			return self.warnings > 0 and (self.warn_icon .. self.warnings .. " ")
 		end,
-		hl = { fg = utils.get_highlight("DiagnosticWarn").fg },
+		hl = { fg = themer.diagnostic.warn },
 	},
 	{
 		provider = function(self)
 			return self.info > 0 and (self.info_icon .. self.info .. " ")
 		end,
-		hl = { fg = utils.get_highlight("DiagnosticInfo").fg },
+		hl = { fg = themer.diagnostic.info },
 	},
 	{
 		provider = function(self)
 			return self.hints > 0 and (self.hint_icon .. self.hints)
 		end,
-		hl = { fg = utils.get_highlight("DiagnosticHint").fg },
+		hl = { fg = themer.diagnostic.hint },
 	},
 }
 
@@ -388,11 +413,11 @@ local git = {
 		self.has_changes = self.status_dict.added ~= 0 or self.status_dict.removed ~= 0 or self.status_dict.changed ~= 0
 	end,
 
-	hl = { fg = colors.orange },
+	hl = { fg = themer.orange },
 
 	{
 		provider = function(self)
-			return " " .. self.status_dict.head .. " "
+			return "ﯙ  " .. self.status_dict.head .. " "
 		end,
 	},
 	{
@@ -400,67 +425,24 @@ local git = {
 			local count = self.status_dict.added or 0
 			return count > 0 and ("  " .. count)
 		end,
-		hl = { fg = colors.green },
+		hl = { fg = themer.diff.add},
 	},
 	{
 		provider = function(self)
 			local count = self.status_dict.removed or 0
 			return count > 0 and ("  " .. count)
 		end,
-		hl = { fg = colors.red },
+		hl = { fg = themer.diff.remove },
 	},
 	{
 		provider = function(self)
 			local count = self.status_dict.changed or 0
 			return count > 0 and ("  " .. count)
 		end,
-		hl = { fg = colors.orange },
+		hl = { fg = themer.diff.change },
 	},
 }
 
-----------------------------------------------------------------------------------------
---------------------------------------------
---
---      LSP PROGRESS
---      only shows initially, or whenever there are actual lsp progress msgs
---
---------------------------------------------
-----------------------------------------------------------------------------------------
-
-local lsp_progress = {
-	condition = function()
-		if #vim.lsp.get_active_clients() == 0 then
-			return false
-		end
-		return true
-	end,
-	hl = { fg = colors.blue },
-	provider = function()
-		local messages = vim.lsp.util.get_progress_messages()
-		if #messages == 0 then
-			return ""
-		end
-		local status = {}
-		for _, msg in pairs(messages) do
-			table.insert(status, msg.percentage or 0)
-		end
-		local spinners = {
-			"⠋",
-			"⠙",
-			"⠹",
-			"⠸",
-			"⠼",
-			"⠴",
-			"⠦",
-			"⠧",
-			"⠇",
-			"⠏",
-		}
-		local ms = vim.loop.hrtime() / 1000000
-		local frame = math.floor(ms / 120) % #spinners
-		return spinners[frame + 1] .. " " .. table.concat(status, " | ")
-	end,
-}
 
 ----------------------------------------------------------------------------------------
 --------------------------------------------
@@ -472,27 +454,8 @@ local lsp_progress = {
 
 local LSPActive = {
 	condition = conditions.lsp_attached,
-	{
-		provider = function()
-			return ""
-		end,
-		hl = { fg = colors.purple },
-	},
-
-	{ provider = "  ", hl = { fg = colors.black, bg = colors.purple, bold = true } },
-	{
-		provider = function()
-			return ""
-		end,
-
-		init = function(self)
-			self.mode = vim.fn.mode(1)
-		end,
-		hl = function(self)
-			local mode = self.mode:sub(1, 1)
-			return { fg = colors.purple, bg = mode_colors[mode] or colors.blue }
-		end,
-	},
+	{ provider = "  ", hl = { fg = themer.accent, bold = true } },
+	
 }
 
 ----------------------------------------------------------------------------------------
@@ -503,7 +466,7 @@ local LSPActive = {
 --------------------------------------------
 ----------------------------------------------------------------------------------------
 
-local round_mode_icon = {
+local mode_icon = {
 	{
 		init = function(self)
 			self.mode = vim.fn.mode(1)
@@ -576,8 +539,9 @@ local round_mode_icon = {
 		hl = function(self)
 			local mode = self.mode:sub(1, 1)
 			return {
-				bg = mode_colors[mode] or colors.blue,
-				fg = colors.black,
+				-- bg = mode_colors[mode] or colors.blue,
+				fg = themer.accent,
+				bold = true,
 			}
 		end,
 		provider = function(self)
@@ -608,7 +572,7 @@ local round_mode_icon = {
 
 local default_statusline = {
 	condition = conditions.is_active,
-	utils.make_flexible_component(5, RoundWorkDir),
+	utils.make_flexible_component(5, WorkDirIcon),
 	align,
 	utils.make_flexible_component(3, gps_lsp, { provider = "" }),
 	align,
@@ -617,7 +581,7 @@ local default_statusline = {
 	git,
 	align,
 	LSPActive,
-	round_mode_icon,
+	mode_icon,
 }
 
 require("heirline").setup(default_statusline)
