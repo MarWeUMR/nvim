@@ -50,9 +50,6 @@ local themer = require("themer.modules.core.api").get_cp("doom_one")
 local conditions = require("heirline.conditions")
 local align = { provider = "%=", hl = { fg = themer.accent } }
 
-
-
-
 local use_dev_icons = false
 
 local file_icons = {
@@ -106,7 +103,7 @@ local mode_colors = {
 ----------------------------------------------------------------------------------------
 --------------------------------------------
 --
---      FILE PATH AND WORKDIR
+--      FILE PATH
 --
 --------------------------------------------
 ----------------------------------------------------------------------------------------
@@ -144,25 +141,13 @@ local FileIcon = {
 		self.mode = vim.fn.mode(1)
 		local filename = self.filename
 		local extension = vim.fn.fnamemodify(filename, ":e")
-		if use_dev_icons then
-			self.icon, self.icon_color = require("nvim-web-devicons").get_icon_color(
-				filename,
-				extension,
-				{ default = true }
-			)
-		else
-			self.icon = file_icons[extension] or ""
-		end
+		self.icon = file_icons[extension] or ""
 	end,
 	provider = function(self)
 		return self.icon and (" " .. self.icon)
 	end,
 	hl = function(self)
-		if use_dev_icons then
-			return { fg = self.icon_color }
-		else
-			return { fg = themer.bg.selected, bg = themer.search_result.bg }
-		end
+		return { fg = themer.bg.selected, bg = themer.search_result.bg }
 	end,
 	condition = function()
 		return vim.tbl_contains(vim.tbl_keys(file_icons), vim.bo.ft)
@@ -219,7 +204,7 @@ local FileNameSurround = {
 			return ""
 		end,
 		hl = function(_)
-			return { fg = colors.blue, bg = colors.blue }
+			return { fg = themer.syntax.conditional, bg = themer.syntax.conditional }
 		end,
 		condition = function()
 			return not vim.tbl_contains(vim.tbl_keys(file_icons), vim.bo.ft)
@@ -257,6 +242,14 @@ FileNameBlock[3]["condition"] = function()
 	})
 end
 
+----------------------------------------------------------------------------------------
+--------------------------------------------
+--
+--      CURRENT WORKDIR
+--
+--------------------------------------------
+----------------------------------------------------------------------------------------
+
 local WorkDirIcon = {
 	{
 		provider = function()
@@ -283,7 +276,7 @@ local WorkDirIcon = {
 		hl = { bg = themer.syntax.string, fg = themer.bg.selected },
 	},
 	{
-    -- right margin of cwd path
+		-- right margin of cwd path
 		provider = function()
 			return ""
 		end,
@@ -293,9 +286,9 @@ local WorkDirIcon = {
 					filetype = { "startup", "Telescope", "NvimTree", "toggleterm" },
 				})
 			then
-				return { fg = colors.blue, bg = colors.vibrant_green }
+				return { fg = themer.syntax.conditional, bg = themer.syntax.string }
 			else
-				return {fg = themer.search_result.bg, bg = themer.syntax.string,  }
+				return { fg = themer.search_result.bg, bg = themer.syntax.string }
 			end
 		end,
 	},
@@ -318,7 +311,7 @@ local gps_lsp = {
 	{
 		provider = function()
 			if #require("nvim-gps").get_data() > 0 then
-				return "  "
+				return "  "
 			else
 				return ""
 			end
@@ -329,14 +322,14 @@ local gps_lsp = {
 	{
 		provider = require("nvim-gps").get_location,
 		hl = function()
-			return { fg = themer.syntax.string}
+			return { fg = themer.syntax.string }
 		end,
 	},
 	-- right enclosing
 	{
 		provider = function()
 			if #require("nvim-gps").get_data() > 0 then
-				return " "
+				return " "
 			else
 				return ""
 			end
@@ -425,7 +418,7 @@ local git = {
 			local count = self.status_dict.added or 0
 			return count > 0 and ("  " .. count)
 		end,
-		hl = { fg = themer.diff.add},
+		hl = { fg = themer.diff.add },
 	},
 	{
 		provider = function(self)
@@ -443,7 +436,6 @@ local git = {
 	},
 }
 
-
 ----------------------------------------------------------------------------------------
 --------------------------------------------
 --
@@ -455,7 +447,6 @@ local git = {
 local LSPActive = {
 	condition = conditions.lsp_attached,
 	{ provider = "  ", hl = { fg = themer.accent, bold = true } },
-	
 }
 
 ----------------------------------------------------------------------------------------
