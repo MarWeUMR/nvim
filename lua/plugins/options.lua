@@ -42,9 +42,9 @@ local options = {
 		vertright = "╠",
 		verthoriz = "╬",
 	},
-	laststatus = 3,
+	-- laststatus = 3,
 
-	winbar = "%{%v:lua.require'plugins.winbar'.eval()%}",
+	-- winbar = "%{%v:lua.require'plugins.winbar'.eval()%}",
 }
 
 vim.opt.shortmess:append("c")

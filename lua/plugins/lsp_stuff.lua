@@ -1,6 +1,7 @@
 -- LSP settings
 local lspconfig = require("lspconfig")
 local configs = require("lspconfig.configs")
+local null_ls = require("null-ls")
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.textDocument.completion.completionItem.preselectSupport = true
@@ -44,17 +45,7 @@ for type, icon in pairs(signs) do
 	vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
 end
 
--- local border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" }
--- local border = {
---     { "╔", "FloatBorder" },
---     { "═", "FloatBorder" },
---     { "╗", "FloatBorder" },
---     { "║", "FloatBorder" },
---     { "╝", "FloatBorder" },
---     { "═", "FloatBorder" },
---     { "╚", "FloatBorder" },
---     { "║", "FloatBorder" },
--- }
+
 local function border()
 	return {
 		{ "╔", "FloatBorder" },
@@ -227,12 +218,16 @@ require("rust-tools").setup({
 }, opts)
 require("rust-tools.hover_actions").hover_actions()
 
+-----------------------------------------------------------
 ------------------- NULL-LS
-require("null-ls").setup({
+--------------
+
+null_ls.setup({
 	sources = {
 		require("null-ls").builtins.formatting.stylua,
 		require("null-ls").builtins.diagnostics.pylint,
 		require("null-ls").builtins.formatting.black,
+    null_ls.builtins.code_actions.gitsigns
 	},
 })
 

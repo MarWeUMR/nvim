@@ -45,12 +45,10 @@ local colors = {
 	},
 }
 
-local themer = require("themer.modules.core.api").get_cp("doom_one")
+local themer = require("themer.modules.core.api").get_cp("material_custom")
 
 local conditions = require("heirline.conditions")
 local align = { provider = "%=", hl = { fg = themer.accent } }
-
-local use_dev_icons = false
 
 local file_icons = {
 	typescript = " ",
@@ -128,7 +126,7 @@ local FileIconSurroundB = {
 			return " "
 		end,
 		hl = function(_)
-			return { bg = themer.syntax.conditional, fg = themer.search_result.bg }
+			return { bg = themer.syntax.conditional, fg = themer.magenta }
 		end,
 		condition = function()
 			return vim.tbl_contains(vim.tbl_keys(file_icons), vim.bo.ft)
@@ -146,8 +144,8 @@ local FileIcon = {
 	provider = function(self)
 		return self.icon and (" " .. self.icon)
 	end,
-	hl = function(self)
-		return { fg = themer.bg.selected, bg = themer.search_result.bg }
+	hl = function()
+		return { fg = themer.bg.selected, bg = themer.magenta }
 	end,
 	condition = function()
 		return vim.tbl_contains(vim.tbl_keys(file_icons), vim.bo.ft)
@@ -256,14 +254,14 @@ local WorkDirIcon = {
 			return "  "
 		end,
 		hl = function(_)
-			return { fg = themer.bg.selected, bg = colors.dev_icon_tex }
+			return { fg = themer.bg.selected, bg = themer.accent }
 		end,
 	},
 	{
 		provider = function()
 			return ""
 		end,
-		hl = { fg = colors.dev_icon_tex, bg = themer.syntax.string },
+		hl = { fg = themer.accent, bg = themer.syntax.string },
 	},
 	{
 		provider = function()
@@ -288,7 +286,7 @@ local WorkDirIcon = {
 			then
 				return { fg = themer.syntax.conditional, bg = themer.syntax.string }
 			else
-				return { fg = themer.search_result.bg, bg = themer.syntax.string }
+				return { fg = themer.magenta, bg = themer.syntax.string }
 			end
 		end,
 	},
@@ -406,7 +404,7 @@ local git = {
 		self.has_changes = self.status_dict.added ~= 0 or self.status_dict.removed ~= 0 or self.status_dict.changed ~= 0
 	end,
 
-	hl = { fg = themer.orange },
+	hl = { fg = themer.syntax.number },
 
 	{
 		provider = function(self)
@@ -425,7 +423,7 @@ local git = {
 			local count = self.status_dict.removed or 0
 			return count > 0 and ("  " .. count)
 		end,
-		hl = { fg = themer.diff.remove },
+		hl = { fg = themer.diff.delete },
 	},
 	{
 		provider = function(self)
@@ -563,9 +561,9 @@ local mode_icon = {
 
 local default_statusline = {
 	condition = conditions.is_active,
-	utils.make_flexible_component(5, WorkDirIcon),
+	utils.make_flexible_component(1, WorkDirIcon),
 	align,
-	utils.make_flexible_component(3, gps_lsp, { provider = "" }),
+	utils.make_flexible_component(5, gps_lsp, { provider = "" }),
 	align,
 	diagnostics,
 	align,
