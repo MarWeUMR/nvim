@@ -20,36 +20,80 @@ return require("packer").startup(function(use)
   ------------------------------------------------------
 
   use({
-    "themercorp/themer.lua",
-    config = function()
-      require("themer").setup({
-        colorscheme = "material_custom",
-        styles = {
-          ["function"] = { style = "italic" },
-          functionbuiltin = { style = "italic" },
-          variable = { style = "italic" },
-          variableBuiltIn = { style = "italic" },
-          parameter = { style = "italic" },
-        },
-        enable_installer = true,
-      })
-    end,
-  })
-  use({
     "norcalli/nvim-colorizer.lua",
     config = function()
       require("colorizer").setup({})
     end,
   })
 
-  use({ "folke/tokyonight.nvim" })
-
+  use({ "NTBBloodbath/doom-one.nvim" })
   use({
-    "marko-cerovac/material.nvim",
-    config = function()
-      vim.g.material_style = "deep ocean"
-    end,
+    "folke/tokyonight.nvim",
+    -- config = function()
+    --   vim.g.tokyonight_style = "storm"
+    --   vim.g.tokyonight_italic_functions = true
+    --   vim.g.tokyonight_sidebars = { "qf", "vista_kind", "terminal", "packer" }
+    --
+    --   -- Change the "hint" color to the "orange" color, and make the "error" color bright red
+    --   vim.g.tokyonight_colors = { hint = "orange", error = "#ff0000" }
+    --
+    --   -- Load the colorscheme
+    --   -- vim.cmd([[colorscheme tokyonight]])
+    -- end,
   })
+
+  -- use({
+  --   "marko-cerovac/material.nvim",
+  --   config = function()
+  --     vim.g.material_style = "palenight"
+  --     require("material").setup({
+  --       contrast = {
+  --         sidebars = true, -- Enable contrast for sidebar-like windows ( for example Nvim-Tree )
+  --         floating_windows = true, -- Enable contrast for floating windows
+  --         line_numbers = false, -- Enable contrast background for line numbers
+  --         sign_column = false, -- Enable contrast background for the sign column
+  --         cursor_line = true, -- Enable darker background for the cursor line
+  --         non_current_windows = false, -- Enable darker background for non-current windows
+  --         popup_menu = true, -- Enable lighter background for the popup menu
+  --       },
+  --
+  --       italics = {
+  --         comments = true, -- Enable italic comments
+  --         keywords = true, -- Enable italic keywords
+  --         functions = true, -- Enable italic functions
+  --         strings = true, -- Enable italic strings
+  --         variables = true, -- Enable italic variables
+  --       },
+  --
+  --       contrast_filetypes = { -- Specify which filetypes get the contrasted (darker) background
+  --         "terminal", -- Darker terminal background
+  --         "toggleterm", -- Darker terminal background
+  --         "packer", -- Darker packer background
+  --         "qf", -- Darker qf list background
+  --       },
+  --
+  --       high_visibility = {
+  --         lighter = false, -- Enable higher contrast text for lighter style
+  --         darker = false, -- Enable higher contrast text for darker style
+  --       },
+  --
+  --       disable = {
+  --         colored_cursor = true, -- Disable the colored cursor
+  --         borders = false, -- Disable borders between verticaly split windows
+  --         background = false, -- Prevent the theme from setting the background (NeoVim then uses your teminal background)
+  --         term_colors = false, -- Prevent the theme from setting terminal colors
+  --         eob_lines = false, -- Hide the end-of-buffer lines
+  --       },
+  --
+  --       lualine_style = "default", -- Lualine style ( can be 'stealth' or 'default' )
+  --
+  --       async_loading = true, -- Load parts of the theme asyncronously for faster startup (turned on by default)
+  --
+  --       custom_highlights = {}, -- Overwrite highlights with your own
+  --     })
+  --     vim.cmd([[ colorscheme material ]])
+  --   end,
+  -- })
   use({ "Th3Whit3Wolf/space-nvim" })
 
   ------------------------------------------------------
@@ -104,7 +148,7 @@ return require("packer").startup(function(use)
   ------------------------------------------------------
   -- LSP RELATED
   ------------------------------------------------------
-  use("folke/lsp-colors.nvim")
+  -- use("folke/lsp-colors.nvim")
   use({
     "folke/trouble.nvim",
     requires = "kyazdani42/nvim-web-devicons",
@@ -193,7 +237,7 @@ return require("packer").startup(function(use)
     end,
   })
   use("akinsho/bufferline.nvim")
-  use("akinsho/toggleterm.nvim")
+  use({ "akinsho/toggleterm.nvim", commit = "9563a9fac8e36a6f2545732acac5b2935872db66" })
   use({
     "goolord/alpha-nvim",
     requires = { "kyazdani42/nvim-web-devicons" },
