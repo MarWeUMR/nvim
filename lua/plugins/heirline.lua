@@ -1,81 +1,64 @@
--- M.separators = {--{{{
---   vertical_bar       = '┃',
---   vertical_bar_thin  = '│',
---   left               = '',
---   right              = '',
---   block              = '█',
---   left_filled        = '',
---   right_filled       = '',
---   slant_left         = '',
---   slant_left_thin    = '',
---   slant_right        = '',
---   slant_right_thin   = '',
---   slant_left_2       = '',
---   slant_left_2_thin  = '',
---   slant_right_2      = '',
---   slant_right_2_thin = '',
---   left_rounded       = '',
---   left_rounded_thin  = '',
---   right_rounded      = '',
---   right_rounded_thin = '',
---   circle             = '●',
---   github_icon        = " ﯙ ",
---   folder_icon        = " ",
--- }
-
--- TODO
--- local loaded_colorscheme = vim.g.colors_name
---
--- if loaded_colorscheme == "tokyonight" then
---   colors.file_path.bg = colors.probe
--- else
--- end
-
-local clrs = require("tokyonight.colors").setup({}) -- pass in any of the config options as explained above
 local utls = require("tokyonight.util")
-
 local utils = require("heirline.utils")
-local colors = {
-  probe = utils.get_highlight("Substitute").bg,
-  red = utils.get_highlight("DiagnosticError").fg,
-  identifier = utils.get_highlight("Identifier").fg,
-  green = utils.get_highlight("String").fg,
-  blue = utils.get_highlight("Function").fg,
-  gray = utils.get_highlight("NonText").fg,
-  special_fg = utils.get_highlight("Special").fg,
-  special_bg = utils.get_highlight("Special").bg,
-  purple = utils.get_highlight("Statement").fg,
-  cyan = utils.get_highlight("Special").fg,
-  orange = clrs.orange,
-  wild_fg = utils.get_highlight("WildMenu").fg,
-  wild_bg = utils.get_highlight("WildMenu").bg,
-  diag = {
-    warn = clrs.warning,
-    error = clrs.error,
-    hint = clrs.hint,
-    info = clrs.info,
-  },
-  cwd_icon = {
-    fg = clrs.bg_dark,
-    bg = utls.darken(clrs.green, 0.2, clrs.bg_dark),
-  },
-  cwd_path = {
-    fg = clrs.bg_dark,
-    bg = utils.get_highlight("String").fg,
-  },
-  file_icon = {
-    fg = clrs.bg_dark,
-    bg = utils.get_highlight("Identifier").fg,
-  },
-}
-
-colors["file_path"] = { fg = clrs.bg_dark, bg = clrs.purple }
-colors["file_icon"] = { fg = clrs.bg_dark, bg = utls.darken(clrs.purple, 0.4, clrs.bg_dark) }
-
-
-
 local conditions = require("heirline.conditions")
-local align = { provider = "%=", hl = { fg = colors.probe } }
+
+local get_theme_color_table = function(theme_name)
+  local clr_table = require("themer.modules.core.api").get_cp(theme_name)
+
+  -- configure common colors among different themes
+  local colors = {
+    default_bg = clr_table.bg.base,
+    accent = clr_table.accent,
+    string = clr_table.syntax.string,
+    directory = clr_table.directory,
+    diag = {
+      warn = clr_table.diagnostic.warn,
+      error = clr_table.diagnostic.error,
+      hint = clr_table.diagnostic.hint,
+      info = clr_table.diagnostic.info,
+    },
+    diff = {
+      add = clr_table.diff.add,
+      change = clr_table.diff.change,
+      remove = clr_table.diff.remove,
+      text = clr_table.diff.text,
+    },
+    cwd_path = {
+      fg = clr_table.bg.selected,
+      bg = clr_table.syntax.string,
+    },
+    cwd_icon = {
+      fg = clr_table.bg.selected,
+      bg = utls.darken(clr_table.syntax.string, 0.4, clr_table.bg.selected),
+    },
+    file_path = {
+      fg = clr_table.bg.selected,
+      bg = clr_table.syntax.conditional,
+    },
+    file_icon = {
+      fg = clr_table.bg.selected,
+      bg = utls.darken(clr_table.syntax.conditional, 0.4, clr_table.bg.selected),
+    },
+  }
+
+  -- IF NECESSARY, ADD YOUR OWN COLORS HERE
+  -- if theme_name == "doom_one" then
+  -- colors["something to add"] = { fg = clr_table.bg.selected, bg = clr_table.syntax.string }
+  -- return colors
+  -- elseif theme_name == "tokyonight" then
+  -- colors["something else to add"] = { fg = clr_table.bg.selected, bg = clr_table.syntax.string }
+  -- return colors
+  -- end
+
+  return colors
+end
+
+-- GET THE NAME OF THE CURRENTLY LOADED THEME...
+local theme_name = vim.api.nvim_get_var("colors_name")
+-- ... AND LOAD THE COLOR TABLE ACCORDINGLY
+local colors = get_theme_color_table(theme_name)
+
+local align = { provider = "%=", hl = { fg = colors.default_bg } }
 
 local file_icons = {
   typescript = " ",
@@ -298,14 +281,14 @@ local WorkDirIcon = {
       local trail = cwd:sub(-1) == "/" and "" or "/"
       return " " .. cwd .. trail
     end,
-    hl = { bg = colors.green, fg = clrs.bg_dark },
+    hl = { bg = colors.cwd_path.bg, fg = colors.cwd_path.fg },
   },
   {
     -- right margin of cwd path
     provider = function()
       return ""
     end,
-    hl = function(self)
+    hl = function()
       if conditions.buffer_matches({
         filetype = { "startup", "Telescope", "NvimTree", "toggleterm" },
       })
@@ -332,34 +315,14 @@ local WorkDirIcon = {
 local gps_lsp = {
   condition = require("nvim-gps").is_available,
   -- left enclosing
-  {
-    provider = function()
-      if #require("nvim-gps").get_data() > 0 then
-        return "  "
-      else
-        return ""
-      end
-    end,
-    hl = { fg = colors.orange },
-  },
   -- actual content
   {
     provider = require("nvim-gps").get_location,
     hl = function()
-      return { fg = colors.orange }
+      return { fg = colors.directory }
     end,
   },
   -- right enclosing
-  {
-    provider = function()
-      if #require("nvim-gps").get_data() > 0 then
-        return " "
-      else
-        return ""
-      end
-    end,
-    hl = { fg = colors.orange },
-  },
 }
 
 ----------------------------------------------------------------------------------------
@@ -392,25 +355,25 @@ local diagnostics = {
     provider = function(self)
       return self.errors > 0 and (self.error_icon .. self.errors .. " ")
     end,
-    hl = { fg = colors.diag.error },
+    hl = { fg = colors.diag.error, bg = colors.default_bg },
   },
   {
     provider = function(self)
       return self.warnings > 0 and (self.warn_icon .. self.warnings .. " ")
     end,
-    hl = { fg = colors.diag.warning },
+    hl = { fg = colors.diag.warning, bg = colors.default_bg },
   },
   {
     provider = function(self)
       return self.info > 0 and (self.info_icon .. self.info .. " ")
     end,
-    hl = { fg = colors.diag.info },
+    hl = { fg = colors.diag.info, bg = colors.default_bg },
   },
   {
     provider = function(self)
       return self.hints > 0 and (self.hint_icon .. self.hints)
     end,
-    hl = { fg = colors.diag.hint },
+    hl = { fg = colors.diag.hint, bg = colors.default_bg },
   },
 }
 
@@ -430,11 +393,11 @@ local git = {
     self.has_changes = self.status_dict.added ~= 0 or self.status_dict.removed ~= 0 or self.status_dict.changed ~= 0
   end,
 
-  hl = { fg = colors.identifier },
+  hl = { fg = colors.diff.text, bg = colors.default_bg },
 
   {
     provider = function(self)
-      return "ﯙ  " .. self.status_dict.head .. " "
+      return "ﯙ    " .. self.status_dict.head .. " "
     end,
   },
   {
@@ -442,21 +405,21 @@ local git = {
       local count = self.status_dict.added or 0
       return count > 0 and ("  " .. count)
     end,
-    hl = { fg = colors.green },
+    hl = { fg = colors.diff.add },
   },
   {
     provider = function(self)
       local count = self.status_dict.removed or 0
       return count > 0 and ("  " .. count)
     end,
-    hl = { fg = colors.red },
+    hl = { fg = colors.diff.remove },
   },
   {
     provider = function(self)
       local count = self.status_dict.changed or 0
       return count > 0 and ("  " .. count)
     end,
-    hl = { fg = colors.diag.warn },
+    hl = { fg = colors.diff.change },
   },
 }
 
@@ -470,7 +433,7 @@ local git = {
 
 local LSPActive = {
   condition = conditions.lsp_attached,
-  { provider = "  ", hl = { fg = colors.identifier, bold = true } },
+  { provider = "  ", hl = { fg = colors.accent, bold = true } },
 }
 
 ----------------------------------------------------------------------------------------
@@ -482,15 +445,7 @@ local LSPActive = {
 ----------------------------------------------------------------------------------------
 
 local mode_icon = {
-  {
-    init = function(self)
-      self.mode = vim.fn.mode(1)
-    end,
-    hl = function(self)
-      local mode = self.mode:sub(1, 1)
-      return { fg = mode_colors[mode] or colors.blue }
-    end,
-  },
+
   {
     init = function(self)
       self.mode = vim.fn.mode(1)
@@ -502,7 +457,6 @@ local mode_icon = {
         ["i"] = "  ",
         ["s"] = "  ",
         ["S"] = "  ",
-        [""] = "  ",
 
         ["v"] = "  ",
         ["V"] = "  ",
@@ -514,65 +468,16 @@ local mode_icon = {
         ["!"] = "  ",
         ["R"] = "  ",
       },
-      mode_names = {
-        n = "N",
-        no = "N?",
-        nov = "N?",
-        noV = "N?",
-        ["no"] = "N?",
-        niI = "Ni",
-        niR = "Nr",
-        niV = "Nv",
-        nt = "Nt",
-        v = "V",
-        vs = "Vs",
-        V = "V_",
-        Vs = "Vs",
-        [""] = "",
-        ["s"] = "",
-        s = "S",
-        S = "S_",
-        [""] = "",
-        i = "I",
-        ic = "Ic",
-        ix = "Ix",
-        R = "R",
-        Rc = "Rc",
-        Rx = "Rx",
-        Rv = "Rv",
-        Rvc = "Rv",
-        Rvx = "Rv",
-        c = "C",
-        cv = "Ex",
-        r = "...",
-        rm = "M",
-        ["r?"] = "?",
-        ["!"] = "!",
-        t = "T",
-      },
     },
-    hl = function(self)
-      local mode = self.mode:sub(1, 1)
+    hl = function()
       return {
         -- bg = mode_colors[mode] or colors.blue,
-        fg = colors.identifier,
+        fg = colors.accent,
         bold = true,
       }
     end,
     provider = function(self)
       return "%2(" .. self.mode_icons[self.mode:sub(1, 1)] .. "%)" .. " "
-    end,
-  },
-  {
-    init = function(self)
-      self.mode = vim.fn.mode(1)
-    end,
-    provider = function()
-      return ""
-    end,
-    hl = function(self)
-      local mode = self.mode:sub(1, 1)
-      return { fg = mode_colors[mode] or colors.blue }
     end,
   },
 }
@@ -601,70 +506,28 @@ local default_statusline = {
 
 require("heirline").setup(default_statusline)
 
-
-
+-- ICONS
+--[[
+│
+┃
+
+
+█
+
+
+
+
+
+
+
+
+
+
+
+
+
+●
+ﯙ
+
+]]
 --
--- { TOKYONIGHT COLORS
---   bg = "#24283b",
---   bg_dark = "#1f2335",
---   bg_float = "#1f2335",
---   bg_highlight = "#292e42",
---   bg_popup = "#1f2335",
---   bg_search = "#3d59a1",
---   bg_sidebar = "#1f2335",
---   bg_statusline = "#1f2335",
---   bg_visual = "#364A82",
---   black = "#1D202F",
---   blue = "#7aa2f7",
---   blue0 = "#3d59a1",
---   blue1 = "#2ac3de",
---   blue2 = "#0db9d7",
---   blue5 = "#89ddff",
---   blue6 = "#B4F9F8",
---   blue7 = "#394b70",
---   border = "#1D202F",
---   border_highlight = "#3d59a1",
---   comment = "#565f89",
---   cyan = "#7dcfff",
---   dark3 = "#545c7e",
---   dark5 = "#737aa2",
---   diff = {
---     add = "#283B4D",
---     change = "#272D43",
---     delete = "#3F2D3D",
---     text = "#394b70"
---   },
---   error = "#ff0000",
---   fg = "#c0caf5",
---   fg_dark = "#a9b1d6",
---   fg_gutter = "#3b4261",
---   fg_sidebar = "#a9b1d6",
---   git = {
---     add = "#449dab",
---     change = "#6183bb",
---     conflict = "#bb7a61",
---     delete = "#914c54",
---     ignore = "#545c7e"
---   },
---   gitSigns = {
---     add = "#266d6a",
---     change = "#536c9e",
---     delete = "#b2555b"
---   },
---   green = "#9ece6a",
---   green1 = "#73daca",
---   green2 = "#41a6b5",
---   hint = "#ff9e64",
---   info = "#0db9d7",
---   magenta = "#bb9af7",
---   magenta2 = "#ff007c",
---   none = "NONE",
---   orange = "#ff9e64",
---   purple = "#9d7cd8",
---   red = "#f7768e",
---   red1 = "#db4b4b",
---   teal = "#1abc9c",
---   terminal_black = "#414868",
---   warning = "#e0af68",
---   yellow = "#e0af68"
--- }

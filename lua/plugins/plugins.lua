@@ -19,6 +19,8 @@ return require("packer").startup(function(use)
   -- THEMES
   ------------------------------------------------------
 
+  use({ "themercorp/themer.lua" })
+
   use({
     "norcalli/nvim-colorizer.lua",
     config = function()
@@ -100,9 +102,11 @@ return require("packer").startup(function(use)
   -- REST
   ------------------------------------------------------
 
+  use({ "tyru/capture.vim" })
+
   use("numToStr/Comment.nvim")
   use("windwp/nvim-autopairs")
-  use({ "rebelot/heirline.nvim" })
+  use({ "rebelot/heirline.nvim"})
   use({ "mfussenegger/nvim-dap" })
   use({
     "stevearc/aerial.nvim",

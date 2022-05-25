@@ -1,2 +1,2 @@
 vim.cmd([[ set bg=dark ]])
-vim.cmd([[ colorscheme tokyonight ]])
+-- vim.cmd([[ colorscheme tokyonight ]])
