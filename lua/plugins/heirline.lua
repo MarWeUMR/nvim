@@ -72,8 +72,6 @@ local colors = {
 colors["file_path"] = { fg = clrs.bg_dark, bg = clrs.purple }
 colors["file_icon"] = { fg = clrs.bg_dark, bg = utls.darken(clrs.purple, 0.4, clrs.bg_dark) }
 
-
-
 local conditions = require("heirline.conditions")
 local align = { provider = "%=", hl = { fg = colors.probe } }
 
@@ -305,7 +303,7 @@ local WorkDirIcon = {
     provider = function()
       return ""
     end,
-    hl = function(self)
+    hl = function()
       if conditions.buffer_matches({
         filetype = { "startup", "Telescope", "NvimTree", "toggleterm" },
       })
@@ -398,7 +396,7 @@ local diagnostics = {
     provider = function(self)
       return self.warnings > 0 and (self.warn_icon .. self.warnings .. " ")
     end,
-    hl = { fg = colors.diag.warning },
+    hl = { fg = colors.diag.warning, bg=clrs.bg },
   },
   {
     provider = function(self)
@@ -502,8 +500,6 @@ local mode_icon = {
         ["i"] = "  ",
         ["s"] = "  ",
         ["S"] = "  ",
-        [""] = "  ",
-
         ["v"] = "  ",
         ["V"] = "  ",
         [""] = "  ",
@@ -519,7 +515,6 @@ local mode_icon = {
         no = "N?",
         nov = "N?",
         noV = "N?",
-        ["no"] = "N?",
         niI = "Ni",
         niR = "Nr",
         niV = "Nv",
@@ -528,8 +523,6 @@ local mode_icon = {
         vs = "Vs",
         V = "V_",
         Vs = "Vs",
-        [""] = "",
-        ["s"] = "",
         s = "S",
         S = "S_",
         [""] = "",
@@ -551,8 +544,7 @@ local mode_icon = {
         t = "T",
       },
     },
-    hl = function(self)
-      local mode = self.mode:sub(1, 1)
+    hl = function()
       return {
         -- bg = mode_colors[mode] or colors.blue,
         fg = colors.identifier,
@@ -600,8 +592,6 @@ local default_statusline = {
 }
 
 require("heirline").setup(default_statusline)
-
-
 
 --
 -- { TOKYONIGHT COLORS
