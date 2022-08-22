@@ -99,6 +99,7 @@ return packer.startup(function(use)
     ----------------------------------------------------------------------------------
     -- COLOR SCHEMES
     --------------------------------------------------------------------------------
+    use("marko-cerovac/material.nvim")
 
     use({
         "catppuccin/nvim",
@@ -195,9 +196,6 @@ return packer.startup(function(use)
 
     use({
         "folke/which-key.nvim",
-        config = function()
-            require("plugins.whichkey")
-        end,
     })
 
     use({ "ggandor/leap.nvim" })
@@ -226,6 +224,11 @@ return packer.startup(function(use)
                 -- your configuration
             })
         end,
+    })
+
+    use({
+        "nvim-lualine/lualine.nvim",
+        requires = { "kyazdani42/nvim-web-devicons" },
     })
 
     -- Automatically set up your configuration after cloning packer.nvim
