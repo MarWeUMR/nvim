@@ -89,12 +89,15 @@ return packer.startup(function(use)
     })
     use({ "j-hui/fidget.nvim" })
     --"SmiteshP/nvim-navic",
-    use({
-        "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
-        config = function()
-            require("lsp_lines").setup()
-        end,
-    })
+    -- use({
+    --     "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
+    --     config = function()
+    --         require("lsp_lines").setup()
+    --         vim.diagnostic.config({
+    --             virtual_text = false,
+    --         })
+    --     end,
+    -- })
 
     ----------------------------------------------------------------------------------
     -- COLOR SCHEMES
@@ -139,11 +142,6 @@ return packer.startup(function(use)
     use({
         "TimUntersberger/neogit",
         requires = "nvim-lua/plenary.nvim",
-        config = function()
-            local neogit = require("neogit")
-
-            neogit.setup({})
-        end,
     })
 
     use({
@@ -229,6 +227,13 @@ return packer.startup(function(use)
     use({
         "nvim-lualine/lualine.nvim",
         requires = { "kyazdani42/nvim-web-devicons" },
+    })
+
+    use({
+        "lewis6991/satellite.nvim",
+        config = function()
+            require("satellite").setup()
+        end,
     })
 
     -- Automatically set up your configuration after cloning packer.nvim

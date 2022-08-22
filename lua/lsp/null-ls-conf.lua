@@ -8,7 +8,9 @@ end
             null_ls.builtins.formatting.stylua,
             null_ls.builtins.formatting.autopep8,
             null_ls.builtins.diagnostics.pylint,
-            null_ls.builtins.diagnostics.mypy
+            null_ls.builtins.diagnostics.mypy.with({
+                extra_args = {"--config-file", ".mypyrc"}
+            })
         },
         on_attach = require("lsp.on-attach"),
     })

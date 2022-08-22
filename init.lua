@@ -11,6 +11,7 @@ else
     require("plugins/telescope")
     require("plugins/whichkey_conf")
     require("plugins/mason")
+    require("plugins/neogit")
     require("plugins/bufferline")
     require("plugins/leap")
     -- require("plugins/cat")
