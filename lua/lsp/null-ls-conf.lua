@@ -3,13 +3,12 @@ if not ok then
     return
 end
 
-
-null_ls.setup {
-    sources = {
-        null_ls.builtins.formatting.stylua,
-        null_ls.builtins.formatting.autopep8,
-        null_ls.builtins.diagnostics.pylint,
-        null_ls.builtins.diagnostics.mypy,
-    },
-    on_attach = require "lsp.on-attach",
-}
+    null_ls.setup({
+        sources = {
+            null_ls.builtins.formatting.stylua,
+            null_ls.builtins.formatting.autopep8,
+            null_ls.builtins.diagnostics.pylint,
+            null_ls.builtins.diagnostics.mypy
+        },
+        on_attach = require("lsp.on-attach"),
+    })

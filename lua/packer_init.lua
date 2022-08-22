@@ -100,19 +100,22 @@ return packer.startup(function(use)
     -- COLOR SCHEMES
     --------------------------------------------------------------------------------
 
+    use({
+        "catppuccin/nvim",
+    })
     use({ "sthendev/mariana.vim", run = "make" })
     use("kaiuri/nvim-juliana")
 
     use({ "rebelot/kanagawa.nvim" })
-    use({
-        "navarasu/onedark.nvim",
-        config = function()
-            require("onedark").setup({
-                style = "warmer",
-            })
-            require("onedark").load()
-        end,
-    })
+    -- use({
+    --     "navarasu/onedark.nvim",
+    --     config = function()
+    --         require("onedark").setup({
+    --             style = "warmer",
+    --         })
+    --         require("onedark").load()
+    --     end,
+    -- })
     use("EdenEast/nightfox.nvim")
 
     --------------------------------------------------------------------------------
@@ -210,10 +213,18 @@ return packer.startup(function(use)
             require("hlargs").setup()
         end,
     })
+
+    use({ "akinsho/bufferline.nvim", tag = "v2.*", requires = "kyazdani42/nvim-web-devicons" })
+
     use({
-        "nanozuki/tabby.nvim",
+        "glepnir/lspsaga.nvim",
+        branch = "main",
         config = function()
-            require("tabby").setup()
+            local saga = require("lspsaga")
+
+            saga.init_lsp_saga({
+                -- your configuration
+            })
         end,
     })
 
