@@ -22,8 +22,6 @@ opt.completeopt = 'menuone,noinsert,noselect'  -- Autocomplete options
 -- Neovim UI
 -----------------------------------------------------------
 
-cmd('colorscheme catppuccin')
-g.catppuccin_flavour = "frappe" -- macchiato latte, frappe, macchiato, mocha
 opt.number = true           -- Show line number
 opt.showmatch = true        -- Highlight matching parenthesis
 opt.foldmethod = 'marker'   -- Enable folding (default 'foldmarker')

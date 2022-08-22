@@ -1,10 +1,11 @@
-local ok, cat = pcall(require, "catppuccin/nvim")
-if not ok then
-    return
-end
+local present, catppuccin = pcall(require, "catppuccin")
+if not present then return end
+
+vim.g.catppuccin_flavour = "frappe"
 
 
-cat.setup({
+
+catppuccin.setup({
 	dim_inactive = {
 		enabled = false,
 		shade = "dark",
@@ -97,3 +98,5 @@ cat.setup({
 	color_overrides = {},
 	highlight_overrides = {},
 })
+
+vim.api.nvim_command "colorscheme catppuccin"
