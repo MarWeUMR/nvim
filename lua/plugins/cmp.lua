@@ -14,17 +14,26 @@ if not lspKind_status_ok then
 end
 
 lspkind.init()
-
 local border = {
-	"╔",
-	"═",
-	"╗",
-	"║",
-	"╝",
-	"═",
-	"╚",
-	"║",
+    { "🭽", "FloatBorder" },
+    { "▔", "FloatBorder" },
+    { "🭾", "FloatBorder" },
+    { "▕", "FloatBorder" },
+    { "🭿", "FloatBorder" },
+    { "▁", "FloatBorder" },
+    { "🭼", "FloatBorder" },
+    { "▏", "FloatBorder" },
 }
+-- local border = {
+-- 	"╔",
+-- 	"═",
+-- 	"╗",
+-- 	"║",
+-- 	"╝",
+-- 	"═",
+-- 	"╚",
+-- 	"║",
+-- }
 
 require("luasnip/loaders/from_vscode").lazy_load()
 
@@ -154,11 +163,11 @@ cmp.setup({
 		documentation = {
 			border = border,
 			winhighlight = "NormalFloat:NormalFloat,FloatBorder:FloatBorder",
-			scrollbar = "║",
+			scrollbar = "▏",
 		},
 		completion = {
 			border = border,
-			scrollbar = "║",
+			scrollbar = "▏",
 			autocomplete = {
 				require("cmp.types").cmp.TriggerEvent.InsertEnter,
 				require("cmp.types").cmp.TriggerEvent.TextChanged,
@@ -180,5 +189,3 @@ cmp.setup({
 	},
 	preselect = cmp.PreselectMode.Item,
 })
-
-vim.api.nvim_set_hl(0, "CmpBorderedWindow_FloatBorder", { fg = "#565c64" })

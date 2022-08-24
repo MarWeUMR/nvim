@@ -94,16 +94,6 @@ _G.packer_plugins = {
     path = "/Users/marcus/.local/share/nvim/site/pack/packer/start/cmp-buffer",
     url = "https://github.com/hrsh7th/cmp-buffer"
   },
-  ["cmp-calc"] = {
-    loaded = true,
-    path = "/Users/marcus/.local/share/nvim/site/pack/packer/start/cmp-calc",
-    url = "https://github.com/hrsh7th/cmp-calc"
-  },
-  ["cmp-git"] = {
-    loaded = true,
-    path = "/Users/marcus/.local/share/nvim/site/pack/packer/start/cmp-git",
-    url = "https://github.com/petertriho/cmp-git"
-  },
   ["cmp-nvim-lsp"] = {
     loaded = true,
     path = "/Users/marcus/.local/share/nvim/site/pack/packer/start/cmp-nvim-lsp",
@@ -113,16 +103,6 @@ _G.packer_plugins = {
     loaded = true,
     path = "/Users/marcus/.local/share/nvim/site/pack/packer/start/cmp-path",
     url = "https://github.com/hrsh7th/cmp-path"
-  },
-  ["cmp-tmux"] = {
-    loaded = true,
-    path = "/Users/marcus/.local/share/nvim/site/pack/packer/start/cmp-tmux",
-    url = "https://github.com/andersevenrud/cmp-tmux"
-  },
-  cmp_luasnip = {
-    loaded = true,
-    path = "/Users/marcus/.local/share/nvim/site/pack/packer/start/cmp_luasnip",
-    url = "https://github.com/saadparwaiz1/cmp_luasnip"
   },
   ["diffview.nvim"] = {
     config = { "\27LJ\2\n¿\1\0\0\5\0\n\0\r6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0005\3\5\0005\4\4\0=\4\6\0035\4\a\0=\4\b\3=\3\t\2B\0\2\1K\0\1\0\17key_bindings\tview\1\0\1\6q\27<Cmd>DiffviewClose<CR>\15file_panel\1\0\0\1\0\1\6q\27<Cmd>DiffviewClose<CR>\1\0\1\21enhanced_diff_hl\2\nsetup\rdiffview\frequire\0" },
@@ -154,10 +134,15 @@ _G.packer_plugins = {
     url = "https://github.com/lewis6991/gitsigns.nvim"
   },
   ["hlargs.nvim"] = {
-    config = { "\27LJ\2\n4\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\vhlargs\frequire\0" },
+    config = { "\27LJ\2\n¢\3\0\0\t\0\28\0(6\0\0\0'\2\1\0B\0\2\0029\0\2\0'\2\3\0005\3\14\0005\4\a\0004\5\3\0005\6\5\0005\a\4\0=\a\6\6>\6\1\5=\5\b\0044\5\3\0005\6\f\0005\a\t\0005\b\n\0=\b\v\a=\a\6\6>\6\1\5=\5\r\4=\4\15\3B\0\3\0016\0\0\0'\2\3\0B\0\2\0029\0\16\0005\2\26\0005\3\18\0005\4\17\0=\4\19\0035\4\21\0005\5\20\0=\5\22\0045\5\23\0=\5\24\4=\4\25\3=\3\27\2B\0\2\1K\0\1\0\22excluded_argnames\1\0\0\vusages\blua\1\5\0\0\tself\buse\14use_rocks\6_\ago\1\0\0\1\2\0\0\6_\17declarations\1\0\0\1\4\0\0\buse\14use_rocks\6_\nsetup\ntheme\1\0\0\fhorizon\1\0\0\15foreground\1\0\1\tfrom\vNormal\1\0\1\vitalic\2\6*\1\0\0\vHlargs\1\0\0\1\0\2\vitalic\2\15foreground\f#A5D6FF\vhlargs\vplugin\20core.highlights\frequire\0" },
     loaded = true,
     path = "/Users/marcus/.local/share/nvim/site/pack/packer/start/hlargs.nvim",
     url = "https://github.com/m-demare/hlargs.nvim"
+  },
+  ["horizon.nvim"] = {
+    loaded = true,
+    path = "/Users/marcus/.local/share/nvim/site/pack/packer/start/horizon.nvim",
+    url = "https://github.com/LunarVim/horizon.nvim"
   },
   ["indent-blankline.nvim"] = {
     loaded = true,
@@ -175,7 +160,7 @@ _G.packer_plugins = {
     url = "https://github.com/ggandor/leap.nvim"
   },
   ["lsp-inlayhints.nvim"] = {
-    config = { "\27LJ\2\n<\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\19lsp-inlayhints\frequire\0" },
+    config = { "\27LJ\2\nÞ\1\0\0\5\0\n\0\r6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\b\0005\3\3\0005\4\4\0=\4\5\0035\4\6\0=\4\a\3=\3\t\2B\0\2\1K\0\1\0\16inlay_hints\1\0\0\15type_hints\1\0\2\23remove_colon_start\2\vprefix\b=> \20parameter_hints\1\0\1\vprefix\bïž”\1\0\2\21labels_separator\n â \14highlight\fComment\nsetup\19lsp-inlayhints\frequire\0" },
     loaded = true,
     path = "/Users/marcus/.local/share/nvim/site/pack/packer/start/lsp-inlayhints.nvim",
     url = "https://github.com/lvimuser/lsp-inlayhints.nvim"
@@ -185,36 +170,10 @@ _G.packer_plugins = {
     path = "/Users/marcus/.local/share/nvim/site/pack/packer/start/lspkind-nvim",
     url = "https://github.com/onsails/lspkind-nvim"
   },
-  ["lspsaga.nvim"] = {
-    config = { "\27LJ\2\nA\0\0\4\0\3\0\a6\0\0\0'\2\1\0B\0\2\0029\1\2\0004\3\0\0B\1\2\1K\0\1\0\18init_lsp_saga\flspsaga\frequire\0" },
-    loaded = true,
-    path = "/Users/marcus/.local/share/nvim/site/pack/packer/start/lspsaga.nvim",
-    url = "https://github.com/glepnir/lspsaga.nvim"
-  },
-  ["lua-dev.nvim"] = {
-    loaded = true,
-    path = "/Users/marcus/.local/share/nvim/site/pack/packer/start/lua-dev.nvim",
-    url = "https://github.com/folke/lua-dev.nvim"
-  },
   ["lualine.nvim"] = {
     loaded = true,
     path = "/Users/marcus/.local/share/nvim/site/pack/packer/start/lualine.nvim",
     url = "https://github.com/nvim-lualine/lualine.nvim"
-  },
-  ["mariana.vim"] = {
-    loaded = true,
-    path = "/Users/marcus/.local/share/nvim/site/pack/packer/start/mariana.vim",
-    url = "https://github.com/sthendev/mariana.vim"
-  },
-  ["mason-lspconfig.nvim"] = {
-    loaded = true,
-    path = "/Users/marcus/.local/share/nvim/site/pack/packer/start/mason-lspconfig.nvim",
-    url = "https://github.com/williamboman/mason-lspconfig.nvim"
-  },
-  ["mason.nvim"] = {
-    loaded = true,
-    path = "/Users/marcus/.local/share/nvim/site/pack/packer/start/mason.nvim",
-    url = "https://github.com/williamboman/mason.nvim"
   },
   ["material.nvim"] = {
     loaded = true,
@@ -243,14 +202,23 @@ _G.packer_plugins = {
   },
   ["nvim-autopairs"] = {
     config = { "\27LJ\2\n@\0\0\3\0\3\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0004\2\0\0B\0\2\1K\0\1\0\nsetup\19nvim-autopairs\frequire\0" },
-    loaded = true,
-    path = "/Users/marcus/.local/share/nvim/site/pack/packer/start/nvim-autopairs",
+    load_after = {},
+    loaded = false,
+    needs_bufread = false,
+    only_cond = false,
+    path = "/Users/marcus/.local/share/nvim/site/pack/packer/opt/nvim-autopairs",
     url = "https://github.com/windwp/nvim-autopairs"
   },
   ["nvim-cmp"] = {
     loaded = true,
     path = "/Users/marcus/.local/share/nvim/site/pack/packer/start/nvim-cmp",
-    url = "https://github.com/williamboman/nvim-cmp"
+    url = "https://github.com/hrsh7th/nvim-cmp"
+  },
+  ["nvim-colorizer.lua"] = {
+    config = { "\27LJ\2\nn\0\0\4\0\5\0\b6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0005\3\4\0B\0\3\1K\0\1\0\1\0\2\bRGB\1\tmode\15background\1\5\0\0\blua\bvim\nkitty\tconf\nsetup\14colorizer\frequire\0" },
+    loaded = true,
+    path = "/Users/marcus/.local/share/nvim/site/pack/packer/start/nvim-colorizer.lua",
+    url = "https://github.com/norcalli/nvim-colorizer.lua"
   },
   ["nvim-juliana"] = {
     loaded = true,
@@ -272,20 +240,16 @@ _G.packer_plugins = {
     path = "/Users/marcus/.local/share/nvim/site/pack/packer/start/nvim-treesitter",
     url = "https://github.com/nvim-treesitter/nvim-treesitter"
   },
+  ["nvim-treesitter-context"] = {
+    config = { "\27LJ\2\nê\2\0\0\a\0\17\0\0286\0\0\0'\2\1\0B\0\2\0029\1\2\0'\3\3\0004\4\4\0005\5\5\0005\6\4\0=\6\6\5>\5\1\0045\5\b\0005\6\a\0=\6\t\5>\5\2\0045\5\v\0005\6\n\0=\6\f\5>\5\3\4B\1\3\0016\1\0\0'\3\3\0B\1\2\0029\1\r\0015\3\14\0005\4\15\0=\4\16\3B\1\2\1K\0\1\0\14separator\1\3\0\0\bâ”€\18ContextBorder\1\0\2\24multiline_threshold\3\4\tmode\ftopline\nsetup TreesitterContextLineNumber\1\0\0\1\0\1\finherit\vLineNr\22TreesitterContext\1\0\0\1\0\1\finherit\vNormal\18ContextBorder\1\0\0\1\0\1\tlink\bDim\23treesitter-context\vplugin\20core.highlights\frequire\0" },
+    loaded = true,
+    path = "/Users/marcus/.local/share/nvim/site/pack/packer/start/nvim-treesitter-context",
+    url = "https://github.com/nvim-treesitter/nvim-treesitter-context"
+  },
   ["nvim-treesitter-textobjects"] = {
     loaded = true,
     path = "/Users/marcus/.local/share/nvim/site/pack/packer/start/nvim-treesitter-textobjects",
     url = "https://github.com/nvim-treesitter/nvim-treesitter-textobjects"
-  },
-  ["nvim-ts-autotag"] = {
-    loaded = true,
-    path = "/Users/marcus/.local/share/nvim/site/pack/packer/start/nvim-ts-autotag",
-    url = "https://github.com/windwp/nvim-ts-autotag"
-  },
-  ["nvim-ts-context-commentstring"] = {
-    loaded = true,
-    path = "/Users/marcus/.local/share/nvim/site/pack/packer/start/nvim-ts-context-commentstring",
-    url = "https://github.com/JoosepAlviste/nvim-ts-context-commentstring"
   },
   ["nvim-ts-rainbow"] = {
     loaded = true,
@@ -302,6 +266,14 @@ _G.packer_plugins = {
     path = "/Users/marcus/.local/share/nvim/site/pack/packer/start/packer.nvim",
     url = "https://github.com/wbthomason/packer.nvim"
   },
+  playground = {
+    commands = { "TSPlaygroundToggle", "TSHighlightCapturesUnderCursor" },
+    loaded = false,
+    needs_bufread = true,
+    only_cond = false,
+    path = "/Users/marcus/.local/share/nvim/site/pack/packer/opt/playground",
+    url = "https://github.com/nvim-treesitter/playground"
+  },
   ["plenary.nvim"] = {
     loaded = true,
     path = "/Users/marcus/.local/share/nvim/site/pack/packer/start/plenary.nvim",
@@ -312,6 +284,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "/Users/marcus/.local/share/nvim/site/pack/packer/start/satellite.nvim",
     url = "https://github.com/lewis6991/satellite.nvim"
+  },
+  shadotheme = {
+    loaded = true,
+    path = "/Users/marcus/.local/share/nvim/site/pack/packer/start/shadotheme",
+    url = "https://github.com/Shadorain/shadotheme"
   },
   ["telescope-fzf-native.nvim"] = {
     loaded = true,
@@ -336,34 +313,46 @@ _G.packer_plugins = {
 }
 
 time([[Defining packer_plugins]], false)
--- Config for: lspsaga.nvim
-time([[Config for lspsaga.nvim]], true)
-try_loadstring("\27LJ\2\nA\0\0\4\0\3\0\a6\0\0\0'\2\1\0B\0\2\0029\1\2\0004\3\0\0B\1\2\1K\0\1\0\18init_lsp_saga\flspsaga\frequire\0", "config", "lspsaga.nvim")
-time([[Config for lspsaga.nvim]], false)
--- Config for: lsp-inlayhints.nvim
-time([[Config for lsp-inlayhints.nvim]], true)
-try_loadstring("\27LJ\2\n<\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\19lsp-inlayhints\frequire\0", "config", "lsp-inlayhints.nvim")
-time([[Config for lsp-inlayhints.nvim]], false)
+-- Config for: nvim-colorizer.lua
+time([[Config for nvim-colorizer.lua]], true)
+try_loadstring("\27LJ\2\nn\0\0\4\0\5\0\b6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0005\3\4\0B\0\3\1K\0\1\0\1\0\2\bRGB\1\tmode\15background\1\5\0\0\blua\bvim\nkitty\tconf\nsetup\14colorizer\frequire\0", "config", "nvim-colorizer.lua")
+time([[Config for nvim-colorizer.lua]], false)
 -- Config for: diffview.nvim
 time([[Config for diffview.nvim]], true)
 try_loadstring("\27LJ\2\n¿\1\0\0\5\0\n\0\r6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0005\3\5\0005\4\4\0=\4\6\0035\4\a\0=\4\b\3=\3\t\2B\0\2\1K\0\1\0\17key_bindings\tview\1\0\1\6q\27<Cmd>DiffviewClose<CR>\15file_panel\1\0\0\1\0\1\6q\27<Cmd>DiffviewClose<CR>\1\0\1\21enhanced_diff_hl\2\nsetup\rdiffview\frequire\0", "config", "diffview.nvim")
 time([[Config for diffview.nvim]], false)
--- Config for: nvim-autopairs
-time([[Config for nvim-autopairs]], true)
-try_loadstring("\27LJ\2\n@\0\0\3\0\3\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0004\2\0\0B\0\2\1K\0\1\0\nsetup\19nvim-autopairs\frequire\0", "config", "nvim-autopairs")
-time([[Config for nvim-autopairs]], false)
 -- Config for: hlargs.nvim
 time([[Config for hlargs.nvim]], true)
-try_loadstring("\27LJ\2\n4\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\vhlargs\frequire\0", "config", "hlargs.nvim")
+try_loadstring("\27LJ\2\n¢\3\0\0\t\0\28\0(6\0\0\0'\2\1\0B\0\2\0029\0\2\0'\2\3\0005\3\14\0005\4\a\0004\5\3\0005\6\5\0005\a\4\0=\a\6\6>\6\1\5=\5\b\0044\5\3\0005\6\f\0005\a\t\0005\b\n\0=\b\v\a=\a\6\6>\6\1\5=\5\r\4=\4\15\3B\0\3\0016\0\0\0'\2\3\0B\0\2\0029\0\16\0005\2\26\0005\3\18\0005\4\17\0=\4\19\0035\4\21\0005\5\20\0=\5\22\0045\5\23\0=\5\24\4=\4\25\3=\3\27\2B\0\2\1K\0\1\0\22excluded_argnames\1\0\0\vusages\blua\1\5\0\0\tself\buse\14use_rocks\6_\ago\1\0\0\1\2\0\0\6_\17declarations\1\0\0\1\4\0\0\buse\14use_rocks\6_\nsetup\ntheme\1\0\0\fhorizon\1\0\0\15foreground\1\0\1\tfrom\vNormal\1\0\1\vitalic\2\6*\1\0\0\vHlargs\1\0\0\1\0\2\vitalic\2\15foreground\f#A5D6FF\vhlargs\vplugin\20core.highlights\frequire\0", "config", "hlargs.nvim")
 time([[Config for hlargs.nvim]], false)
+-- Config for: lsp-inlayhints.nvim
+time([[Config for lsp-inlayhints.nvim]], true)
+try_loadstring("\27LJ\2\nÞ\1\0\0\5\0\n\0\r6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\b\0005\3\3\0005\4\4\0=\4\5\0035\4\6\0=\4\a\3=\3\t\2B\0\2\1K\0\1\0\16inlay_hints\1\0\0\15type_hints\1\0\2\23remove_colon_start\2\vprefix\b=> \20parameter_hints\1\0\1\vprefix\bïž”\1\0\2\21labels_separator\n â \14highlight\fComment\nsetup\19lsp-inlayhints\frequire\0", "config", "lsp-inlayhints.nvim")
+time([[Config for lsp-inlayhints.nvim]], false)
 -- Config for: satellite.nvim
 time([[Config for satellite.nvim]], true)
 try_loadstring("\27LJ\2\n7\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\14satellite\frequire\0", "config", "satellite.nvim")
 time([[Config for satellite.nvim]], false)
+-- Config for: nvim-treesitter-context
+time([[Config for nvim-treesitter-context]], true)
+try_loadstring("\27LJ\2\nê\2\0\0\a\0\17\0\0286\0\0\0'\2\1\0B\0\2\0029\1\2\0'\3\3\0004\4\4\0005\5\5\0005\6\4\0=\6\6\5>\5\1\0045\5\b\0005\6\a\0=\6\t\5>\5\2\0045\5\v\0005\6\n\0=\6\f\5>\5\3\4B\1\3\0016\1\0\0'\3\3\0B\1\2\0029\1\r\0015\3\14\0005\4\15\0=\4\16\3B\1\2\1K\0\1\0\14separator\1\3\0\0\bâ”€\18ContextBorder\1\0\2\24multiline_threshold\3\4\tmode\ftopline\nsetup TreesitterContextLineNumber\1\0\0\1\0\1\finherit\vLineNr\22TreesitterContext\1\0\0\1\0\1\finherit\vNormal\18ContextBorder\1\0\0\1\0\1\tlink\bDim\23treesitter-context\vplugin\20core.highlights\frequire\0", "config", "nvim-treesitter-context")
+time([[Config for nvim-treesitter-context]], false)
+-- Load plugins in order defined by `after`
+time([[Sequenced loading]], true)
+vim.cmd [[ packadd nvim-cmp ]]
+time([[Sequenced loading]], false)
+
+-- Command lazy-loads
+time([[Defining lazy-load commands]], true)
+pcall(vim.cmd, [[command -nargs=* -range -bang -complete=file TSHighlightCapturesUnderCursor lua require("packer.load")({'playground'}, { cmd = "TSHighlightCapturesUnderCursor", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args>, mods = "<mods>" }, _G.packer_plugins)]])
+pcall(vim.cmd, [[command -nargs=* -range -bang -complete=file TSPlaygroundToggle lua require("packer.load")({'playground'}, { cmd = "TSPlaygroundToggle", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args>, mods = "<mods>" }, _G.packer_plugins)]])
+time([[Defining lazy-load commands]], false)
+
 vim.cmd [[augroup packer_load_aucmds]]
 vim.cmd [[au!]]
   -- Event lazy-loads
 time([[Defining lazy-load event autocommands]], true)
+vim.cmd [[au InsertCharPre * ++once lua require("packer.load")({'nvim-autopairs'}, { event = "InsertCharPre *" }, _G.packer_plugins)]]
 vim.cmd [[au CursorHold * ++once lua require("packer.load")({'gitsigns.nvim'}, { event = "CursorHold *" }, _G.packer_plugins)]]
 time([[Defining lazy-load event autocommands]], false)
 vim.cmd("augroup END")
