@@ -435,9 +435,13 @@ core.augroup('UserHighlights', {
 -----------------------------------------------------------------------------//
 -- Color Scheme {{{1
 -----------------------------------------------------------------------------//
-local ok, msg = pcall(vim.cmd.colorscheme, 'horizon')
-if not ok then
-  vim.schedule(function() vim.notify(fmt('Theme failed to load because: %s', msg), 'error') end)
+-- local ok, msg = pcall(vim.cmd.colorscheme, 'doom-one')
+-- if not ok then
+ --  vim.schedule(function() vim.notify(fmt('Theme failed to load because: %s', msg), 'error') end)
+-- end
+
+if core.plugin_installed('doom-one.nvim') then
+  vim.cmd('colorscheme doom-one')
 end
 
 return M

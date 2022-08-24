@@ -2,10 +2,9 @@
 -- Plugin manager configuration file {{{
 -----------------------------------------------------------
 
+-- local utils = require('core.utils.plugins')
 
-local utils = require('core.utils.plugins')
-
-local conf = utils.conf
+-- local conf = utils.conf
 
 -- Automatically install packer
 local fn = vim.fn
@@ -37,8 +36,8 @@ if not status_ok then
     return
 end
 -- }}}
-
 -----------------------------------------------------------
+--
 -- Install plugins
 return packer.startup(function(use)
     -- Add you plugins here:
@@ -49,16 +48,21 @@ return packer.startup(function(use)
     use({
         "nvim-neo-tree/neo-tree.nvim",
         branch = "v2.x",
-        config = conf("neo-tree"),
-        keys = { "<C-N>" },
-        cmd = { "NeoTree" },
+        -- config = conf("neo-tree"),
+        --keys = { "<C-N>" },
+        --cmd = { "NeoTree" },
         requires = {
             "nvim-lua/plenary.nvim",
             "MunifTanjim/nui.nvim",
             "kyazdani42/nvim-web-devicons",
-            { "mrbjarksen/neo-tree-diagnostics.nvim", module = "neo-tree.sources.diagnostics" },
-            { "s1n7ax/nvim-window-picker", tag = "v1.*", config = conf("window-picker") },
+            { "s1n7ax/nvim-window-picker", tag = "v1.*" },
         },
+    })
+
+    use({
+        "mrbjarksen/neo-tree-diagnostics.nvim",
+        requires = "nvim-neo-tree/neo-tree.nvim",
+        module = "neo-tree.sources.diagnostics", -- if wanting to lazyload
     })
 
     -- use({
@@ -133,9 +137,10 @@ return packer.startup(function(use)
     -- }}}
 
     --------------------------------------------------------------------------------
-    ---- COLOR SCHEMES {{{1
+    ---- COLOR SCHEMES {{{
     --------------------------------------------------------------------------------
 
+    use("folke/tokyonight.nvim")
     use({ "Shadorain/shadotheme" })
 
     use({ "LunarVim/horizon.nvim" })
@@ -159,43 +164,9 @@ return packer.startup(function(use)
     -- })
     use("EdenEast/nightfox.nvim")
 
-    -- use({
-    --     "NTBBloodbath/doom-one.nvim",
-    --     setup = function()
-    --         -- Add color to cursor
-    --         vim.g.doom_one_cursor_coloring = false
-    --         -- Set :terminal colors
-    --         vim.g.doom_one_terminal_colors = true
-    --         -- Enable italic comments
-    --         vim.g.doom_one_italic_comments = false
-    --         -- Enable TS support
-    --         vim.g.doom_one_enable_treesitter = true
-    --         -- Color whole diagnostic text or only underline
-    --         vim.g.doom_one_diagnostics_text_color = true
-    --         -- Enable transparent background
-    --         vim.g.doom_one_transparent_background = false
-    --
-    --         -- Pumblend transparency
-    --         vim.g.doom_one_pumblend_enable = false
-    --         vim.g.doom_one_pumblend_transparency = 20
-    --
-    --         -- Plugins integration
-    --         vim.g.doom_one_plugin_neorg = true
-    --         vim.g.doom_one_plugin_barbar = false
-    --         vim.g.doom_one_plugin_telescope = true
-    --         vim.g.doom_one_plugin_neogit = true
-    --         vim.g.doom_one_plugin_nvim_tree = true
-    --         vim.g.doom_one_plugin_dashboard = true
-    --         vim.g.doom_one_plugin_startify = true
-    --         vim.g.doom_one_plugin_whichkey = true
-    --         vim.g.doom_one_plugin_indent_blankline = true
-    --         vim.g.doom_one_plugin_vim_illuminate = true
-    --         vim.g.doom_one_plugin_lspsaga = false
-    --     end,
-    --     config = function()
-    --         vim.cmd("colorscheme doom-one")
-    --     end,
-    -- })
+    use({
+        "NTBBloodbath/doom-one.nvim",
+    })
     -- }}}
 
     --------------------------------------------------------------------------------
@@ -247,7 +218,7 @@ return packer.startup(function(use)
     -- }}}
 
     --------------------------------------------------------------------------------
-    -- Syntax {{{
+    -- Syntax {{{1
     --------------------------------------------------------------------------------
     use({
         "nvim-treesitter/nvim-treesitter",
