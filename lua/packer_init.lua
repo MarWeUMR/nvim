@@ -2,9 +2,9 @@
 -- Plugin manager configuration file {{{
 -----------------------------------------------------------
 
--- local utils = require('core.utils.plugins')
+local utils = require('core.utils.plugins')
 
--- local conf = utils.conf
+local conf = utils.conf
 
 -- Automatically install packer
 local fn = vim.fn
@@ -46,32 +46,12 @@ return packer.startup(function(use)
 
     -- File explorer
     use({
-        "nvim-neo-tree/neo-tree.nvim",
-        branch = "v2.x",
-        -- config = conf("neo-tree"),
-        --keys = { "<C-N>" },
-        --cmd = { "NeoTree" },
+        "kyazdani42/nvim-tree.lua",
         requires = {
-            "nvim-lua/plenary.nvim",
-            "MunifTanjim/nui.nvim",
-            "kyazdani42/nvim-web-devicons",
-            { "s1n7ax/nvim-window-picker", tag = "v1.*" },
+            "kyazdani42/nvim-web-devicons", -- optional, for file icons
         },
+        tag = "nightly", -- optional, updated every week. (see issue #1193)
     })
-
-    use({
-        "mrbjarksen/neo-tree-diagnostics.nvim",
-        requires = "nvim-neo-tree/neo-tree.nvim",
-        module = "neo-tree.sources.diagnostics", -- if wanting to lazyload
-    })
-
-    -- use({
-    --     "kyazdani42/nvim-tree.lua",
-    --     requires = {
-    --         "kyazdani42/nvim-web-devicons", -- optional, for file icons
-    --     },
-    --     tag = "nightly", -- optional, updated every week. (see issue #1193)
-    -- })
 
     use({
         "hrsh7th/nvim-cmp",
@@ -90,7 +70,20 @@ return packer.startup(function(use)
     --------------------------------------------------------------------------------
     -- LSP {{{
     --------------------------------------------------------------------------------
-
+    use({
+        "ray-x/lsp_signature.nvim",
+        config = function()
+            require("lsp_signature").setup({
+                bind = true,
+                fix_pos = false,
+                auto_close_after = 15, -- close after 15 seconds
+                hint_enable = false,
+                handler_opts = { border = core.style.current.border },
+                toggle_key = "<C-K>",
+                select_signature_key = "<M-N>",
+            })
+        end,
+    })
     use("neovim/nvim-lspconfig")
     use("jose-elias-alvarez/null-ls.nvim")
     -- use({
@@ -140,7 +133,17 @@ return packer.startup(function(use)
     ---- COLOR SCHEMES {{{
     --------------------------------------------------------------------------------
 
-    use("folke/tokyonight.nvim")
+    use({
+        "folke/tokyonight.nvim",
+        config = function()
+            vim.g.tokyonight_style = "night"
+            vim.g.tokyonight_italic_functions = true
+            vim.g.tokyonight_sidebars = { "qf", "vista_kind", "terminal", "packer" }
+
+            -- Change the "hint" color to the "orange" color, and make the "error" color bright red
+            vim.g.tokyonight_colors = { hint = "orange", error = "#ff0000" }
+        end,
+    })
     use({ "Shadorain/shadotheme" })
 
     use({ "LunarVim/horizon.nvim" })
@@ -180,6 +183,7 @@ return packer.startup(function(use)
             "nvim-telescope/telescope-project.nvim",
             { "nvim-telescope/telescope-fzf-native.nvim", run = "make" },
         },
+        config = conf('telescope').config
     })
     -- }}}
 
@@ -323,6 +327,23 @@ return packer.startup(function(use)
         config = function()
             require("satellite").setup()
         end,
+    })
+
+    -- use("github/copilot.vim")
+
+    use({
+        "zbirenbaum/copilot.lua",
+        event = { "VimEnter" },
+        config = function()
+            vim.defer_fn(function()
+                require("copilot").setup()
+            end, 100)
+        end,
+    })
+
+    use({
+        "zbirenbaum/copilot-cmp",
+        module = "copilot_cmp",
     })
 
     -- }}}
