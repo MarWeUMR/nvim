@@ -42,7 +42,7 @@ _G.core = core or namespace
     require("plugins/lualine")
     require("plugins/indent_blankline")
     require("plugins/treesitter")
-    require("plugins/gitsigns")
+    require("plugins/gitsigns_conf")
     require("plugins/fterm")
     require("lsp")
 end

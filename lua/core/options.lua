@@ -26,6 +26,7 @@ opt.completeopt = "menuone,noinsert,noselect" -- Autocomplete options
 -- cmd("colorscheme doom-one")
 
 opt.number = true -- Show line number
+opt.relativenumber = true -- Show line number
 opt.showmatch = true -- Highlight matching parenthesis
 opt.foldmethod = "marker" -- Enable folding (default 'foldmarker')
 -- opt.colorcolumn = '80'      -- Line lenght marker at 80 columns

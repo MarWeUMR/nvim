@@ -2,7 +2,7 @@
 -- Plugin manager configuration file {{{
 -----------------------------------------------------------
 
-local utils = require('core.utils.plugins')
+local utils = require("core.utils.plugins")
 
 local conf = utils.conf
 
@@ -133,6 +133,17 @@ return packer.startup(function(use)
     ---- COLOR SCHEMES {{{
     --------------------------------------------------------------------------------
 
+    use("olimorris/onedarkpro.nvim")
+
+    use({
+        "rafamadriz/neon",
+        config = function()
+            vim.g.neon_style = "doom"
+            vim.g.neon_italic_keyword = true
+            vim.g.neon_italic_function = true
+            vim.g.neon_transparent = true
+        end,
+    })
     use({
         "folke/tokyonight.nvim",
         config = function()
@@ -145,6 +156,7 @@ return packer.startup(function(use)
         end,
     })
     use({ "Shadorain/shadotheme" })
+    use("Th3Whit3Wolf/space-nvim")
 
     use({ "LunarVim/horizon.nvim" })
 
@@ -183,7 +195,7 @@ return packer.startup(function(use)
             "nvim-telescope/telescope-project.nvim",
             { "nvim-telescope/telescope-fzf-native.nvim", run = "make" },
         },
-        config = conf('telescope').config
+        config = conf("telescope").config,
     })
     -- }}}
 
@@ -198,9 +210,8 @@ return packer.startup(function(use)
 
     use({
         "lewis6991/gitsigns.nvim",
-        event = "CursorHold",
         config = function()
-            require("gitsigns")
+            require("gitsigns").setup()
         end,
     })
 
