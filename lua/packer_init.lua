@@ -84,6 +84,7 @@ return packer.startup(function(use)
             })
         end,
     })
+
     use("neovim/nvim-lspconfig")
     use("jose-elias-alvarez/null-ls.nvim")
     -- use({
@@ -107,6 +108,13 @@ return packer.startup(function(use)
     --         })
     --     end,
     -- })
+
+    use({
+        "stevearc/aerial.nvim",
+        config = function()
+            require("aerial").setup()
+        end,
+    })
 
     use({
         "lvimuser/lsp-inlayhints.nvim",
@@ -289,9 +297,16 @@ return packer.startup(function(use)
         end,
     })
 
+    --}}}
+
     --------------------------------------------------------------------------------
     -- RANDOM STUFF {{{
     --------------------------------------------------------------------------------
+
+    -- TODO: this fixes a bug in neovim core that prevents "CursorHold" from working
+    -- hopefully one day when this issue is fixed this can be removed
+    -- @see: https://github.com/neovim/neovim/issues/12587
+    use("antoinemadec/FixCursorHold.nvim")
 
     use({
         "norcalli/nvim-colorizer.lua",
@@ -355,6 +370,18 @@ return packer.startup(function(use)
     use({
         "zbirenbaum/copilot-cmp",
         module = "copilot_cmp",
+    })
+
+    use({
+        "folke/trouble.nvim",
+        requires = "kyazdani42/nvim-web-devicons",
+        config = function()
+            require("trouble").setup({
+                -- your configuration comes here
+                -- or leave it empty to use the default settings
+                -- refer to the configuration section below
+            })
+        end,
     })
 
     -- }}}

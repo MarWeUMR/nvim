@@ -1,28 +1,8 @@
-vim.cmd([[autocmd! ColorScheme * highlight NormalFloat guibg=#1f2335]])
-vim.cmd([[autocmd! ColorScheme * highlight FloatBorder guifg=white guibg=#1f2335]])
-
-local border = {
-    { "🭽", "FloatBorder" },
-    { "▔", "FloatBorder" },
-    { "🭾", "FloatBorder" },
-    { "▕", "FloatBorder" },
-    { "🭿", "FloatBorder" },
-    { "▁", "FloatBorder" },
-    { "🭼", "FloatBorder" },
-    { "▏", "FloatBorder" },
-}
-
--- LSP settings (for overriding per client)
-local handlers = {
-    ["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = border }),
-    ["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = border }),
-}
-
--- Do not forget to use the on_attach function
-require("lspconfig").pylsp.setup({ handlers = handlers })
+-- vim.cmd([[autocmd! ColorScheme * highlight NormalFloat guibg=#1f2335]])
+-- vim.cmd([[autocmd! ColorScheme * highlight FloatBorder guifg=white guibg=#1f2335]])
 
 --------------------------------------------------------------------------------
--- HANDLE GUTTER AND INLINE LSP STUFF
+-- HANDLE GUTTER AND INLINE LSP STUFF {{{1
 --------------------------------------------------------------------------------
 
 vim.diagnostic.config({
@@ -32,7 +12,7 @@ vim.diagnostic.config({
     },
     float = {
         source = "always",
-        border = border,
+        border = core.style.border.line,
     },
     signs = true,
     underline = true,
@@ -46,4 +26,6 @@ for type, icon in pairs(signs) do
     vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
 end
 
-vim.cmd([[autocmd CursorHold,CursorHoldI * lua require('lsp.code_action_utils').code_action_listener()]])
+-- }}}
+
+--vim.cmd([[autocmd CursorHold,CursorHoldI * lua require('lsp.code_action_utils').code_action_listener()]])

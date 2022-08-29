@@ -10,5 +10,5 @@ null_ls.setup({
 		--null_ls.builtins.diagnostics.pylint,
 		-- null_ls.builtins.diagnostics.mypy,
 	},
-	on_attach = require("lsp.on-attach"),
+	--on_attach = require("lsp.on-attach"),
 })
