@@ -162,8 +162,8 @@ local mappings = {
         },
         l = {
             name = "+lsp",
-            e = { builtins.diagnostics, "telescope: workspace diagnostics" },
-            d = { builtins.lsp_document_symbols, "telescope: document symbols" },
+            d = { builtins.diagnostics, "telescope: workspace diagnostics" },
+            o = { builtins.lsp_document_symbols, "telescope: document symbols" },
             s = { builtins.lsp_dynamic_workspace_symbols, "telescope: workspace symbols" },
         },
         r = { builtins.resume, "resume last picker" },
