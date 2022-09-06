@@ -6,6 +6,7 @@ end
 null_ls.setup({
 	sources = {
 		null_ls.builtins.formatting.stylua,
+        null_ls.builtins.formatting.phpcsfixer
 		-- null_ls.builtins.formatting.autopep8,
 		--null_ls.builtins.diagnostics.pylint,
 		-- null_ls.builtins.diagnostics.mypy,

@@ -55,4 +55,11 @@ require("lspconfig").pylsp.setup({
     },
 })
 
+require("lspconfig").intelephense.setup({
+handlers = handlers,
+    capabilities = capabilities,
+
+})
+
+
 require("lsp.lsp-settings")
