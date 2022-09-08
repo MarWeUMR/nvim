@@ -120,16 +120,16 @@ local function delta_git_bcommits(opts)
 end
 
 local function nvim_config()
-        builtins.find_files({
-            prompt_title = "~ nvim config ~",
-            cwd = vim.fn.stdpath("config"),
-            file_ignore_patterns = {
-                ".git/.*",
-                "dotbot/.*",
-                "zsh/plugins/.*",
-            },
-        })
-    end
+    builtins.find_files({
+        prompt_title = "~ nvim config ~",
+        cwd = vim.fn.stdpath("config"),
+        file_ignore_patterns = {
+            ".git/.*",
+            "dotbot/.*",
+            "zsh/plugins/.*",
+        },
+    })
+end
 
 local mappings = {
     ["a"] = { "<cmd>Alpha<cr>", "Alpha" },
@@ -170,12 +170,6 @@ local mappings = {
         ["?"] = { builtins.help_tags, "help" },
         f = { builtins.find_files, "find files" },
         --h = { frecency, "Most (f)recently used files" },
-        g = {
-            name = "+git",
-            b = { builtins.git_branches, "branches" },
-            c = { delta_git_commits, "commits" },
-            B = { delta_git_bcommits, "buffer commits" },
-        },
         o = { builtins.buffers, "buffers" },
         s = { builtins.live_grep, "live grep" },
         c = { nvim_config, "nvim config" },
@@ -189,7 +183,7 @@ local mappings = {
 
     g = {
         name = "Git",
-        g = { "<cmd>lua __fterm_gitui()<CR>", "Gitui" },
+        g = { "<cmd>lua __fterm_lazygit()<CR>", "Lazygit" },
         j = { "<cmd>lua require 'gitsigns'.next_hunk()<cr>", "Next Hunk" },
         k = { "<cmd>lua require 'gitsigns'.prev_hunk()<cr>", "Prev Hunk" },
         l = { "<cmd>lua require 'gitsigns'.blame_line()<cr>", "Blame" },
@@ -204,10 +198,10 @@ local mappings = {
         o = { "<cmd>Telescope git_status<cr>", "Open changed file" },
         b = { "<cmd>Telescope git_branches<cr>", "Checkout branch" },
         c = { "<cmd>Telescope git_commits<cr>", "Checkout commit" },
-        d = {
-            "<cmd>Gitsigns diffthis HEAD<cr>",
-            "Diff",
-        },
+        d = { "<cmd>DiffviewOpen<cr>", "Open Diffview"},
+        D = { "<cmd>DiffviewClose<cr>", "Close Diffview"},
+        h = { "<cmd>DiffviewFileHistory<cr>", "Browse file history"},
+        e = { "<cmd>DiffviewToggleFiles<cr>", "Toggle diffview file explorer"},
     },
     x = {
 

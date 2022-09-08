@@ -11,9 +11,9 @@ fterm.setup({
   },
 })
 
-local gitui = fterm:new({
-  ft = "fterm_gitui", -- You can also override the default filetype, if you want
-  cmd = "gitui",
+local lazygit = fterm:new({
+  ft = "fterm_lazygit", -- You can also override the default filetype, if you want
+  cmd = "lazygit",
   border = "double",
   dimensions = {
     height = 0.9,
@@ -22,6 +22,6 @@ local gitui = fterm:new({
 })
 
 -- Use this to toggle lazygit in a floating terminal
-function _G.__fterm_gitui()
-  gitui:toggle()
+function _G.__fterm_lazygit()
+  lazygit:toggle()
 end
