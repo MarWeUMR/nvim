@@ -149,6 +149,11 @@ local mappings = {
     ["F"] = { "<cmd>Telescope live_grep theme=ivy<cr>", "Find Text" },
     ["P"] = { "<cmd>Telescope projects<cr>", "Projects" },
     ["z"] = { "<cmd>ZenMode<cr>", "Zen-Mode" },
+    --
+    --         --------------------
+    --       ----   TELESCOPE    ----
+    --         --------------------
+    --
     t = {
         name = "Telescope",
         p = { "<cmd>Telescope projects<cr>", "Projects" },
@@ -172,15 +177,24 @@ local mappings = {
         --h = { frecency, "Most (f)recently used files" },
         o = { builtins.buffers, "buffers" },
         s = { builtins.live_grep, "live grep" },
-        c = { nvim_config, "nvim config" },
+        c = { "<cmd>Telescope colorscheme<cr>", "Projects" },
     },
+    --
+    --         --------------------
+    --       ----     WINDOW     ----
+    --         --------------------
+    --
     w = {
         name = "Window",
         v = { "<C-W>v", "VSplit" },
         h = { "<C-W>s", "HSplit" },
         q = { "<cmd>:q<CR>", "Quit" },
     },
-
+    --
+    --         --------------------
+    --       ----      GIT       ----
+    --         --------------------
+    --
     g = {
         name = "Git",
         g = { "<cmd>lua __fterm_lazygit()<CR>", "Lazygit" },
