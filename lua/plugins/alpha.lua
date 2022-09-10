@@ -70,8 +70,7 @@ return function()
         button("Directory", "r", " Recent Files", "<Cmd>Telescope oldfiles<CR>"),
         button("Type", "f", "  Find File", "<Cmd>Telescope find_files<CR>"),
         button("Label", "F", "  Find Word", ":Telescope live_grep<CR>"),
-        button("Label", "l", "  Load last session", ":SessionLoadLast<CR>"),
-        button("Label", "S", "  Select sessions", ":Telescope persisted<CR>"),
+        button("Label", "p", "  Open Project", "<Cmd>Telescope projects<CR>"),
         button("Label", "b", "  Bookmarks", ":Telescope marks<CR>"),
         button("Label", "c", "  Colorschemes", ":Telescope colorscheme<CR>"),
     }

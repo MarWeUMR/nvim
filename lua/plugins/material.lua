@@ -3,7 +3,7 @@ if not present then
     return
 end
 
-vim.g.material_style = "palenight"
+vim.g.material_style = "deep ocean"
 
 material.setup({
 
