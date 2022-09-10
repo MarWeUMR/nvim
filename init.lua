@@ -3,6 +3,8 @@ if vim.g.vscode then
     -- VSCode extension
     -- vim.cmd([[source XXXXX.vim]])
 else
+
+    -- Ensure all autocommands are cleared
     vim.api.nvim_create_augroup("vimrc", {})
 
     ----------------------------------------------------------------------------------------------------
@@ -25,31 +27,32 @@ else
     _G.core = core or namespace
 
     -- Import Lua modules
-    require("packer_init")
-    require("core/options")
     require("core/globals")
     require("core/styles")
-    require("core/highlights")
+    require("core/options")
+    require("core/custom_highlights")
+    require("packer_init")
     require("core/externals")
     require("core/keymaps")
+    require("plugins/alpha")
+    require("plugins/cat")
+    require("plugins/cmp")
+    require("plugins/comments")
     require("plugins/nvim-tree")
-    require("plugins/telescope")
     require("plugins/whichkey_conf")
     -- require("plugins/mason")
     require("plugins/neogit")
     require("plugins/bufferline")
     require("plugins/leap")
-    -- require("plugins/cat")
-    -- require("plugins/material")
-    require("plugins/cmp")
-    require("plugins/comments")
+    require("plugins/material")
+    require("plugins/ufo")
     require("plugins/lualine")
     require("plugins/indent_blankline")
+    require("plugins/telescope")
     require("plugins/treesitter")
     require("plugins/gitsigns_conf")
     require("plugins/fterm")
     require("lsp")
-end
 
 if vim.g.neovide then
     vim.g.gui_font_default_size = 18
@@ -92,4 +95,5 @@ if vim.g.neovide then
     vim.keymap.set({ "n", "i" }, "<C-->", function()
         ResizeGuiFont(-1)
     end, opts)
+end
 end

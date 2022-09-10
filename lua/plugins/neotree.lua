@@ -1,5 +1,5 @@
 local icons = core.style.icons
-local highlights = require("core.highlights")
+local highlights = require("core.custom_highlights")
 
 highlights.plugin("NeoTree", {
     theme = {

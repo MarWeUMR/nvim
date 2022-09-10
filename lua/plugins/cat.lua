@@ -73,7 +73,7 @@ catppuccin.setup({
 		which_key = true,
 		indent_blankline = {
 			enabled = true,
-			colored_indent_levels = false,
+			colored_indent_levels = true,
 		},
 		dashboard = true,
 		neogit = false,
@@ -82,14 +82,14 @@ catppuccin.setup({
 		barbar = false,
 		bufferline = true,
 		markdown = true,
-		lightspeed = false,
+		lightspeed = true,
 		ts_rainbow = true,
 		hop = false,
 		notify = true,
 		telekasten = true,
 		symbols_outline = true,
 		mini = false,
-		aerial = false,
+		aerial = true,
 		vimwiki = true,
 		beacon = true,
 		navic = false,
@@ -99,4 +99,4 @@ catppuccin.setup({
 	highlight_overrides = {},
 })
 
-vim.api.nvim_command "colorscheme catppuccin"
+-- vim.api.nvim_command "colorscheme catppuccin"

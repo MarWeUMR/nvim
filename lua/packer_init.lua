@@ -262,7 +262,7 @@ return packer.startup(function(use)
     use({
         "nvim-treesitter/nvim-treesitter-context",
         config = function()
-            local hl = require("core.highlights")
+            local hl = require("core.custom_highlights")
             hl.plugin("treesitter-context", {
                 { ContextBorder = { link = "Dim" } },
                 { TreesitterContext = { inherit = "Normal" } },
@@ -279,7 +279,7 @@ return packer.startup(function(use)
     use({
         "m-demare/hlargs.nvim",
         config = function()
-            require("core.highlights").plugin("hlargs", {
+            require("core.custom_highlights").plugin("hlargs", {
                 theme = {
                     ["*"] = { { Hlargs = { italic = true, foreground = "#A5D6FF" } } },
                     ["horizon"] = { { Hlargs = { italic = true, foreground = { from = "Normal" } } } },
@@ -302,6 +302,21 @@ return packer.startup(function(use)
     --------------------------------------------------------------------------------
     -- RANDOM STUFF {{{
     --------------------------------------------------------------------------------
+
+    use({ "goolord/alpha-nvim", config = conf("alpha") })
+
+    use({
+        "ahmedkhalf/project.nvim",
+        config = function()
+            require("project_nvim").setup({
+                -- your configuration comes here
+                -- or leave it empty to use the default settings
+                -- refer to the configuration section below
+            })
+        end,
+    })
+
+    use({ "kevinhwang91/nvim-ufo", requires = "kevinhwang91/promise-async" })
 
     -- TODO: this fixes a bug in neovim core that prevents "CursorHold" from working
     -- hopefully one day when this issue is fixed this can be removed

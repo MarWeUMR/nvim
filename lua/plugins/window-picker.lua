@@ -7,5 +7,5 @@
         buftype = { 'terminal', 'quickfix', 'nofile' },
       },
     },
-    other_win_hl_color = require('core.highlights').get('Visual', 'bg'),
+    other_win_hl_color = require('core.custom_highlights').get('Visual', 'bg'),
   })

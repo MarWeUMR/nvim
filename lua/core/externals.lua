@@ -1,4 +1,4 @@
-local H = require('core.highlights')
+local H = require('core.custom_highlights')
 
 local fn = vim.fn
 local fmt = string.format

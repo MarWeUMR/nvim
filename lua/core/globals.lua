@@ -295,7 +295,7 @@ function core.replace_termcodes(str) return api.nvim_replace_termcodes(str, true
 function core.has(feature) return vim.fn.has(feature) > 0 end
 
 ----------------------------------------------------------------------------------------------------
--- Mappings
+-- MAPPINGS {{{1
 ----------------------------------------------------------------------------------------------------
 
 ---create a mapping function factory
@@ -316,3 +316,40 @@ local function make_mapper(mode, o)
   end
 end
 
+local map_opts = { remap = true, silent = true }
+local noremap_opts = { silent = true }
+
+-- A recursive commandline mapping
+core.nmap = make_mapper('n', map_opts)
+-- A recursive select mapping
+core.xmap = make_mapper('x', map_opts)
+-- A recursive terminal mapping
+core.imap = make_mapper('i', map_opts)
+-- A recursive operator mapping
+core.vmap = make_mapper('v', map_opts)
+-- A recursive insert mapping
+core.omap = make_mapper('o', map_opts)
+-- A recursive visual & select mapping
+core.tmap = make_mapper('t', map_opts)
+-- A recursive visual mapping
+core.smap = make_mapper('s', map_opts)
+-- A recursive normal mapping
+core.cmap = make_mapper('c', { remap = true, silent = false })
+-- A non recursive normal mapping
+core.nnoremap = make_mapper('n', noremap_opts)
+-- A non recursive visual mapping
+core.xnoremap = make_mapper('x', noremap_opts)
+-- A non recursive visual & select mapping
+core.vnoremap = make_mapper('v', noremap_opts)
+-- A non recursive insert mapping
+core.inoremap = make_mapper('i', noremap_opts)
+-- A non recursive operator mapping
+core.onoremap = make_mapper('o', noremap_opts)
+-- A non recursive terminal mapping
+core.tnoremap = make_mapper('t', noremap_opts)
+-- A non recursive select mapping
+core.snoremap = make_mapper('s', noremap_opts)
+-- A non recursive commandline mapping
+core.cnoremap = make_mapper('c', { silent = false })
+
+-- }}}

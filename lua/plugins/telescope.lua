@@ -27,7 +27,7 @@ function core.telescope.ivy(opts)
 end
 
 function M.config()
-    local H = require("core.highlights")
+    local H = require("core.custom_highlights")
     local telescope = require("telescope")
     local actions = require("telescope.actions")
     local layout_actions = require("telescope.actions.layout")
@@ -216,6 +216,9 @@ function M.config()
             reloader = core.telescope.dropdown(),
         },
     })
+
+    telescope.load_extension('projects')
+
 
     --- NOTE: this must be required after setting up telescope
     --- otherwise the result will be cached without the updates
