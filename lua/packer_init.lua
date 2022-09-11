@@ -87,14 +87,10 @@ return packer.startup(function(use)
 
     use("neovim/nvim-lspconfig")
     use("jose-elias-alvarez/null-ls.nvim")
-    -- use({
-    -- 	"williamboman/mason.nvim",
-    -- 	"williamboman/mason-lspconfig.nvim",
-    -- 	"neovim/nvim-lspconfig",
+
     -- 	"folke/lua-dev.nvim",
     -- 	--"ray-x/lsp_signature.nvim",
     -- 	-- {"simrat39/rust-tools.nvim", branch = "modularize_and_inlay_rewrite" },
-    -- 	"jose-elias-alvarez/null-ls.nvim",
     -- })
 
     use({ "j-hui/fidget.nvim" })
@@ -113,25 +109,6 @@ return packer.startup(function(use)
         "stevearc/aerial.nvim",
         config = function()
             require("aerial").setup()
-        end,
-    })
-
-    use({
-        "lvimuser/lsp-inlayhints.nvim",
-        config = function()
-            require("lsp-inlayhints").setup({
-                inlay_hints = {
-                    highlight = "Comment",
-                    labels_separator = " ⏐ ",
-                    parameter_hints = {
-                        prefix = "",
-                    },
-                    type_hints = {
-                        prefix = "=> ",
-                        remove_colon_start = true,
-                    },
-                },
-            })
         end,
     })
 
@@ -176,15 +153,7 @@ return packer.startup(function(use)
     use("kaiuri/nvim-juliana")
 
     use({ "rebelot/kanagawa.nvim" })
-    -- use({
-    --     "navarasu/onedark.nvim",
-    --     config = function()
-    --         require("onedark").setup({
-    --             style = "warmer",
-    --         })
-    --         require("onedark").load()
-    --     end,
-    -- })
+
     use("EdenEast/nightfox.nvim")
 
     use({
@@ -270,7 +239,7 @@ return packer.startup(function(use)
             })
             require("treesitter-context").setup({
                 multiline_threshold = 4,
-                separator = { "─", "ContextBorder" }, -- alternatives: ▁ ─ ▄
+                separator = { "▄", "ContextBorder" }, -- alternatives: ▁ ─ ▄
                 mode = "topline",
             })
         end,
@@ -374,24 +343,27 @@ return packer.startup(function(use)
 
     use({
         "zbirenbaum/copilot.lua",
+        opt = true,
         event = { "VimEnter" },
         config = function()
-            vim.defer_fn(function()
+            vim.schedule(function()
                 require("copilot").setup()
-            end, 100)
+            end)
         end,
     })
 
     use({
         "zbirenbaum/copilot-cmp",
-        after = { "copilot.lua" },
+        requires = { "copilot.lua", opt = true },
+        opt = true,
         config = function()
             require("copilot-cmp").setup({
                 method = "getCompletionsCycling",
                 force_autofmt = false,
                 formatters = {
                     label = require("copilot_cmp.format").format_label_text,
-                    insert_text = require("copilot_cmp.format").format_label_text,
+                    -- insert_text = require("copilot_cmp.format").format_label_text,
+                    insert_text = require("copilot_cmp.format").remove_existing,
                     preview = require("copilot_cmp.format").deindent,
                 },
             })

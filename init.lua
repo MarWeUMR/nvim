@@ -40,7 +40,6 @@ else
     require("plugins/comments")
     require("plugins/nvim-tree")
     require("plugins/whichkey_conf")
-    -- require("plugins/mason")
     require("plugins/neogit")
     require("plugins/bufferline")
     require("plugins/leap")
@@ -57,7 +56,7 @@ else
 if vim.g.neovide then
     vim.g.gui_font_default_size = 18
     vim.g.gui_font_size = vim.g.gui_font_default_size
-    vim.g.gui_font_face = "JetbrainsMono Nerd Font"
+    vim.g.gui_font_face = "Liga SFMono Nerd Font"
     -- vim.opt.guifont = { "JetbrainsMono Nerd Font", ":h18" }
     -- vim.g.neovide_refresh_rate_idle = 60
     vim.g.neovide_no_idle= true
