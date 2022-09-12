@@ -161,6 +161,7 @@ return packer.startup(function(use)
     ---- COLOR SCHEMES {{{
     --------------------------------------------------------------------------------
 
+    use({ "sam4llis/nvim-tundra" })
     use("olimorris/onedarkpro.nvim")
 
     use({
