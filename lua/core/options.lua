@@ -26,7 +26,6 @@ opt.completeopt = "menuone,noinsert,noselect" -- Autocomplete options
 -----------------------------------------------------------
 
 
--- cmd("colorscheme doom-one")
 
 opt.number = true -- Show line number
 opt.relativenumber = true -- Show line number

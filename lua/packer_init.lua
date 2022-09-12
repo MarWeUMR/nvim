@@ -55,17 +55,42 @@ return packer.startup(function(use)
 
     use({
         "hrsh7th/nvim-cmp",
+        module = "cmp",
+        event = "InsertEnter",
+        config = conf("cmp"),
         requires = {
-            "hrsh7th/cmp-nvim-lsp",
-            "hrsh7th/cmp-buffer",
-            "hrsh7th/cmp-path",
-            "onsails/lspkind-nvim",
+            { "hrsh7th/cmp-nvim-lsp" },
+            { "hrsh7th/cmp-nvim-lsp-document-symbol", after = "nvim-cmp" },
+            -- { "hrsh7th/cmp-cmdline", after = "nvim-cmp" },
+            -- { "f3fora/cmp-spell", after = "nvim-cmp" },
+            { "hrsh7th/cmp-path", after = "nvim-cmp" },
+            { "hrsh7th/cmp-buffer", after = "nvim-cmp" },
+            -- { "hrsh7th/cmp-emoji", after = "nvim-cmp" },
+            -- { "rcarriga/cmp-dap", after = "nvim-cmp" },
+            { "saadparwaiz1/cmp_luasnip", after = "nvim-cmp" },
             {
                 "L3MON4D3/LuaSnip",
                 requires = { "rafamadriz/friendly-snippets" },
             },
+            -- { "dmitmel/cmp-cmdline-history", after = "nvim-cmp" },
+            -- { "lukas-reineke/cmp-rg", tag = "*", after = "nvim-cmp" },
         },
     })
+
+    -- use({
+    --     "hrsh7th/nvim-cmp",
+    --     requires = {
+    --         "hrsh7th/cmp-nvim-lsp",
+    --         "hrsh7th/cmp-buffer",
+    --         "hrsh7th/cmp-path",
+    --         "onsails/lspkind-nvim",
+    --         {
+    --             "L3MON4D3/LuaSnip",
+    --             requires = { "rafamadriz/friendly-snippets" },
+    --         },
+    --     },
+    --     config = conf('cmp2')
+    -- })
 
     --------------------------------------------------------------------------------
     -- LSP {{{
@@ -358,14 +383,14 @@ return packer.startup(function(use)
         opt = true,
         config = function()
             require("copilot-cmp").setup({
-                method = "getCompletionsCycling",
-                force_autofmt = false,
-                formatters = {
-                    label = require("copilot_cmp.format").format_label_text,
-                    -- insert_text = require("copilot_cmp.format").format_label_text,
-                    insert_text = require("copilot_cmp.format").remove_existing,
-                    preview = require("copilot_cmp.format").deindent,
-                },
+                -- method = "getCompletionsCycling",
+                -- force_autofmt = false,
+                -- formatters = {
+                --     label = require("copilot_cmp.format").format_label_text,
+                --     insert_text = require("copilot_cmp.format").format_label_text,
+                --     -- insert_text = require("copilot_cmp.format").remove_existing,
+                --     preview = require("copilot_cmp.format").deindent,
+                -- },
             })
         end,
     })
