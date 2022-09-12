@@ -463,6 +463,23 @@ local function colorscheme_overrides()
             -- TODO: set ColorColumn instead as this normally links to that
             { Headline = { background = { from = "Normal", alter = 20 } } },
         },
+        ["nordfox"] = {
+            { Normal = { fg = "#C1C1C1" } }, -- TODO: Upstream normal foreground color
+            { Constant = { bold = true } },
+            { NonText = { fg = { from = "Comment" } } },
+            { LineNr = { background = "NONE" } },
+            { TabLineSel = { background = { from = "SpecialKey", attr = "fg" } } },
+            { VisibleTab = { background = { from = "Normal", alter = 20 }, bold = true } },
+            { commentTSConstant = { inherit = "Constant", bold = true } },
+            { luaTSConstructor = { inherit = "Type", italic = false, bold = false } },
+            { PanelBackground = { link = "Normal" } },
+            { PanelWinSeparator = { inherit = "PanelBackground", fg = { from = "WinSeparator" } } },
+            { PanelHeading = { bg = "bg", bold = true, fg = { from = "Normal", alter = -30 } } },
+            { PanelDarkBackground = { background = { from = "Normal", alter = -25 } } },
+            { PanelDarkHeading = { inherit = "PanelDarkBackground", bold = true } },
+            -- TODO: set ColorColumn instead as this normally links to that
+            { Headline = { background = { from = "Normal", alter = 20 } } },
+        },
     }
     local hls = overrides[vim.g.colors_name]
     if not hls then
