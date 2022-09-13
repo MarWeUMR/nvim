@@ -113,9 +113,7 @@ return packer.startup(function(use)
     use("neovim/nvim-lspconfig")
     use("jose-elias-alvarez/null-ls.nvim")
 
-    -- 	"folke/lua-dev.nvim",
     -- 	--"ray-x/lsp_signature.nvim",
-    -- 	-- {"simrat39/rust-tools.nvim", branch = "modularize_and_inlay_rewrite" },
     -- })
 
     use({ "j-hui/fidget.nvim" })
@@ -160,14 +158,21 @@ return packer.startup(function(use)
     --------------------------------------------------------------------------------
     ---- COLOR SCHEMES {{{
     --------------------------------------------------------------------------------
-
+    use({ "sainnhe/everforest" })
+    use({
+        "sainnhe/edge",
+        config = function()
+            vim.g.edge_style = "neon"
+            vim.g.edge_better_performance = 1
+        end,
+    })
     use({ "sam4llis/nvim-tundra" })
     use("olimorris/onedarkpro.nvim")
 
     use({
         "rafamadriz/neon",
         config = function()
-            vim.g.neon_style = "doom"
+            vim.g.neon_style = "default"
             vim.g.neon_italic_keyword = true
             vim.g.neon_italic_function = true
             vim.g.neon_transparent = true
@@ -360,6 +365,7 @@ return packer.startup(function(use)
 
     use({
         "folke/which-key.nvim",
+        config = conf('whichkey_conf')
     })
 
     use({ "ggandor/leap.nvim" })

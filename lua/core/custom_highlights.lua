@@ -398,6 +398,7 @@ local sidebar_fts = {
     "dbui",
     "neotest-summary",
     "pr",
+    "nvim-tree",
 }
 
 local function on_sidebar_enter()
@@ -438,6 +439,14 @@ local function colorscheme_overrides()
             { NeoTreeIndentMarker = { link = "Comment" } },
             { NeoTreeRootName = { bold = true, italic = true, foreground = "LightMagenta" } },
         },
+        ["neon"] = {
+            { TSNamespace = { foreground = P.blue } },
+            { TSVariable = { foreground = { from = "Normal" } } },
+            { CursorLineNr = { foreground = { from = "Keyword" } } },
+            { LineNr = { background = "NONE" } },
+            { NeoTreeIndentMarker = { link = "Comment" } },
+            { NeoTreeRootName = { bold = true, italic = true, foreground = "LightMagenta" } },
+        },
         ["doom-one"] = {
             { TSNamespace = { foreground = P.blue } },
             { TSVariable = { foreground = { from = "Normal" } } },
@@ -463,7 +472,8 @@ local function colorscheme_overrides()
             -- TODO: set ColorColumn instead as this normally links to that
             { Headline = { background = { from = "Normal", alter = 20 } } },
         },
-        ["nordfox"] = {
+        ["kanagawa"] = {
+            { TSVariable = { foreground = { from = "Normal" } } },
             { Normal = { fg = "#C1C1C1" } }, -- TODO: Upstream normal foreground color
             { Constant = { bold = true } },
             { NonText = { fg = { from = "Comment" } } },
@@ -514,7 +524,7 @@ core.augroup("UserHighlights", {
 -----------------------------------------------------------------------------//
 -- Color Scheme {{{1
 -----------------------------------------------------------------------------//
-local ok, msg = pcall(vim.cmd.colorscheme, "nordfox")
+local ok, msg = pcall(vim.cmd.colorscheme, "doom-one")
 if not ok then
     vim.schedule(function()
         vim.notify(fmt("Theme failed to load because: %s", msg), "error")

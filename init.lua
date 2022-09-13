@@ -39,7 +39,6 @@ else
     require("plugins/cmp")
     require("plugins/comments")
     require("plugins/nvim-tree")
-    require("plugins/whichkey_conf")
     require("plugins/neogit")
     require("plugins/bufferline")
     require("plugins/leap")
