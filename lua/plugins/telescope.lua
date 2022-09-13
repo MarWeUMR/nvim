@@ -30,8 +30,8 @@ function M.config()
     local H = require("core.custom_highlights")
     local telescope = require("telescope")
     local actions = require("telescope.actions")
+    local previewers = require("telescope.previewers")
     local layout_actions = require("telescope.actions.layout")
-    -- local which_key = require("which-key")
     local icons = core.style.icons
     local P = core.style.palette
     local fmt, fn = string.format, vim.fn
@@ -189,14 +189,8 @@ function M.config()
             colorscheme = {
                 enable_preview = true,
             },
-            find_files = {
-                hidden = true,
-            },
-            keymaps = core.telescope.dropdown({
-                layout_config = {
-                    height = 18,
-                    width = 0.5,
-                },
+            find_files = core.telescope.ivy({
+                previewer = previewers.cat.new,
             }),
             git_branches = core.telescope.dropdown(),
             git_bcommits = {
@@ -218,8 +212,7 @@ function M.config()
     })
 
     --- This is used to activate the projects.nvim integration
-    telescope.load_extension('projects')
-
+    telescope.load_extension("projects")
 
     --- NOTE: this must be required after setting up telescope
     --- otherwise the result will be cached without the updates
@@ -331,45 +324,7 @@ function M.config()
         })
     end
 
-    -- which_key.register({
-    --     ["<c-p>"] = { project_files, "telescope: find files" },
-    --     ["<leader>f"] = {
-    --         name = "+telescope",
-    --         a = { pickers, "builtins" },
-    --         b = { builtins.current_buffer_fuzzy_find, "current buffer fuzzy find" },
-    --         n = { notifications, "notifications" },
-    --         v = {
-    --             name = "+vim",
-    --             h = { builtins.highlights, "highlights" },
-    --             a = { builtins.autocommands, "autocommands" },
-    --             o = { builtins.vim_options, "options" },
-    --         },
-    --         l = {
-    --             name = "+lsp",
-    --             e = { builtins.diagnostics, "telescope: workspace diagnostics" },
-    --             d = { builtins.lsp_document_symbols, "telescope: document symbols" },
-    --             s = { builtins.lsp_dynamic_workspace_symbols, "telescope: workspace symbols" },
-    --         },
-    --         L = { luasnips, "luasnip: available snippets" },
-    --         p = { installed_plugins, "plugins" },
-    --         r = { builtins.resume, "resume last picker" },
-    --         ["?"] = { builtins.help_tags, "help" },
-    --         f = { find_files, "find files" },
-    --         fn = { find_near_files, "find near files" },
-    --         h = { frecency, "Most (f)recently used files" },
-    --         g = {
-    --             name = "+git",
-    --             b = { builtins.git_branches, "branches" },
-    --             c = { delta_git_commits, "commits" },
-    --             B = { delta_git_bcommits, "buffer commits" },
-    --         },
-    --         o = { buffers, "buffers" },
-    --         s = { live_grep, "live grep" },
-    --         d = { dotfiles, "dotfiles" },
-    --         c = { nvim_config, "nvim config" },
-    --     },
-    -- })
-
+    
     vim.api.nvim_exec_autocmds("User", { pattern = "TelescopeConfigComplete", modeline = false })
 end
 

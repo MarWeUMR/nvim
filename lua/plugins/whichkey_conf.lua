@@ -12,7 +12,9 @@ return function()
 
     local wk = require("which-key")
 
+    -- local telescope = require("telescope")
     local builtins = require("telescope.builtin")
+    -- local previewers = require("telescope.previewers")
     local telescope_themes = require("telescope.themes")
     local setup = {}
     local mappings = {
@@ -23,13 +25,12 @@ return function()
 
         ["a"] = { "<cmd>Alpha<cr>", "Alpha" },
         ["b"] = {
-            builtins.buffers(telescope_themes.get_dropdown({ previewer = true })),
+            builtins.buffers(telescope_themes.get_dropdown({})),
             "Buffers",
         },
         ["e"] = { "<cmd>NvimTreeToggle<cr>", "Explorer" },
         ["o"] = { ":AerialToggle<cr>", "Outline" },
-        ["F"] = { "<cmd>Telescope live_grep theme=ivy<cr>", "Find Text" },
-        ["P"] = { "<cmd>Telescope projects<cr>", "Projects" },
+        ["p"] = { "<cmd>Telescope projects theme=ivy<cr>", "Projects" },
         ["z"] = { "<cmd>ZenMode<cr>", "Zen-Mode" },
 
         --         -----------------
@@ -38,8 +39,8 @@ return function()
 
         f = {
             name = "file",
-            f = { "<cmd>Telescope find_files<cr>", "Find File" }, -- create a binding with label
-            F = { "<cmd>Telescope live_grep theme=ivy<cr>", "Find Text" },
+            f = { builtins.find_files, "Find Files" }, -- create a binding with label
+            F = { builtins.live_grep, "Find Text" },
             b = { builtins.current_buffer_fuzzy_find, "current buffer fuzzy find" },
             v = {
                 name = "+vim",
@@ -57,6 +58,7 @@ return function()
             r = { "<cmd>Telescope oldfiles<cr>", "Open Recent File" },
             R = { "<cmd>Telescope registers<cr>", "Registers" },
             k = { "<cmd>Telescope keymaps<cr>", "Keymaps" },
+            m = { "<cmd>Telescope marks<cr>", "Marks" },
             C = { "<cmd>Telescope commands<cr>", "Commands" },
         },
 
