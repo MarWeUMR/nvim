@@ -25,7 +25,7 @@ return function()
 
         ["a"] = { "<cmd>Alpha<cr>", "Alpha" },
         ["b"] = {
-            builtins.buffers(telescope_themes.get_dropdown({})),
+            builtins.buffers,
             "Buffers",
         },
         ["e"] = { "<cmd>NvimTreeToggle<cr>", "Explorer" },

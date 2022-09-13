@@ -190,7 +190,7 @@ function M.config()
                 enable_preview = true,
             },
             find_files = core.telescope.ivy({
-                previewer = previewers.cat.new,
+                -- previewer = previewers.cat.new,
             }),
             git_branches = core.telescope.dropdown(),
             git_bcommits = {
@@ -283,10 +283,6 @@ function M.config()
         builtins.builtin({ include_extensions = true })
     end
 
-    local function find_files()
-        builtins.find_files()
-    end
-
     local function buffers()
         builtins.buffers()
     end
@@ -324,7 +320,6 @@ function M.config()
         })
     end
 
-    
     vim.api.nvim_exec_autocmds("User", { pattern = "TelescopeConfigComplete", modeline = false })
 end
 

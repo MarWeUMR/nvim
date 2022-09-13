@@ -365,7 +365,7 @@ return packer.startup(function(use)
 
     use({
         "folke/which-key.nvim",
-        config = conf('whichkey_conf')
+        config = conf("whichkey_conf"),
     })
 
     use({ "ggandor/leap.nvim" })
@@ -393,21 +393,19 @@ return packer.startup(function(use)
 
     use({
         "zbirenbaum/copilot.lua",
-        opt = true,
         event = { "VimEnter" },
         config = function()
-            vim.schedule(function()
+            vim.defer_fn(function()
                 require("copilot").setup()
-            end)
+            end, 100)
         end,
     })
 
     use({
         "zbirenbaum/copilot-cmp",
-        requires = { "copilot.lua", opt = true },
-        opt = true,
+        module = "copilot_cmp",
         config = function()
-            require("copilot-cmp").setup({
+            require("copilot_cmp").setup({
                 -- method = "getCompletionsCycling",
                 -- force_autofmt = false,
                 -- formatters = {
