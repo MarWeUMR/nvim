@@ -58,7 +58,7 @@ function M.config()
                 {
                     TelescopeSelectionCaret = {
                         fg = { from = "Identifier" },
-                        bg = { from = "TelescopeSelection" },
+                        -- bg = { from = "TelescopeSelection" },
                     },
                 },
             },

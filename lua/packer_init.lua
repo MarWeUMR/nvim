@@ -157,16 +157,7 @@ return packer.startup(function(use)
     --------------------------------------------------------------------------------
     ---- COLOR SCHEMES {{{
     --------------------------------------------------------------------------------
-    use({
-        "rose-pine/neovim",
-        as = "rose-pine",
-        tag = "v1.*",
-        config = function()
-            require("rose-pine").setup({
-                dark_variant = "moon", -- 'main' or 'moon'
-            })
-        end,
-    })
+
     use({ "sainnhe/everforest" })
     use({
         "sainnhe/gruvbox-material",
