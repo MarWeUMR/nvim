@@ -1,7 +1,6 @@
 -----------------------------------------------------------
 -- Plugin manager configuration file {{{
 -----------------------------------------------------------
-
 local utils = require("core.utils.plugins")
 
 local conf = utils.conf
@@ -111,7 +110,7 @@ return packer.startup(function(use)
     })
 
     use("neovim/nvim-lspconfig")
-    use("jose-elias-alvarez/null-ls.nvim")
+    use({ "jose-elias-alvarez/null-ls.nvim", commit = "cdef04dfad2d1a6d76f596ac63600e7430baaabe" })
 
     -- 	--"ray-x/lsp_signature.nvim",
     -- })
@@ -158,7 +157,26 @@ return packer.startup(function(use)
     --------------------------------------------------------------------------------
     ---- COLOR SCHEMES {{{
     --------------------------------------------------------------------------------
+    use({
+        "rose-pine/neovim",
+        as = "rose-pine",
+        tag = "v1.*",
+        config = function()
+            require("rose-pine").setup({
+                dark_variant = "moon", -- 'main' or 'moon'
+            })
+        end,
+    })
     use({ "sainnhe/everforest" })
+    use({
+        "sainnhe/gruvbox-material",
+
+        config = function()
+            vim.g.gruvbox_material_background = "hard"
+            vim.g.gruvbox_material_foreground = "original"
+            vim.g.gruvbox_material_better_performance = 1
+        end,
+    })
     use({
         "sainnhe/edge",
         config = function()
@@ -354,10 +372,13 @@ return packer.startup(function(use)
     -- Autopair
     use({
         "windwp/nvim-autopairs",
-        event = "InsertCharPre",
         after = "nvim-cmp",
         config = function()
-            require("nvim-autopairs").setup({})
+            require("nvim-autopairs").setup()
+            -- If you want insert `(` after select function or method item
+            local cmp_autopairs = require("nvim-autopairs.completion.cmp")
+            local cmp = require("cmp")
+            cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done({ map_char = { tex = "" } }))
         end,
     })
 
@@ -404,17 +425,9 @@ return packer.startup(function(use)
     use({
         "zbirenbaum/copilot-cmp",
         module = "copilot_cmp",
+        after = { "copilot.lua" },
         config = function()
-            require("copilot_cmp").setup({
-                -- method = "getCompletionsCycling",
-                -- force_autofmt = false,
-                -- formatters = {
-                --     label = require("copilot_cmp.format").format_label_text,
-                --     insert_text = require("copilot_cmp.format").format_label_text,
-                --     -- insert_text = require("copilot_cmp.format").remove_existing,
-                --     preview = require("copilot_cmp.format").deindent,
-                -- },
-            })
+            require("copilot_cmp").setup()
         end,
     })
 

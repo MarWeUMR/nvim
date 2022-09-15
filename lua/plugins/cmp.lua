@@ -1,5 +1,7 @@
 return function()
     local cmp = require("cmp")
+
+    -- local copilot = require("copilot_cmp")
     local h = require("core.custom_highlights")
     local api, fn = vim.api, vim.fn
     local fmt = string.format
@@ -7,6 +9,7 @@ return function()
     local border = core.style.current.border
     local lsp_hls = core.style.lsp.highlights
     local ellipsis = core.style.icons.misc.ellipsis
+
     local luasnip = require("luasnip")
 
     local kind_hls = core.fold(
@@ -63,6 +66,26 @@ return function()
         }, ","),
     }
     cmp.setup({
+
+        -- cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done()),
+        -- sorting = {
+        --     priority_weight = 2,
+        --     comparators = {
+        --         copilot.comparators.prioritize,
+        --
+        --         -- Below is the default comparitor list and order for nvim-cmp
+        --         cmp.config.compare.offset,
+        --         -- cmp.config.compare.scopes, --this is commented in nvim-cmp too
+        --         cmp.config.compare.exact,
+        --         cmp.config.compare.score,
+        --         cmp.config.compare.recently_used,
+        --         cmp.config.compare.locality,
+        --         cmp.config.compare.kind,
+        --         cmp.config.compare.sort_text,
+        --         cmp.config.compare.length,
+        --         cmp.config.compare.order,
+        --     },
+        -- },
         experimental = { ghost_text = false },
         preselect = cmp.PreselectMode.None,
         window = {
@@ -71,7 +94,7 @@ return function()
         },
         snippet = {
             expand = function(args)
-                require("luasnip").lsp_expand(args.body)
+                luasnip.lsp_expand(args.body)
             end,
         },
         mapping = {
@@ -113,11 +136,13 @@ return function()
                     norg = "[Norg]",
                     rg = "[Rg]",
                     git = "[Git]",
+                    copilot = "[CoPi]",
                 })[entry.source.name]
                 return vim_item
             end,
         },
         sources = cmp.config.sources({
+            { name = "copilot" },
             { name = "nvim_lsp" },
             { name = "luasnip" },
             { name = "path" },

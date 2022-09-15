@@ -182,8 +182,8 @@ function M.config()
                     return { prompt = prompt:gsub("%s", ".*") }
                 end,
             }),
-            current_buffer_fuzzy_find = core.telescope.dropdown({
-                previewer = false,
+            current_buffer_fuzzy_find = core.telescope.ivy({
+                -- previewer = false,
                 shorten_path = false,
             }),
             colorscheme = {
