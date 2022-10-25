@@ -308,6 +308,15 @@ end
 function config.hydra()
   local Hydra = require("hydra")
 
+  local function run(method, args)
+    return function()
+      local dap = require("dap")
+      if dap[method] then
+        dap[method](args)
+      end
+    end
+  end
+
   local dap_hint = [[
                   DAP
   _<CR>_: Dap UI
@@ -325,20 +334,20 @@ function config.hydra()
   Hydra({
     name = "DAP",
     hint = dap_hint,
-    mode = "n",
-    body = "<Leader>d",
+    mode = { "n", "x" },
+    body = "<Space>d",
     config = {
       color = "pink",
       invoke_on_body = true,
     },
     heads = {
-      { "<CR>", "<CMD>lua require('dapui').toggle()<CR>" },
-      { "n", "<CMD>lua require('dap').step_over()<CR>" },
-      { "o", "<CMD>lua require('dap').step_out()<CR>" },
+      { "<CR>", "<CMD>lua require('dapui').toggle()<CR>", { exit = true, nowait = true } },
+      { 'n', run('step_over'), { silent = true } },
+      { 'o', run('step_out'), { silent = true } },
       { "x", "<CMD>lua require('dap').close()<CR>" },
-      { "b", "<CMD>lua require('dap').toggle_breakpoint()<CR>" },
+      { "b", run("toggle_breakpoint"), { silent = true } },
       { "c", "<CMD>lua require('dap').continue()<CR>" },
-      { "i", "<CMD>lua require('dap').step_in()<CR>" },
+      { "i", run("step_into"), { silent = true } },
       { "K", "<CMD>lua require('dap.ui.widgets').hover()<CR>", { exit = true, nowait = true } },
       { "q", "", { exit = true, nowait = true } },
     },
