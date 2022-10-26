@@ -12,6 +12,48 @@ function config.zephyr()
   vim.cmd("colorscheme zephyr")
 end
 
+function config.onedark()
+  require("onedark").setup({
+    style = "warmer",
+  })
+end
+
+function config.themer()
+  require("themer").setup({})
+end
+
+function config.neosolarized()
+  local NeoSolarized = require("NeoSolarized")
+
+  -- Default Setting for NeoSolarized
+
+  NeoSolarized.setup({
+    style = "dark", -- "dark" or "light"
+    transparent = false, -- true/false
+    terminal_colors = true, -- Configure the colors used when opening a `:terminal` in Neovim
+    enable_italics = true, -- Italics for different hightlight groups (eg. Statement, Condition, Comment, Include, etc.)
+    styles = {
+      -- Style for different style groups
+      comments = { italic = true },
+      keywords = { italic = true },
+      functions = { bold = true },
+      variables = {},
+      string = { italic = true },
+      underline = true, -- true/false; for global underline
+      undercurl = true, -- true/false; for global undercurl
+    },
+  })
+  -- Set colorscheme to NeoSolarized
+  --   vim.cmd([[
+  --    try
+  --         colorscheme NeoSolarized
+  --     catch /^Vim\%((\a\+)\)\=:E18o
+  --         colorscheme default
+  --         set background=dark
+  --     endtry
+  -- ]] )
+end
+
 function config.galaxyline()
   require("modules.ui.eviline")
 end
@@ -263,6 +305,11 @@ function config.fidget()
         completed = "Completed", -- message shown when task completes
       },
     },
+    sources = { -- Sources to configure
+      null_ls = { -- Name of source
+        ignore = true, -- Ignore notifications from this source
+      },
+    },
   })
 end
 
@@ -342,8 +389,8 @@ function config.hydra()
     },
     heads = {
       { "<CR>", "<CMD>lua require('dapui').toggle()<CR>", { exit = true, nowait = true } },
-      { 'n', run('step_over'), { silent = true } },
-      { 'o', run('step_out'), { silent = true } },
+      { "n", run("step_over"), { silent = true } },
+      { "o", run("step_out"), { silent = true } },
       { "x", "<CMD>lua require('dap').close()<CR>" },
       { "b", run("toggle_breakpoint"), { silent = true } },
       { "c", "<CMD>lua require('dap').continue()<CR>" },
@@ -353,5 +400,6 @@ function config.hydra()
     },
   })
 end
+
 
 return config

@@ -1,5 +1,3 @@
--- TODO: lspkind, cmp menu customizations
-
 local config = {}
 
 function config.nvim_lsp()

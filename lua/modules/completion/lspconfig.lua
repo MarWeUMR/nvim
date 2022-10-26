@@ -1,4 +1,3 @@
--- TODO: rust-tools -> runnables display
 
 local lspconfig = require("lspconfig")
 

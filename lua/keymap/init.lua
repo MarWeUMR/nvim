@@ -44,8 +44,13 @@ nmap({
 	{ "<Leader>lF", cmd("Lspsaga show_line_diagnostics"), opts(noremap, silent) },
 	{ "<Leader>9", cmd("Lspsaga diagnostic_jump_next"), opts(noremap, silent) },
 	{ "<Leader>8", cmd("Lspsaga diagnostic_jump_prev"), opts(noremap, silent) },
-	-- { "<Leader>du", cmd("dapui toggle"), opts(noremap, silent) },
+  -- Trouble
+	{ "<Leader>xx", cmd("TroubleToggle"), opts(noremap, silent) },
+  -- GitSigns
+	{ "<Leader>xx", cmd("TroubleToggle"), opts(noremap, silent) },
+
 })
 
--- DAP
-map("n", "<Leader>du", "<CMD>lua require('dapui').toggle()<CR>" )
+-- map("n", "<Leader>du", "<CMD>lua require('dapui').toggle()<CR>" )
+
+-- 

@@ -1,45 +1,43 @@
--- TODO: ufo
-
 local plugin = require("core.pack").register_plugin
 local conf = require("modules.tools.config")
 
 plugin({
-	"nvim-lua/plenary.nvim",
+  "nvim-lua/plenary.nvim",
 })
 
 plugin({
-	"nvim-telescope/telescope.nvim",
-	-- cmd = 'Telescope',
-	config = conf.telescope,
-	requires = {
-		{ "nvim-lua/plenary.nvim" },
-		{ "nvim-telescope/telescope-fzy-native.nvim" },
-	},
+  "nvim-telescope/telescope.nvim",
+  config = conf.telescope,
+  requires = {
+    { "nvim-lua/plenary.nvim" },
+    { "nvim-telescope/telescope-fzy-native.nvim" },
+  },
 })
 
 plugin({
-	"ggandor/leap.nvim",
-	config = conf.leap,
+  "ggandor/leap.nvim",
+  config = conf.leap,
 })
 
 plugin({
-	"ggandor/flit.nvim",
-	config = conf.flit,
+  "ggandor/flit.nvim",
+  config = conf.flit,
 })
 
 plugin({
-	"max397574/better-escape.nvim",
-	config = conf.better_escape,
+  "max397574/better-escape.nvim",
+  config = conf.better_escape,
 })
 
 plugin({
-	"numToStr/Comment.nvim",
-	config = conf.comments,
+  "numToStr/Comment.nvim",
+  config = conf.comments,
 })
 
 plugin({
-	"lewis6991/gitsigns.nvim",
-	config = conf.gitsigns,
+  "lewis6991/gitsigns.nvim",
+event = "BufRead",
+  config = conf.gitsigns,
 })
 
 -- dap
@@ -48,10 +46,17 @@ plugin({
   config = conf.dap_ui,
 })
 
-plugin({"mfussenegger/nvim-dap",
-config = conf.dap,
-requires = {
-  { "theHamsta/nvim-dap-virtual-text" },
-  { "rcarriga/nvim-dap-ui" },
-},
+plugin({
+  "mfussenegger/nvim-dap",
+  config = conf.dap,
+  requires = {
+    { "theHamsta/nvim-dap-virtual-text" },
+    { "rcarriga/nvim-dap-ui" },
+  },
+})
+
+plugin({
+  "folke/trouble.nvim",
+  requires = "kyazdani42/nvim-web-devicons",
+  config = conf.trouble,
 })
