@@ -46,3 +46,4 @@ plugin({ "windwp/nvim-autopairs", event = "InsertEnter", config = conf.auto_pair
 -- plugin({ "github/copilot.vim" })
 plugin({ "zbirenbaum/copilot.lua", event = "VimEnter", config = conf.copilot })
 plugin({ "zbirenbaum/copilot-cmp", after = { "copilot.lua" }, config = conf.copilot_cmp })
+plugin({"jose-elias-alvarez/typescript.nvim"})

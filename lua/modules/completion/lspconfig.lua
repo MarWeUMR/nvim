@@ -1,34 +1,15 @@
-
 local lspconfig = require("lspconfig")
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 
--- local lsp_formatting = function(bufnr)
--- 	vim.lsp.buf.format({
--- 		filter = function(client)
--- 			-- apply whatever logic you want (in this example, we'll only use null-ls)
--- 			return client.name == "null-ls"
--- 		end,
--- 		bufnr = bufnr,
--- 	})
--- end
---
--- -- if you want to set up formatting on save, you can use this as a callback
--- local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
---
--- -- add to your shared on_attach callback
--- local on_attach = function(client, bufnr)
--- 	if client.supports_method("textDocument/formatting") then
--- 		vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
--- 		vim.api.nvim_create_autocmd("BufWritePre", {
--- 			group = augroup,
--- 			buffer = bufnr,
--- 			callback = function()
--- 				lsp_formatting(bufnr)
--- 			end,
--- 		})
--- 	end
--- end
+local handlers = {
+  ["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "rounded" }),
+  ["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = "rounded" }),
+  ["textDocument/publishDiagnostics"] = vim.lsp.with(
+    vim.lsp.diagnostic.on_publish_diagnostics,
+    { virtual_text = true }
+  ),
+}
 
 if not packer_plugins["cmp-nvim-lsp"].loaded then
   vim.cmd([[packadd cmp-nvim-lsp]])
@@ -58,6 +39,7 @@ vim.diagnostic.config({
 })
 
 lspconfig.sumneko_lua.setup({
+  handlers = handlers,
   on_attach = function(_, bufnr)
     vim.keymap.set("n", "<space>lf", function()
       vim.lsp.buf.format({ async = true })
@@ -83,9 +65,9 @@ lspconfig.sumneko_lua.setup({
 
 local rt = require("rust-tools")
 
-local extension_path = '/Users/marcus/.vscode-insiders/extensions/vadimcn.vscode-lldb-1.8.1/'
-local codelldb_path = extension_path .. 'adapter/codelldb'
-local liblldb_path = extension_path .. 'lldb/lib/liblldb.dylib'
+local extension_path = "/Users/marcus/.vscode-insiders/extensions/vadimcn.vscode-lldb-1.8.1/"
+local codelldb_path = extension_path .. "adapter/codelldb"
+local liblldb_path = extension_path .. "lldb/lib/liblldb.dylib"
 
 local rust_opts = {
   tools = { -- rust-tools options
@@ -164,6 +146,7 @@ local rust_opts = {
   -- these override the defaults set by rust-tools.nvim
   -- see https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md#rust_analyzer
   server = {
+    handlers = handlers,
     capabilities = capabilities,
     on_attach = function(_, bufnr)
       -- Hover actions
@@ -185,9 +168,8 @@ local rust_opts = {
 
   -- debugging stuff
   dap = {
-        adapter = require('rust-tools.dap').get_codelldb_adapter(
-            codelldb_path, liblldb_path)
-    }
+    adapter = require("rust-tools.dap").get_codelldb_adapter(codelldb_path, liblldb_path),
+  },
   -- dap = {
   --   adapter = {
   --     type = "executable",
@@ -199,25 +181,19 @@ local rust_opts = {
 
 rt.setup(rust_opts)
 
--- lspconfig.rust_analyzer.setup({
---   capabilities = capabilities,
---   settings = {
---     imports = {
---       granularity = {
---         group = 'module',
---       },
---       prefix = 'self',
---     },
---     cargo = {
---       buildScripts = {
---         enable = true,
---       },
---     },
---     procMacro = {
---       enable = true,
---     },
---   },
--- })
+
+-- It enables tsserver automatically so no need to call lspconfig.tsserver.setup
+require("typescript").setup({
+  disable_commands = false, -- prevent the plugin from creating Vim commands
+  debug = false, -- enable debug logging for commands
+  -- LSP Config options
+  server = {
+    capabilities = require("modules.completion.tsserver").capabilities,
+    handlers = require("modules.completion.tsserver").handlers,
+    on_attach = require("modules.completion.tsserver").on_attach,
+    settings = require("modules.completion.tsserver").settings,
+  },
+})
 
 -- local servers = {
 --   'pyright',
