@@ -42,15 +42,15 @@ plugin({ "j-hui/fidget.nvim", config = conf.fidget })
 
 plugin({ "rcarriga/nvim-notify", config = conf.notify })
 
-plugin({
-  "folke/noice.nvim",
-  config = conf.noice,
-  event = "VimEnter",
-  requires = {
-    { "MunifTanjim/nui.nvim" },
-    { "rcarriga/nvim-notify" },
-  },
-})
+-- plugin({
+--   "folke/noice.nvim",
+--   config = conf.noice,
+--   event = "VimEnter",
+--   requires = {
+--     { "MunifTanjim/nui.nvim" },
+--     { "rcarriga/nvim-notify" },
+--   },
+-- })
 
 plugin({ "anuvyklack/hydra.nvim", config = conf.hydra })
 plugin({ "Tsuzat/NeoSolarized.nvim", config = conf.neosolarized })

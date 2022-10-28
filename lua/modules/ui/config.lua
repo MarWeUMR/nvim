@@ -317,40 +317,88 @@ function config.notify()
   require("notify").setup({})
 end
 
-function config.noice()
-  require("noice").setup({
-    views = {
-      cmdline_popup = {
-        position = {
-          row = 5,
-          col = "50%",
-        },
-        size = {
-          width = 60,
-          height = "auto",
-        },
-      },
-      popupmenu = {
-        position = {
-          row = 8,
-          col = "50%",
-        },
-        relative = "editor",
-        size = {
-          width = 60,
-          height = 10,
-        },
-        border = {
-          style = "rounded",
-          padding = { 0, 1 },
-        },
-        win_options = {
-          winhighlight = { Normal = "Normal", FloatBorder = "DiagnosticInfo" },
-        },
-      },
-    },
-  })
-end
+-- function config.noice()
+--   require("noice").setup({
+--     views = {
+--       cmdline_popup = {
+--         position = {
+--           row = 5,
+--           col = "50%",
+--         },
+--         size = {
+--           width = 60,
+--           height = "auto",
+--         },
+--       },
+--       popupmenu = {
+--         position = {
+--           row = 8,
+--           col = "50%",
+--         },
+--         relative = "editor",
+--         size = {
+--           width = 60,
+--           height = 10,
+--         },
+--         border = {
+--           style = "rounded",
+--           padding = { 0, 1 },
+--         },
+--         win_options = {
+--           winhighlight = { Normal = "Normal", FloatBorder = "DiagnosticInfo" },
+--         },
+--       },
+--     },
+--     routes = {
+--       {
+--         filter = {
+--           event = "msg_show",
+--           kind = " ",
+--           find = "written",
+--         },
+--         opts = { skip = true },
+--       },
+--     },
+--     lsp = {
+--         progress = {
+--           enabled = false,
+--           -- Lsp Progress is formatted using the builtins for lsp_progress. See config.format.builtin
+--           -- See the section on formatting for more details on how to customize.
+--           --- @type NoiceFormat|string
+--           format = "lsp_progress",
+--           --- @type NoiceFormat|string
+--           format_done = "lsp_progress_done",
+--           throttle = 1000 / 30, -- frequency to update lsp progress message
+--           view = "mini",
+--         },
+--         hover = {
+--           enabled = true,
+--           view = nil, -- when nil, use defaults from documentation
+--           ---@type NoiceViewOptions
+--           opts = {}, -- merged with defaults from documentation
+--         },
+--         signature = {
+--           enabled = true,
+--           auto_open = true, -- Automatically show signature help when typing a trigger character from the LSP
+--           view = nil, -- when nil, use defaults from documentation
+--           ---@type NoiceViewOptions
+--           opts = {}, -- merged with defaults from documentation
+--         },
+--         -- defaults for hover and signature help
+--         documentation = {
+--           view = "hover",
+--           ---@type NoiceViewOptions
+--           opts = {
+--             lang = "markdown",
+--             replace = true,
+--             render = "plain",
+--             format = { "{message}" },
+--             win_options = { concealcursor = "n", conceallevel = 3 },
+--           },
+--         },
+--       },
+--   })
+-- end
 
 function config.hydra()
   local Hydra = require("hydra")
@@ -400,6 +448,5 @@ function config.hydra()
     },
   })
 end
-
 
 return config
