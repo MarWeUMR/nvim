@@ -296,21 +296,7 @@ function config.neo_tree()
 end
 
 function config.fidget()
-  require("fidget").setup({
-    options = {
-      text = {
-        spinner = "pipe", -- animation shown when tasks are ongoing
-        done = "", -- character shown when all tasks are complete
-        commenced = "Started", -- message shown when task starts
-        completed = "Completed", -- message shown when task completes
-      },
-    },
-    sources = { -- Sources to configure
-      null_ls = { -- Name of source
-        ignore = true, -- Ignore notifications from this source
-      },
-    },
-  })
+  require("fidget").setup()
 end
 
 function config.notify()

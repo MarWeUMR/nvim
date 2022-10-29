@@ -170,30 +170,21 @@ local rust_opts = {
   dap = {
     adapter = require("rust-tools.dap").get_codelldb_adapter(codelldb_path, liblldb_path),
   },
-  -- dap = {
-  --   adapter = {
-  --     type = "executable",
-  --     command = "lldb-vscode",
-  --     name = "rt_lldb",
-  --   },
-  -- },
 }
 
 rt.setup(rust_opts)
 
+local ts = require("typescript")
+local ts_opts = {
+  capabilities = require("modules.completion.tsserver").capabilities,
+  handlers = require("modules.completion.tsserver").handlers,
+  on_attach = require("modules.completion.tsserver").on_attach,
+  settings = require("modules.completion.tsserver").settings,
+}
 
 -- It enables tsserver automatically so no need to call lspconfig.tsserver.setup
-require("typescript").setup({
-  disable_commands = false, -- prevent the plugin from creating Vim commands
-  debug = false, -- enable debug logging for commands
-  -- LSP Config options
-  server = {
-    capabilities = require("modules.completion.tsserver").capabilities,
-    handlers = require("modules.completion.tsserver").handlers,
-    on_attach = require("modules.completion.tsserver").on_attach,
-    settings = require("modules.completion.tsserver").settings,
-  },
-})
+ts.setup({ server = ts_opts })
+lspconfig.angularls.setup({})
 
 -- local servers = {
 --   'pyright',

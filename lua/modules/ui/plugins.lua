@@ -16,6 +16,7 @@ plugin({
   -- config = conf.kanagawa
 })
 
+
 plugin({ "glepnir/dashboard-nvim", config = conf.dashboard })
 
 plugin({

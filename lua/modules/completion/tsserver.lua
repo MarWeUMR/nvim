@@ -50,7 +50,6 @@ local on_attach = function(client, bufnr)
 
   buf_set_option("omnifunc", "v:lua.vim.lsp.omnifunc")
 
-  require("lsp-inlayhints").on_attach(client, bufnr)
 end
 
 local function filter(arr, fn)
@@ -81,7 +80,7 @@ local handlers = {
   ["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "rounded" }),
   ["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = "rounded" }),
   ["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics,
-    { virtual_text = "rounded" }),
+    { virtual_text = true }),
   ['textDocument/definition'] = function(err, result, method, ...)
     if vim.tbl_islist(result) and #result > 1 then
       local filtered_result = filter(result, filterReactDTS)
