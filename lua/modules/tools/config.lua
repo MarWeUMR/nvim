@@ -192,4 +192,11 @@ function config.trouble()
   require("trouble").setup({})
 end
 
+function config.toggleterm()
+  require("toggleterm").setup({
+  direction = 'float',
+  open_mapping = [[<c-\>]],
+  })
+end
+
 return config

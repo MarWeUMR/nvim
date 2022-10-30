@@ -2,6 +2,7 @@
 require("keymap.config")
 local key = require("core.keymaps")
 local nmap = key.nmap
+local tmap = key.tmap
 local silent, noremap = key.silent, key.noremap
 local opts = key.new_opts
 local cmd = key.cmd
@@ -49,8 +50,16 @@ nmap({
 	{ "<Leader>xx", cmd("TroubleToggle"), opts(noremap, silent) },
   -- GitSigns
 	{ "<Leader>xx", cmd("TroubleToggle"), opts(noremap, silent) },
+  -- Toggleterm
+	{ "<C-t>", cmd("ToggleTerm"), opts(noremap, silent) },
 
 })
+
+tmap({
+  { "<C-t>", cmd("ToggleTerm"), opts(noremap, silent) },
+  { "<C-t>", cmd("ToggleTerm"), opts(noremap, silent) },
+})
+
 
 -- map("n", "<Leader>du", "<CMD>lua require('dapui').toggle()<CR>" )
 

@@ -60,3 +60,5 @@ plugin({
   requires = "kyazdani42/nvim-web-devicons",
   config = conf.trouble,
 })
+
+plugin({"akinsho/toggleterm.nvim", tag = '*', config = conf.toggleterm})
