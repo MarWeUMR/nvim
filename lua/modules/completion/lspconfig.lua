@@ -47,6 +47,11 @@ lspconfig.sumneko_lua.setup({
     vim.api.nvim_buf_set_option(bufnr, "formatexpr", "v:lua.vim.lsp.formatexpr()")
     vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
     vim.api.nvim_buf_set_option(bufnr, "tagfunc", "v:lua.vim.lsp.tagfunc")
+    local bufopts = { noremap = true, silent = true, buffer = bufnr }
+    vim.keymap.set("n", "gD", vim.lsp.buf.declaration, bufopts)
+    vim.keymap.set("n", "gd", vim.lsp.buf.definition, bufopts)
+    vim.keymap.set("n", "gi", vim.lsp.buf.implementation, bufopts)
+    vim.keymap.set("n", "<space>D", vim.lsp.buf.type_definition, bufopts)
   end,
   capabilities = capabilities,
   settings = {
@@ -149,6 +154,7 @@ local rust_opts = {
     handlers = handlers,
     capabilities = capabilities,
     on_attach = function(_, bufnr)
+      local bufopts = { noremap = true, silent = true, buffer = bufnr }
       -- Hover actions
       vim.keymap.set("n", "<Leader>lh", rt.hover_actions.hover_actions, { buffer = bufnr })
       vim.keymap.set("n", "<Leader>rr", rt.runnables.runnables, { buffer = bufnr })
@@ -157,6 +163,10 @@ local rust_opts = {
       vim.keymap.set("n", "<space>lf", function()
         vim.lsp.buf.format({ async = true })
       end, { buffer = bufnr })
+      vim.keymap.set("n", "gD", vim.lsp.buf.declaration, bufopts)
+      vim.keymap.set("n", "gd", vim.lsp.buf.definition, bufopts)
+      vim.keymap.set("n", "gi", vim.lsp.buf.implementation, bufopts)
+      vim.keymap.set("n", "<space>D", vim.lsp.buf.type_definition, bufopts)
       vim.api.nvim_buf_set_option(bufnr, "formatexpr", "v:lua.vim.lsp.formatexpr()")
       vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
       vim.api.nvim_buf_set_option(bufnr, "tagfunc", "v:lua.vim.lsp.tagfunc")

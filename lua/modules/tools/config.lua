@@ -159,7 +159,7 @@ function config.gitsigns()
     update_debounce = 50,
     _extmark_signs = true,
     _threaded_diff = true,
-    word_diff = true,
+    word_diff = false,
   })
 end
 

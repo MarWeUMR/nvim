@@ -18,6 +18,8 @@ function config.onedark()
   })
 end
 
+
+
 function config.themer()
   require("themer").setup({})
 end

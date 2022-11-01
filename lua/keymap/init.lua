@@ -44,11 +44,10 @@ nmap({
 	{ "<Leader>la", cmd("Lspsaga code_action"), opts(noremap, silent) },
 	{ "<Leader>pd", cmd("Lspsaga peek_definition"), opts(noremap, silent) },
 	{ "<Leader>lF", cmd("Lspsaga show_line_diagnostics"), opts(noremap, silent) },
+	{ "<Leader>lI", cmd("Lspsaga show_cursor_diagnostics"), opts(noremap, silent) },
 	{ "<Leader>9", cmd("Lspsaga diagnostic_jump_next"), opts(noremap, silent) },
 	{ "<Leader>8", cmd("Lspsaga diagnostic_jump_prev"), opts(noremap, silent) },
   -- Trouble
-	{ "<Leader>xx", cmd("TroubleToggle"), opts(noremap, silent) },
-  -- GitSigns
 	{ "<Leader>xx", cmd("TroubleToggle"), opts(noremap, silent) },
   -- Toggleterm
 	{ "<C-t>", cmd("ToggleTerm"), opts(noremap, silent) },
@@ -61,6 +60,5 @@ tmap({
 })
 
 
--- map("n", "<Leader>du", "<CMD>lua require('dapui').toggle()<CR>" )
 
 -- 
