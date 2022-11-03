@@ -18,8 +18,6 @@ function config.onedark()
   })
 end
 
-
-
 function config.themer()
   require("themer").setup({})
 end
@@ -45,60 +43,111 @@ function config.neosolarized()
       undercurl = true, -- true/false; for global undercurl
     },
   })
-  -- Set colorscheme to NeoSolarized
-  --   vim.cmd([[
-  --    try
-  --         colorscheme NeoSolarized
-  --     catch /^Vim\%((\a\+)\)\=:E18o
-  --         colorscheme default
-  --         set background=dark
-  --     endtry
-  -- ]] )
 end
 
 function config.galaxyline()
   require("modules.ui.eviline")
 end
 
-function config.dashboard()
-  -- we need to ensure, that treesitter's vim lang is loaded
-  -- otherwise, commands like :PackerSync dont work on the dashboard
-  -- seems to be related to notify/noice
-  if not packer_plugins["nvim-treesitter"].loaded then
-    vim.cmd([[packadd nvim-treesitter]])
+function config.alpha()
+  local alpha = require("alpha")
+  local dashboard = require("alpha.themes.dashboard")
+  require("alpha.term")
+
+  ASCII_IMAGES_FOLDER = os.getenv("HOME") .. "/.config/nvim/static"
+
+  local function list_files(path, extension)
+    local files = {}
+    local pfile = io.popen("ls " .. path .. "/*" .. extension)
+
+    for filename in pfile:lines() do
+      table.insert(files, filename)
+    end
+
+    return files
   end
 
-  local home = os.getenv("HOME")
-  local db = require("dashboard")
-  db.session_directory = home .. "/.cache/nvim/session"
-  db.preview_file_height = 12
-  db.preview_file_width = 80
-  db.custom_center = {
-    {
-      icon = "  ",
-      desc = "Find File                               ",
-      action = "Telescope find_files find_command=rg,--hidden,--files",
-      shortcut = "SPC f f",
-    },
-    {
-      icon = "  ",
-      desc = "Recently opened files                  ",
-      action = "Telescope oldfiles",
-      shortcut = "SPC f h",
-    },
-    {
-      icon = "  ",
-      desc = "Live grep                              ",
-      action = "Telescope live_grep",
-      shortcut = "SPC f w",
-    },
-    {
-      icon = "  ",
-      desc = "Update Plugins                          ",
-      shortcut = "SPC p u",
-      action = "PackerUpdate",
+  local function get_random_ascii_image(path)
+    math.randomseed(os.clock())
+
+    -- For some reason ls *.(cat|ccat) will not work under vim,
+    -- so gotta ls twice and merge
+
+    local images = list_files(path, ".cat")
+    local colored_images = list_files(path, ".ccat")
+
+    for _, v in pairs(colored_images) do
+      table.insert(images, v)
+    end
+
+    return images[math.random(1, #images)]
+  end
+
+  local function remove_escaped_colors(str)
+    return str:gsub("\27%[[0-9;]*m", "")
+  end
+
+  local function get_ascii_image_dim(path)
+    local width = 0
+    local height = 0
+
+    local pfile = io.open(path, "r")
+
+    for line in pfile:lines() do
+      -- Take into account colored output
+      line = remove_escaped_colors(line)
+      local current_width = vim.fn.strdisplaywidth(line)
+      if current_width > width then
+        width = current_width
+      end
+      height = height + 1
+    end
+    return { width, height }
+  end
+
+  local random_image = get_random_ascii_image(ASCII_IMAGES_FOLDER)
+  local image_width, image_height = unpack(get_ascii_image_dim(random_image))
+
+  local terminal = {
+    type = "terminal",
+    command = "cat | lolcat " .. random_image,
+    width = image_width,
+    height = image_height,
+
+    opts = {
+      redraw = true,
+      window_config = {},
     },
   }
+
+  local buttons = {
+    type = "group",
+    val = {
+      { type = "padding", val = 1 },
+      dashboard.button("SPC r u", "  Recently used", "<cmd>Telescope oldfiles<CR>"),
+      dashboard.button("SPC f f", "  Find file", "<cmd>Telescope find_files<CR>"),
+      dashboard.button("SPC f g", "  Live grep"),
+      dashboard.button("p", "  Projects", "<cmd>Telescope projects<CR>"),
+      dashboard.button("s", "  Sessions", "<cmd>Telescope persisted<CR>"),
+    },
+    position = "center",
+  }
+
+  local conf = {
+    layout = {
+
+      { type = "padding", val = 2 },
+      terminal,
+      { type = "padding", val = 40 },
+      buttons,
+      { type = "padding", val = 1 },
+    },
+    opts = {
+      margin = 5,
+    },
+  }
+
+  alpha.setup(conf)
 end
 
 function config.nvim_bufferline()
@@ -434,6 +483,68 @@ function config.hydra()
       { "K", "<CMD>lua require('dap.ui.widgets').hover()<CR>", { exit = true, nowait = true } },
       { "q", "", { exit = true, nowait = true } },
     },
+  })
+end
+
+function config.onedark_pro()
+  require("onedarkpro").setup({
+    dark_theme = "onedark", -- The default dark theme
+    styles = {
+      comments = "italic",
+      conditionals = "italic",
+      keywords = "italic",
+      virtual_text = "italic",
+    },
+    options = {
+      bold = true, -- Use bold styles?
+      italic = true, -- Use italic styles?
+      underline = true, -- Use underline styles?
+      undercurl = true, -- Use undercurl styles?
+
+      cursorline = true, -- Use cursorline highlighting?
+      transparency = false, -- Use a transparent background?
+      terminal_colors = false, -- Use the theme's colors for Neovim's :terminal?
+      window_unfocused_color = true, -- When the window is out of focus, change the normal background?
+    },
+    highlights = {
+      -- Neotree
+      NeoTreeRootName = { fg = "${purple}", style = "bold" },
+      NeoTreeFileNameOpened = { fg = "${purple}", style = "italic" },
+      -- Telescope
+      TelescopeBorder = {
+        fg = "${telescope_results}",
+        bg = "${telescope_results}",
+      },
+      TelescopePromptBorder = {
+        fg = "${telescope_prompt}",
+        bg = "${telescope_prompt}",
+      },
+      TelescopePromptCounter = { fg = "${fg}" },
+      TelescopePromptNormal = { fg = "${fg}", bg = "${telescope_prompt}" },
+      TelescopePromptPrefix = {
+        fg = "${purple}",
+        bg = "${telescope_prompt}",
+      },
+      TelescopePromptTitle = {
+        fg = "${telescope_prompt}",
+        bg = "${purple}",
+      },
+
+      TelescopePreviewTitle = {
+        fg = "${telescope_results}",
+        bg = "${green}",
+      },
+      TelescopeResultsTitle = {
+        fg = "${telescope_results}",
+        bg = "${telescope_results}",
+      },
+
+      TelescopeMatching = { fg = "${blue}" },
+      TelescopeNormal = { bg = "${telescope_results}" },
+      TelescopeSelection = { bg = "${telescope_prompt}" },
+    },
+
+    vim.cmd("colorscheme onedarkpro"),
   })
 end
 

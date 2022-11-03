@@ -194,9 +194,19 @@ end
 
 function config.toggleterm()
   require("toggleterm").setup({
-  direction = 'float',
-  open_mapping = [[<c-\>]],
+    direction = "float",
+    open_mapping = [[<c-\>]],
   })
+end
+
+function config.persisted()
+  require("persisted").setup()
+  require("telescope").load_extension("persisted")
+end
+
+function config.project()
+  require("project_nvim").setup()
+  require('telescope').load_extension('projects')
 end
 
 return config
