@@ -5,7 +5,10 @@ function config.telescope()
     vim.cmd([[packadd plenary.nvim]])
     vim.cmd([[packadd telescope-fzy-native.nvim]])
   end
-  require("telescope").setup({
+  local telescope = require("telescope")
+  local actions = require("telescope.actions")
+
+  telescope.setup({
     defaults = {
       layout_config = {
         horizontal = { prompt_position = "top", results_width = 0.6 },
@@ -15,6 +18,17 @@ function config.telescope()
       file_previewer = require("telescope.previewers").vim_buffer_cat.new,
       grep_previewer = require("telescope.previewers").vim_buffer_vimgrep.new,
       qflist_previewer = require("telescope.previewers").vim_buffer_qflist.new,
+      mappings = {
+        i = {
+          ["<C-f>"] = actions.preview_scrolling_up,
+          ["<C-b>"] = actions.preview_scrolling_down,
+          ["<C-j>"] = actions.move_selection_next,
+          ["<C-k>"] = actions.move_selection_previous,
+        },
+      },
+      multi_icon = "✚",
+      prompt_prefix = "❯ ",
+      selection_caret = "▶ ",
     },
     extensions = {
       fzy_native = {
@@ -206,7 +220,7 @@ end
 
 function config.project()
   require("project_nvim").setup()
-  require('telescope').load_extension('projects')
+  require("telescope").load_extension("projects")
 end
 
 return config

@@ -8,7 +8,7 @@ plugin({
 
 plugin({
   "folke/tokyonight.nvim",
-  -- config = conf.tokyo,
+  config = conf.tokyo,
 })
 
 plugin({
@@ -16,7 +16,7 @@ plugin({
   -- config = conf.kanagawa
 })
 
-plugin({"goolord/alpha-nvim", config = conf.alpha})
+plugin({ "goolord/alpha-nvim", config = conf.alpha })
 -- plugin({ "glepnir/dashboard-nvim", config = conf.dashboard })
 
 plugin({
@@ -56,6 +56,10 @@ plugin({ "rcarriga/nvim-notify", config = conf.notify })
 plugin({ "anuvyklack/hydra.nvim", config = conf.hydra })
 plugin({ "Tsuzat/NeoSolarized.nvim", config = conf.neosolarized })
 plugin({ "navarasu/onedark.nvim", config = conf.onedark })
-plugin({"olimorris/onedarkpro.nvim", config = conf.onedark_pro})
+plugin({
+  "olimorris/onedarkpro.nvim",
+  -- config = conf.onedark_pro
+})
 plugin({ "themercorp/themer.lua", config = conf.themer })
-plugin({"kvrohit/mellow.nvim"})
+plugin({ "kvrohit/mellow.nvim" })
+plugin({ "catppuccin/nvim", as = "catppuccin", config = conf.cat })

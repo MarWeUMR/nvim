@@ -8,13 +8,14 @@ local opts = key.new_opts
 local cmd = key.cmd
 local plug = key.plug
 
-local function map(mode, lhs, rhs, opts)
-	local options = { noremap = true, silent = true }
-	if opts then
-		options = vim.tbl_extend("force", options, opts)
-	end
-	vim.api.nvim_set_keymap(mode, lhs, rhs, options)
-end
+local map = vim.keymap.set
+-- local function map(mode, lhs, rhs, opts)
+-- 	local options = { noremap = true, silent = true }
+-- 	if opts then
+-- 		options = vim.tbl_extend("force", options, opts)
+-- 	end
+-- 	vim.api.nvim_set_keymap(mode, lhs, rhs, options)
+-- end
 
 -- usage of plugins
 nmap({
@@ -36,6 +37,7 @@ nmap({
 	{ "<Leader>fg", cmd("Telescope live_grep"), opts(noremap, silent) },
 	{ "<Leader>ff", cmd("Telescope find_files"), opts(noremap, silent) },
 	{ "<Leader><Leader>", cmd("Telescope current_buffer_fuzzy_find"), opts(noremap, silent) },
+	{ "<Leader>gs", cmd("Telescope current_buffer_fuzzy_find"), opts(noremap, silent) },
 	-- Lsp Saga
 	{ "gh", cmd("Lspsaga lsp_finder"), opts(noremap, silent) },
 	{ "<Leader>lr", cmd("Lspsaga rename"), opts(noremap, silent) },
@@ -60,5 +62,6 @@ tmap({
 })
 
 
+map("n", "<Leader>gs", require("utils.telescope-commands").git_status)
 
 -- 

@@ -73,6 +73,13 @@ opt.colorcolumn = ""
 -- opt.conceallevel = 2
 -- opt.concealcursor = 'niv'
 
+-- GIT
+if vim.fn.has("nvim-0.9") == 1 then
+  opt.diffopt = { "filler", "internal", "algorithm:histogram", "indent-heuristic", "linematch:60" }
+else
+  opt.diffopt = { "filler", "internal", "algorithm:histogram", "indent-heuristic" }
+end
+
 -- turn off comment continuation on newlines
 utils.augroup("general_settings", {
 	{

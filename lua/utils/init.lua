@@ -90,4 +90,8 @@ function utils.augroup(name, commands)
 	return id
 end
 
+local telescope = require("utils.telescope-commands")
+utils.telescope = telescope
+
+
 return utils
