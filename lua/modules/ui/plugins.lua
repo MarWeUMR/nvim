@@ -63,3 +63,4 @@ plugin({
 plugin({ "themercorp/themer.lua", config = conf.themer })
 plugin({ "kvrohit/mellow.nvim" })
 plugin({ "catppuccin/nvim", as = "catppuccin", config = conf.cat })
+plugin({"https://github.com/uga-rosa/ccc.nvim", config = conf.ccc})

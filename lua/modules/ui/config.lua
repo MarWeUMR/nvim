@@ -596,4 +596,10 @@ function config.onedark_pro()
   })
 end
 
+function config.ccc()
+  local ccc = require("ccc")
+  local mapping = ccc.mapping
+  ccc.setup({mappings = mapping})
+end
+
 return config
