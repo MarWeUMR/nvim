@@ -151,6 +151,16 @@ local rust_opts = {
   -- these override the defaults set by rust-tools.nvim
   -- see https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md#rust_analyzer
   server = {
+    settings = {
+      ["rust-analyzer"] = {
+        cargo = {
+          features = {"pro"},
+        },
+        checkOnSave = {
+          features = {"pro"},
+        },
+      },
+    },
     handlers = handlers,
     capabilities = capabilities,
     on_attach = function(_, bufnr)
