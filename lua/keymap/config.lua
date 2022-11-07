@@ -18,31 +18,26 @@ xmap({ " ", "", opts(noremap) })
 
 -- usage example
 nmap({
-	-- noremal remap
-	-- close buffer
-	{ "<C-x>k", cmd("bdelete"), opts(noremap, silent) },
-	-- save
-	{ "<C-s>", cmd("write"), opts(noremap) },
-	-- yank
-	{ "Y", "y$", opts(noremap) },
-	-- buffer jump
-	{ "<S-l>", cmd("bn"), opts(noremap) },
-	{ "<S-h>", cmd("bp"), opts(noremap) },
-	-- remove trailing white space
-	{ "<Leader>t", cmd("TrimTrailingWhitespace"), opts(noremap) },
-	-- window jump
-	{ "<C-h>", "<C-w>h", opts(noremap) },
-	{ "<C-l>", "<C-w>l", opts(noremap) },
-	{ "<C-j>", "<C-w>j", opts(noremap) },
-	{ "<C-k>", "<C-w>k", opts(noremap) },
-	-- remove search highlight on esc
-	{ "<esc>", "<esc><cmd>noh<cr>", opts(noremap) },
+  -- noremal remap
+  -- save
+  { "<C-s>", cmd("write"), opts(noremap) },
+  -- yank
+  { "Y", "y$", opts(noremap) },
+  -- remove trailing white space
+  { "<Leader>t", cmd("TrimTrailingWhitespace"), opts(noremap) },
+  -- window jump
+  { "<C-h>", "<C-w>h", opts(noremap) },
+  { "<C-l>", "<C-w>l", opts(noremap) },
+  { "<C-j>", "<C-w>j", opts(noremap) },
+  { "<C-k>", "<C-w>k", opts(noremap) },
+  -- remove search highlight on esc
+  { "<esc>", "<esc><cmd>noh<cr>", opts(noremap) },
 })
 
 imap({
-	-- insert mode
-	{ "<C-h>", "<Bs>", opts(noremap) },
-	{ "<C-e>", "<End>", opts(noremap) },
+  -- insert mode
+  { "<C-h>", "<Bs>", opts(noremap) },
+  { "<C-e>", "<End>", opts(noremap) },
 })
 
 -- commandline remap

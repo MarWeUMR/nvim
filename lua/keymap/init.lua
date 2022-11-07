@@ -1,4 +1,3 @@
--- TODO: ctrl + jk for Telescope
 require("keymap.config")
 local key = require("core.keymaps")
 local nmap = key.nmap
@@ -50,6 +49,15 @@ nmap({
   { "<Leader>xx", cmd("TroubleToggle"), opts(noremap, silent) },
   -- Toggleterm
   { "<C-t>", cmd("ToggleTerm"), opts(noremap, silent) },
+  -- Bufferline
+  { "<S-l>", cmd("BufferLineCycleNext"), opts(noremap, silent) },
+  { "<S-h>", cmd("BufferLineCyclePrev"), opts(noremap, silent) },
+  { "<Leader>bb", cmd("BufferLinePick"), opts(noremap, silent) },
+  { "<Leader>bk", cmd("BufferLinePickClose"), opts(noremap, silent) },
+  { "<Leader>bd", cmd("bdelete"), opts(noremap, silent) },
+  -- Tabbing
+  { "<Leader><tab>", cmd("tabnext"), opts(noremap, silent) },
+  { "<Leader>tq", cmd("tabc"), opts(noremap, silent) },
 })
 
 tmap({
@@ -59,5 +67,3 @@ tmap({
 
 map("n", "<Leader>gs", require("utils.telescope-commands").git_status)
 map("n", "<Leader>ls", require("telescope.builtin").lsp_document_symbols)
-
---
