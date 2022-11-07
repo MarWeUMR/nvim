@@ -1,5 +1,11 @@
 local opt = vim.opt
 local utils = require("utils")
+local function list(value, str, sep)
+  sep = sep or ","
+  str = str or ""
+  value = type(value) == "table" and table.concat(value, sep) or value
+  return str ~= "" and table.concat({value, str}, sep) or value
+end
 
 opt.termguicolors = true
 opt.hidden = true
@@ -44,7 +50,25 @@ opt.showcmd = false
 opt.cmdheight = 0
 opt.laststatus = 3
 opt.list = true
-opt.listchars = "tab:»·,nbsp:+,trail:·,extends:→,precedes:←"
+-- opt.listchars = "tab:»·,nbsp:+,trail:·,extends:→,precedes:←"
+opt.listchars = list {
+  "tab: ──",
+  "space:·",
+  "nbsp:␣",
+  "trail:•",
+  --"eol:↵",
+  "precedes:«",
+  "extends:»"
+}
+opt.fillchars = list {
+  -- "vert:▏",
+  "vert:│",
+  "diff:╱",
+  "foldclose:",
+  "foldopen:",
+  "fold: ",
+  "msgsep:─",
+}
 opt.pumblend = 10
 opt.winblend = 10
 opt.undofile = true

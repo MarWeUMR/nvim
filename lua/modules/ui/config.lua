@@ -201,8 +201,17 @@ end
 function config.nvim_bufferline()
   require("bufferline").setup({
     options = {
+      debug = { logging = true },
+      mode = "buffers", -- tabs
+      sort_by = "insert_after_current",
+      right_mouse_command = "vert sbuffer %d",
+      show_buffer_close_icons = true,
+      indicator = { style = "underline" },
+      diagnostics = "nvim_lsp",
+      diagnostics_update_in_insert = false,
+      hover = { enabled = true, reveal = { "close" } },
       modified_icon = "✥",
-      buffer_close_icon = "",
+      -- buffer_close_icon = "",
       always_show_bufferline = false,
     },
   })
@@ -488,6 +497,88 @@ end
 function config.hydra()
   local Hydra = require("hydra")
 
+  local hint_opts = {
+    position = "bottom",
+    -- border = border,
+    type = "window",
+  }
+
+  local ok, gitsigns = pcall(require, "gitsigns")
+  if ok then
+    local hint = [[
+ _J_: next hunk   _s_: stage hunk        _d_: show deleted   _b_: blame line
+ _K_: prev hunk   _u_: undo stage hunk   _p_: preview hunk   _B_: blame show full 
+ ^ ^              _S_: stage buffer      ^ ^                 _/_: show base file
+ ^ ^              _h_: file history      _v_: diff view                       ^ ^
+ ^
+ ^ ^                            _q_: exit
+]]
+
+    Hydra({
+      name = "Git Mode",
+      hint = hint,
+      config = {
+        color = "pink",
+        invoke_on_body = true,
+        hint = hint_opts,
+        on_enter = function()
+          gitsigns.toggle_linehl(true)
+          gitsigns.toggle_deleted(true)
+        end,
+        on_exit = function()
+          gitsigns.toggle_linehl(false)
+          gitsigns.toggle_deleted(false)
+        end,
+      },
+      mode = { "n", "x" },
+      body = "<Leader>g",
+      heads = {
+        {
+          "J",
+          function()
+            if vim.wo.diff then
+              return "]c"
+            end
+            vim.schedule(function()
+              gitsigns.next_hunk()
+            end)
+            return "<Ignore>"
+          end,
+          { expr = true },
+        },
+        {
+          "K",
+          function()
+            if vim.wo.diff then
+              return "[c"
+            end
+            vim.schedule(function()
+              gitsigns.prev_hunk()
+            end)
+            return "<Ignore>"
+          end,
+          { expr = true },
+        },
+        { "s", ":Gitsigns stage_hunk<CR>", { silent = true } },
+        { "u", gitsigns.undo_stage_hunk },
+        { "S", gitsigns.stage_buffer },
+        { "p", gitsigns.preview_hunk },
+        { "h", ":DiffviewFileHistory %<CR>" },
+        { "v", ":DiffviewOpen<CR>" },
+        { "d", gitsigns.toggle_deleted, { nowait = true } },
+        { "b", gitsigns.blame_line },
+        {
+          "B",
+          function()
+            gitsigns.blame_line({ full = true })
+          end,
+        },
+        { "/", gitsigns.show, { exit = true } }, -- show the base of the file
+        { "q", nil, { exit = true, nowait = true } },
+      },
+    })
+  end
+
   local function run(method, args)
     return function()
       local dap = require("dap")
@@ -599,7 +690,7 @@ end
 function config.ccc()
   local ccc = require("ccc")
   local mapping = ccc.mapping
-  ccc.setup({mappings = mapping})
+  ccc.setup({ mappings = mapping })
 end
 
 return config

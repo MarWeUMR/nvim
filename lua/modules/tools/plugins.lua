@@ -65,11 +65,4 @@ plugin({ "akinsho/toggleterm.nvim", tag = "*", config = conf.toggleterm })
 plugin({ "wakatime/vim-wakatime" })
 plugin({ "olimorris/persisted.nvim", config = conf.persisted })
 plugin({ "ahmedkhalf/project.nvim", config = conf.project })
-plugin({
-  "TimUntersberger/neogit",
-  requires = {
-    "nvim-lua/plenary.nvim",
-    "sindrets/diffview.nvim",
-  },
-  config = conf.neogit,
-})
+plugin({ "sindrets/diffview.nvim", config = conf.diffview })
