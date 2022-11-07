@@ -503,8 +503,8 @@ function config.hydra()
     type = "window",
   }
 
-  local ok, gitsigns = pcall(require, "gitsigns")
-  if ok then
+  local ok_git, gitsigns = pcall(require, "gitsigns")
+  if ok_git then
     local hint = [[
  _J_: next hunk   _s_: stage hunk        _d_: show deleted   _b_: blame line
  _K_: prev hunk   _u_: undo stage hunk   _p_: preview hunk   _B_: blame show full 
@@ -531,7 +531,7 @@ function config.hydra()
         end,
       },
       mode = { "n", "x" },
-      body = "<Leader>g",
+      body = "<Space>g",
       heads = {
         {
           "J",
@@ -563,8 +563,8 @@ function config.hydra()
         { "u", gitsigns.undo_stage_hunk },
         { "S", gitsigns.stage_buffer },
         { "p", gitsigns.preview_hunk },
-        { "h", ":DiffviewFileHistory %<CR>" },
-        { "v", ":DiffviewOpen<CR>" },
+        { "h", ":DiffviewFileHistory %<CR>", { exit = true } },
+        { "v", ":DiffviewOpen<CR>", { exit = true } },
         { "d", gitsigns.toggle_deleted, { nowait = true } },
         { "b", gitsigns.blame_line },
         {

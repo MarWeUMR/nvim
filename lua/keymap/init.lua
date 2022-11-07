@@ -29,7 +29,7 @@ nmap({
   { "s", plug("(leap-forward)"), opts(noremap, silent) },
   { "S", plug("(leap-backward)"), opts(noremap, silent) },
   -- Telescope
-  { "<Leader>b", cmd("Telescope buffers"), opts(noremap, silent) },
+  { "<Leader>B", cmd("Telescope buffers"), opts(noremap, silent) },
   { "<Leader>fg", cmd("Telescope live_grep"), opts(noremap, silent) },
   { "<Leader>ff", cmd("Telescope find_files"), opts(noremap, silent) },
   { "<Leader><Leader>", cmd("Telescope current_buffer_fuzzy_find"), opts(noremap, silent) },

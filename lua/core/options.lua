@@ -53,7 +53,7 @@ opt.list = true
 -- opt.listchars = "tab:»·,nbsp:+,trail:·,extends:→,precedes:←"
 opt.listchars = list {
   "tab: ──",
-  "space:·",
+  -- "space:·",
   "nbsp:␣",
   "trail:•",
   --"eol:↵",

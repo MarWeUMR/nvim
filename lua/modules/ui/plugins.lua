@@ -53,7 +53,7 @@ plugin({ "rcarriga/nvim-notify", config = conf.notify })
 --   },
 -- })
 
-plugin({ "anuvyklack/hydra.nvim", config = conf.hydra })
+plugin({ "anuvyklack/hydra.nvim", config = conf.hydra, event = "BufRead" })
 plugin({ "Tsuzat/NeoSolarized.nvim", config = conf.neosolarized })
 plugin({ "navarasu/onedark.nvim", config = conf.onedark })
 plugin({
