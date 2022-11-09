@@ -58,9 +58,11 @@ plugin({ "Tsuzat/NeoSolarized.nvim", config = conf.neosolarized })
 plugin({ "navarasu/onedark.nvim", config = conf.onedark })
 plugin({
   "olimorris/onedarkpro.nvim",
-  -- config = conf.onedark_pro
+  config = conf.onedark_pro,
 })
 plugin({ "themercorp/themer.lua", config = conf.themer })
 plugin({ "kvrohit/mellow.nvim" })
 plugin({ "catppuccin/nvim", as = "catppuccin", config = conf.cat })
-plugin({"https://github.com/uga-rosa/ccc.nvim", config = conf.ccc})
+plugin({ "EdenEast/nightfox.nvim", config = conf.nightfox })
+plugin({ "https://github.com/uga-rosa/ccc.nvim", config = conf.ccc })
+plugin({"marko-cerovac/material.nvim", config = conf.material})

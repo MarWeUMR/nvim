@@ -1,5 +1,19 @@
 local lspconfig = require("lspconfig")
 
+local on_attach = function(_, bufnr)
+  vim.keymap.set("n", "<space>lf", function()
+    vim.lsp.buf.format({ async = true })
+  end, { buffer = bufnr })
+  vim.api.nvim_buf_set_option(bufnr, "formatexpr", "v:lua.vim.lsp.formatexpr()")
+  vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
+  vim.api.nvim_buf_set_option(bufnr, "tagfunc", "v:lua.vim.lsp.tagfunc")
+  local bufopts = { noremap = true, silent = true, buffer = bufnr }
+  vim.keymap.set("n", "gD", vim.lsp.buf.declaration, bufopts)
+  vim.keymap.set("n", "gd", vim.lsp.buf.definition, bufopts)
+  vim.keymap.set("n", "gi", vim.lsp.buf.implementation, bufopts)
+  vim.keymap.set("n", "<space>D", vim.lsp.buf.type_definition, bufopts)
+end
+
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 
 local handlers = {
@@ -38,21 +52,42 @@ vim.diagnostic.config({
   },
 })
 
+lspconfig.pylsp.setup({
+  on_attach = on_attach,
+  capabilities = capabilities,
+  settings = {
+    pylsp = {
+      plugins = {
+        pycodestyle = {
+          enabled = true,
+        },
+        pydocstyle = {
+          enabled = false,
+        },
+        autopep8 = {
+          enabled = true,
+        },
+        pylint = {
+          enabled = true,
+        },
+        pyright = {
+          enabled = true,
+          -- executable = "pyright",
+          -- args = {},
+          -- configurationSources = { "source_directories" },
+        },
+        pyls_mypy = {
+          enabled = true,
+          live_mode = true,
+        },
+      },
+    },
+  },
+})
+
 lspconfig.sumneko_lua.setup({
   handlers = handlers,
-  on_attach = function(_, bufnr)
-    vim.keymap.set("n", "<space>lf", function()
-      vim.lsp.buf.format({ async = true })
-    end, { buffer = bufnr })
-    vim.api.nvim_buf_set_option(bufnr, "formatexpr", "v:lua.vim.lsp.formatexpr()")
-    vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
-    vim.api.nvim_buf_set_option(bufnr, "tagfunc", "v:lua.vim.lsp.tagfunc")
-    local bufopts = { noremap = true, silent = true, buffer = bufnr }
-    vim.keymap.set("n", "gD", vim.lsp.buf.declaration, bufopts)
-    vim.keymap.set("n", "gd", vim.lsp.buf.definition, bufopts)
-    vim.keymap.set("n", "gi", vim.lsp.buf.implementation, bufopts)
-    vim.keymap.set("n", "<space>D", vim.lsp.buf.type_definition, bufopts)
-  end,
+  on_attach = on_attach,
   capabilities = capabilities,
   settings = {
     Lua = {
@@ -154,10 +189,10 @@ local rust_opts = {
     settings = {
       ["rust-analyzer"] = {
         cargo = {
-          features = {"pro"},
+          features = { "pro" },
         },
         checkOnSave = {
-          features = {"pro"},
+          features = { "pro" },
         },
       },
     },
@@ -207,9 +242,7 @@ ts.setup({ server = ts_opts })
 lspconfig.angularls.setup({})
 
 -- local servers = {
---   'pyright',
---   'bashls',
---   'zls',
+--   "pyright",
 -- }
 --
 -- for _, server in ipairs(servers) do

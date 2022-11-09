@@ -33,13 +33,11 @@ function config.tokyo()
       }
     end,
   })
-
-  vim.cmd("colorscheme tokyonight-storm")
 end
 
 function config.cat()
   require("catppuccin").setup({
-    flavour = "mocha", -- latte, frappe, macchiato, mocha
+    flavour = "frappe", -- latte, frappe, macchiato, mocha
     background = { -- :h background
       light = "latte",
       dark = "frappe",
@@ -508,7 +506,7 @@ function config.hydra()
     local hint = [[
  _J_: next hunk   _s_: stage hunk        _d_: show deleted   _b_: blame line
  _K_: prev hunk   _u_: undo stage hunk   _p_: preview hunk   _B_: blame show full 
- ^ ^              _S_: stage buffer      ^ ^                 _/_: show base file
+ _R_: reset hunk  _S_: stage buffer      ^ ^                 _/_: show base file
  ^ ^              _h_: file history      _v_: diff view                       ^ ^
  ^
  ^ ^                            _q_: exit
@@ -531,7 +529,7 @@ function config.hydra()
         end,
       },
       mode = { "n", "x" },
-      body = "<Space>g",
+      body = "<Space>vc",
       heads = {
         {
           "J",
@@ -562,6 +560,7 @@ function config.hydra()
         { "s", ":Gitsigns stage_hunk<CR>", { silent = true } },
         { "u", gitsigns.undo_stage_hunk },
         { "S", gitsigns.stage_buffer },
+        { "R", gitsigns.reset_hunk },
         { "p", gitsigns.preview_hunk },
         { "h", ":DiffviewFileHistory %<CR>", { exit = true } },
         { "v", ":DiffviewOpen<CR>", { exit = true } },
@@ -647,7 +646,7 @@ function config.onedark_pro()
     },
     highlights = {
       -- Neotree
-      NeoTreeRootName = { fg = "${purple}", style = "bold" },
+      NeoTreeRootName = { fg = "${red}", style = "bold" },
       NeoTreeFileNameOpened = { fg = "${purple}", style = "italic" },
       -- Telescope
       TelescopeBorder = {
@@ -682,9 +681,84 @@ function config.onedark_pro()
       TelescopeNormal = { bg = "${telescope_results}" },
       TelescopeSelection = { bg = "${telescope_prompt}" },
     },
-
-    vim.cmd("colorscheme onedarkpro"),
   })
+end
+
+function config.nightfox()
+  require("nightfox").setup({
+    options = {
+      styles = {
+        comments = "italic",
+        keywords = "bold",
+        types = "italic,bold",
+      },
+    },
+  })
+end
+
+function config.material()
+  require('material').setup({
+
+    contrast = {
+        terminal = false, -- Enable contrast for the built-in terminal
+        sidebars = false, -- Enable contrast for sidebar-like windows ( for example Nvim-Tree )
+        floating_windows = false, -- Enable contrast for floating windows
+        cursor_line = false, -- Enable darker background for the cursor line
+        non_current_windows = false, -- Enable darker background for non-current windows
+        filetypes = {}, -- Specify which filetypes get the contrasted (darker) background
+    },
+
+    styles = { -- Give comments style such as bold, italic, underline etc.
+        comments = { --[[ italic = true ]] },
+        strings = { --[[ bold = true ]] },
+        keywords = { --[[ underline = true ]] },
+        functions = { --[[ bold = true, undercurl = true ]] },
+        variables = {},
+        operators = {},
+        types = {},
+    },
+
+    plugins = { -- Uncomment the plugins that you use to highlight them
+        -- Available plugins:
+        -- "dap",
+        -- "dashboard",
+        -- "gitsigns",
+        -- "hop",
+        -- "indent-blankline",
+        -- "lspsaga",
+        -- "mini",
+        -- "neogit",
+        -- "nvim-cmp",
+        -- "nvim-navic",
+        -- "nvim-tree",
+        -- "nvim-web-devicons",
+        -- "sneak",
+        -- "telescope",
+        -- "trouble",
+        -- "which-key",
+    },
+
+    disable = {
+        colored_cursor = false, -- Disable the colored cursor
+        borders = false, -- Disable borders between verticaly split windows
+        background = false, -- Prevent the theme from setting the background (NeoVim then uses your terminal background)
+        term_colors = false, -- Prevent the theme from setting terminal colors
+        eob_lines = false -- Hide the end-of-buffer lines
+    },
+
+    high_visibility = {
+        lighter = false, -- Enable higher contrast text for lighter style
+        darker = false -- Enable higher contrast text for darker style
+    },
+
+    lualine_style = "default", -- Lualine style ( can be 'stealth' or 'default' )
+
+    async_loading = true, -- Load parts of the theme asyncronously for faster startup (turned on by default)
+
+    custom_colors = nil, -- If you want to everride the default colors, set this to a function
+
+    custom_highlights = {}, -- Overwrite highlights with your own
+})
 end
 
 function config.ccc()

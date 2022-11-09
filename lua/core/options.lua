@@ -7,6 +7,9 @@ local function list(value, str, sep)
   return str ~= "" and table.concat({value, str}, sep) or value
 end
 
+
+vim.cmd("colorscheme onedarkpro")
+
 opt.termguicolors = true
 opt.hidden = true
 opt.magic = true
