@@ -58,6 +58,8 @@ nmap({
   -- Tabbing
   { "<Leader><tab>", cmd("tabnext"), opts(noremap, silent) },
   { "<Leader>tq", cmd("tabc"), opts(noremap, silent) },
+  -- Zen
+  { "<Leader>za", cmd("TZAtaraxis"), opts(noremap, silent) },
 })
 
 tmap({
@@ -67,3 +69,5 @@ tmap({
 
 map("n", "<Leader>gs", require("utils.telescope-commands").git_status)
 map("n", "<Leader>ls", require("telescope.builtin").lsp_document_symbols)
+map("n", "<Leader>cc", "<CMD>ToggleTermSendCurrentLine<CR>")
+map("v", "<Leader>vv", "<CMD>ToggleTermSendVisualLines<CR>")

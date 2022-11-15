@@ -24,4 +24,12 @@ pack.ensure_plugins()
 require("core.options")
 pack.load_compile()
 require("keymap")
+
+if vim.g.neovide then
+  vim.cmd([[
+    let g:neovide_refresh_rate=60
+    let g:neovide_remember_window_size = v:true
+    set guifont=CaskaydiaCove\ Nerd\ Font:h14
+  ]])
+end
 -- require("internal.event")

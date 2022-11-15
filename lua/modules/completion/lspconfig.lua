@@ -58,32 +58,49 @@ lspconfig.pylsp.setup({
   settings = {
     pylsp = {
       plugins = {
-        pycodestyle = {
-          enabled = true,
-        },
+        -- pycodestyle = {
+        --   enabled = true,
+        -- },
         pydocstyle = {
           enabled = false,
         },
-        autopep8 = {
-          enabled = true,
-        },
-        pylint = {
-          enabled = true,
-        },
-        pyright = {
-          enabled = true,
-          -- executable = "pyright",
-          -- args = {},
-          -- configurationSources = { "source_directories" },
-        },
-        pyls_mypy = {
-          enabled = true,
-          live_mode = true,
-        },
+        -- autopep8 = {
+        --   enabled = true,
+        -- },
+        -- pylint = {
+        --   enabled = true,
+        -- },
+        -- black = {
+        --   enabled = true,
+        -- },
+        -- pyls_mypy = {
+        --   enabled = true,
+        --   live_mode = true,
+        -- },
       },
     },
   },
 })
+
+-- lspconfig.pyright.setup({
+-- 	on_attach = on_attach,
+-- 	settings = {
+-- 		pyright = {
+-- 			pythonVersion = "3.9",
+-- 			disableOrganizeImports = false,
+-- 			analysis = {
+-- 				useLibraryCodeForTypes = true,
+-- 				autoSearchPaths = true,
+-- 				diagnosticMode = "workspace",
+-- 				autoImportCompletions = true,
+-- 			},
+-- inlayHints = {
+--           variableTypes = true,
+--           functionReturnTypes = true,
+--         },
+-- 		},
+-- 	},
+-- })
 
 lspconfig.sumneko_lua.setup({
   handlers = handlers,

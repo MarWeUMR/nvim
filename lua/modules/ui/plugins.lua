@@ -66,3 +66,5 @@ plugin({ "catppuccin/nvim", as = "catppuccin", config = conf.cat })
 plugin({ "EdenEast/nightfox.nvim", config = conf.nightfox })
 plugin({ "https://github.com/uga-rosa/ccc.nvim", config = conf.ccc })
 plugin({"marko-cerovac/material.nvim", config = conf.material})
+
+plugin({"Pocco81/true-zen.nvim", config = conf.zen})

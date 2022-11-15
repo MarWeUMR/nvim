@@ -32,6 +32,12 @@ nmap({
   { "<C-k>", "<C-w>k", opts(noremap) },
   -- remove search highlight on esc
   { "<esc>", "<esc><cmd>noh<cr>", opts(noremap) },
+  -- movement between methods
+
+  { "<Leader>jf", "]m", opts(noremap) },
+  { "<Leader>jF", "[m", opts(noremap) },
+  { "<Leader>jc", "]]", opts(noremap) },
+  { "<Leader>jC", "[[", opts(noremap) },
 })
 
 imap({

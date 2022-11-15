@@ -43,7 +43,7 @@ end
 opt.completeopt = "menu,menuone,noselect"
 opt.showmode = false
 opt.shortmess = "aoOTIcF"
-opt.scrolloff = 5
+opt.scrolloff = 10
 opt.sidescrolloff = 5
 opt.ruler = false
 opt.showtabline = 0

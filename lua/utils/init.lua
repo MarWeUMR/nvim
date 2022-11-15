@@ -93,5 +93,105 @@ end
 local telescope = require("utils.telescope-commands")
 utils.telescope = telescope
 
+---create a mapping function factory
+---@param mode string
+---@param o table
+---@return fun(lhs: string, rhs: string|function, opts: table|nil) 'create a mapping'
+local function make_mapper(mode, o)
+	-- copy the opts table as extends will mutate the opts table passed in otherwise
+	local parent_opts = vim.deepcopy(o)
+	---Create a mapping
+	---@param lhs string
+	---@param rhs string|function
+	---@param opts table
+	return function(lhs, rhs, opts)
+		-- If the label is all that was passed in, set the opts automagically
+		opts = type(opts) == "string" and { desc = opts } or opts and vim.deepcopy(opts) or {}
+		vim.keymap.set(mode, lhs, rhs, vim.tbl_extend("keep", opts, parent_opts))
+	end
+end
+
+local map_opts = { remap = true, silent = true }
+local noremap_opts = { silent = true }
+
+-- A non recursive normal mapping
+utils.nnoremap = make_mapper("n", noremap_opts)
+
+---Create an nvim command
+---@param name any
+---@param rhs string|fun(args: CommandArgs)
+---@param opts table?
+function utils.command(name, rhs, opts)
+	opts = opts or {}
+	api.nvim_create_user_command(name, rhs, opts)
+end
+
+---Check whether or not the location or quickfix list is open
+---@return boolean
+function utils.is_vim_list_open()
+	for _, win in ipairs(api.nvim_list_wins()) do
+		local buf = api.nvim_win_get_buf(win)
+		local location_list = vim.fn.getloclist(0, { filewinid = 0 })
+		local is_loc_list = location_list.filewinid > 0
+		if vim.bo[buf].filetype == "qf" or is_loc_list then
+			return true
+		end
+	end
+	return false
+end
+
+--- Utility function to toggle the location or the quickfix list
+---@param list_type '"quickfix"' | '"location"'
+---@return string?
+local function toggle_list(list_type)
+	local is_location_target = list_type == "location"
+	local cmd = is_location_target and { "lclose", "lopen" } or { "cclose", "copen" }
+	local is_open = utils.is_vim_list_open()
+	if is_open then
+		return vim.cmd[cmd[1]]()
+	end
+	local list = is_location_target and vim.fn.getloclist(0) or vim.fn.getqflist()
+	if vim.tbl_isempty(list) then
+		local msg_prefix = (is_location_target and "Location" or "QuickFix")
+		return vim.notify(msg_prefix .. " List is Empty.", vim.log.levels.WARN)
+	end
+
+	local winnr = vim.fn.winnr()
+	vim.cmd[cmd[2]]()
+	if vim.fn.winnr() ~= winnr then
+		vim.cmd.wincmd("p")
+	end
+end
+
+function utils.toggle_qf_list()
+	toggle_list("quickfix")
+end
+
+---A terser proxy for `nvim_replace_termcodes`
+---@param str string
+---@return string
+function utils.replace_termcodes(str)
+	return api.nvim_replace_termcodes(str, true, true, true)
+end
+
+---Determine if a value of any type is empty
+---@param item any
+---@return boolean?
+function utils.empty(item)
+	if not item then
+		return true
+	end
+	local item_type = type(item)
+	if item_type == "string" then
+		return item == ""
+	end
+	if item_type == "number" then
+		return item <= 0
+	end
+	if item_type == "table" then
+		return vim.tbl_isempty(item)
+	end
+	return item ~= nil
+end
 
 return utils
