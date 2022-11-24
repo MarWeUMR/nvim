@@ -19,10 +19,10 @@ plugin({
   config = conf.leap,
 })
 
-plugin({
-  "ggandor/flit.nvim",
-  config = conf.flit,
-})
+-- plugin({
+--   "ggandor/flit.nvim",
+--   config = conf.flit,
+-- })
 
 plugin({
   "max397574/better-escape.nvim",
@@ -67,4 +67,4 @@ plugin({ "olimorris/persisted.nvim", config = conf.persisted })
 plugin({ "ahmedkhalf/project.nvim", config = conf.project })
 plugin({ "sindrets/diffview.nvim", config = conf.diffview })
 plugin({ "ldelossa/gh.nvim", requires = { "ldelossa/litee.nvim" }, config = conf.gh })
--- plugin({"Olical/conjure"})
+-- plugin({"Olical/conjure", config = conf.conjure})

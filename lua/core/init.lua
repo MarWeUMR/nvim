@@ -31,5 +31,5 @@ if vim.g.neovide then
     let g:neovide_remember_window_size = v:true
     set guifont=CaskaydiaCove\ Nerd\ Font:h14
   ]])
-end
+ end
 -- require("internal.event")

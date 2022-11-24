@@ -49,10 +49,11 @@ end
 
 local function formatting_filter(client)
 	local exceptions = ({
-		python = { "autopep8" },
+		-- python = { "autopep8" },
 		sql = { "sqls" },
 		lua = { "sumneko_lua" },
 		proto = { "null-ls" },
+		-- typescript = { "black" },
 	})[vim.bo.filetype]
 
 	if not exceptions then
@@ -91,7 +92,7 @@ local function setup_autocommands(client, bufnr)
 		local msg = fmt("Unable to setup LSP autocommands, client for %d is missing", bufnr)
 		return vim.notify(msg, "error", { title = "LSP Setup" })
 	end
---
+	--
 	local events = vim.F.if_nil(vim.b.lsp_events, {
 		[FEATURES.CODELENS.name] = { clients = {}, group_id = nil },
 		[FEATURES.FORMATTING.name] = { clients = {}, group_id = nil },
@@ -145,7 +146,7 @@ local function setup_autocommands(client, bufnr)
 			},
 		}
 	end)
---
+	--
 	augroup(FEATURES.REFERENCES, function()
 		return {
 			{
@@ -168,42 +169,42 @@ local function setup_autocommands(client, bufnr)
 	end)
 	vim.b[bufnr].lsp_events = events
 end
---
--- -----------------------------------------------------------------------------//
--- -- Mappings
--- -----------------------------------------------------------------------------//
---
--- ---Setup mapping when an lsp attaches to a buffer
--- ---@param _ table lsp client
--- ---@param bufnr number
--- local function setup_mappings(_, bufnr)
--- 	local function with_desc(desc)
--- 		return { buffer = bufnr, desc = desc }
--- 	end
---
--- 	utils.nnoremap("]c", function()
--- 		vim.diagnostic.goto_prev({ float = false })
--- 	end, with_desc("lsp: go to prev diagnostic"))
--- 	utils.nnoremap("[c", function()
--- 		vim.diagnostic.goto_next({ float = false })
--- 	end, with_desc("lsp: go to next diagnostic"))
---
--- 	vim.keymap.set({ "n", "x" }, "<leader>ca", lsp.buf.code_action, with_desc("lsp: code action"))
--- 	utils.nnoremap("<leader>rf", format, with_desc("lsp: format buffer"))
--- 	utils.nnoremap("gd", lsp.buf.definition, with_desc("lsp: definition"))
--- 	utils.nnoremap("gr", lsp.buf.references, with_desc("lsp: references"))
--- 	utils.nnoremap("K", lsp.buf.hover, with_desc("lsp: hover"))
--- 	utils.nnoremap("gI", lsp.buf.incoming_calls, with_desc("lsp: incoming calls"))
--- 	utils.nnoremap("gi", lsp.buf.implementation, with_desc("lsp: implementation"))
--- 	utils.nnoremap("<leader>gd", lsp.buf.type_definition, with_desc("lsp: go to type definition"))
--- 	utils.nnoremap("<leader>cl", lsp.codelens.run, with_desc("lsp: run code lens"))
--- 	utils.nnoremap("<leader>rn", lsp.buf.rename, with_desc("lsp: rename"))
--- end
 
-local function on_attach(client, bufnr)
-  setup_autocommands(client, bufnr)
+-----------------------------------------------------------------------------//
+-- Mappings
+-----------------------------------------------------------------------------//
+
+---Setup mapping when an lsp attaches to a buffer
+---@param _ table lsp client
+---@param bufnr number
+local function setup_mappings(_, bufnr)
+	local function with_desc(desc)
+		return { buffer = bufnr, desc = desc }
+	end
+
+	utils.nnoremap("]c", function()
+		vim.diagnostic.goto_prev({ float = false })
+	end, with_desc("lsp: go to prev diagnostic"))
+	utils.nnoremap("[c", function()
+		vim.diagnostic.goto_next({ float = false })
+	end, with_desc("lsp: go to next diagnostic"))
+
+	-- vim.keymap.set({ "n", "x" }, "<leader>ca", lsp.buf.code_action, with_desc("lsp: code action"))
+	utils.nnoremap("<leader>lf", format, with_desc("lsp: format buffer"))
+	-- utils.nnoremap("gd", lsp.buf.definition, with_desc("lsp: definition"))
+	-- utils.nnoremap("gr", lsp.buf.references, with_desc("lsp: references"))
+	-- utils.nnoremap("K", lsp.buf.hover, with_desc("lsp: hover"))
+	-- utils.nnoremap("gI", lsp.buf.incoming_calls, with_desc("lsp: incoming calls"))
+	-- utils.nnoremap("gi", lsp.buf.implementation, with_desc("lsp: implementation"))
+	-- utils.nnoremap("<leader>gd", lsp.buf.type_definition, with_desc("lsp: go to type definition"))
+	-- utils.nnoremap("<leader>cl", lsp.codelens.run, with_desc("lsp: run code lens"))
+	-- utils.nnoremap("<leader>rn", lsp.buf.rename, with_desc("lsp: rename"))
 end
 
+local function on_attach(client, bufnr)
+	setup_autocommands(client, bufnr)
+	setup_mappings(client, bufnr)
+end
 
 utils.augroup("LspSetupCommands", {
 	{
@@ -216,8 +217,8 @@ utils.augroup("LspSetupCommands", {
 				return
 			end
 			local client = lsp.get_client_by_id(args.data.client_id)
-      on_attach(client, bufnr)
-      -- if client_overrides[client.name] then client_overrides[client.name](client, bufnr) end
+			on_attach(client, bufnr)
+			-- if client_overrides[client.name] then client_overrides[client.name](client, bufnr) end
 		end,
 	},
 	{
@@ -239,14 +240,14 @@ utils.augroup("LspSetupCommands", {
 		end,
 	},
 })
--- -----------------------------------------------------------------------------//
--- -- Commands
--- -----------------------------------------------------------------------------//
--- local command = utils.command
---
--- command("LspFormat", function()
--- 	format({ bufnr = 0, async = false })
--- end)
+-----------------------------------------------------------------------------//
+-- Commands
+-----------------------------------------------------------------------------//
+local command = utils.command
+
+command("LspFormat", function()
+	format({ bufnr = 0, async = false })
+end)
 --
 -- do
 -- 	---@type integer?
@@ -355,15 +356,15 @@ sign({ highlight = "DiagnosticSignHint", icon = "⚑" })
 -- -----------------------------------------------------------------------------//
 -- -- Diagnostic Configuration
 -- -----------------------------------------------------------------------------//
--- local max_width = math.min(math.floor(vim.o.columns * 0.7), 100)
--- local max_height = math.min(math.floor(vim.o.lines * 0.3), 30)
--- local icons = {
--- 	error = "", -- '✗'
--- 	warn = "",
--- 	warning = "",
--- 	info = "", -- 
--- 	hint = "", -- ⚑
--- }
+local max_width = math.min(math.floor(vim.o.columns * 0.7), 100)
+local max_height = math.min(math.floor(vim.o.lines * 0.3), 30)
+local icons = {
+	error = "", -- '✗'
+	warn = "",
+	warning = "",
+	info = "", -- 
+	hint = "", -- ⚑
+}
 -- --- Save options for virtual text for future use
 -- ---@diagnostic disable-next-line: unused-local
 -- local virtual_text_opts = {
