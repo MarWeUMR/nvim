@@ -62,9 +62,12 @@ plugin({
 })
 
 plugin({ "akinsho/toggleterm.nvim", tag = "*", config = conf.toggleterm })
-plugin({ "wakatime/vim-wakatime" })
+-- plugin({ "wakatime/vim-wakatime" })
+plugin({ "ActivityWatch/aw-watcher-vim" })
+
 plugin({ "olimorris/persisted.nvim", config = conf.persisted })
 plugin({ "ahmedkhalf/project.nvim", config = conf.project })
 plugin({ "sindrets/diffview.nvim", config = conf.diffview })
-plugin({ "ldelossa/gh.nvim", requires = { "ldelossa/litee.nvim" }, config = conf.gh })
+-- plugin({ "ldelossa/gh.nvim", requires = { "ldelossa/litee.nvim" }, config = conf.gh })
 -- plugin({"Olical/conjure", config = conf.conjure})
+-- plugin({ "nvim-neorg/neorg", requires = { "nvim-lua/plenary.nvim" }, config = conf.neorg, run = ":Neorg sync-parsers" })

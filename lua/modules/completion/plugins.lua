@@ -5,7 +5,7 @@ plugin({
   "neovim/nvim-lspconfig",
   -- used filetype to lazyload lsp
   -- config your language filetype in here
-  ft = { "lua", "rust", "ts", "php", "typescript", "python", "julia", "html" },
+  -- ft = { "lua", "rust", "ts", "php", "typescript", "python", "julia", "html", "jl", "markdown", "qmd" },
   config = conf.nvim_lsp,
 })
 
@@ -14,7 +14,7 @@ plugin({
   event = "InsertEnter",
   config = conf.nvim_cmp,
   requires = {
-    { "hrsh7th/cmp-nvim-lsp", after = "nvim-lspconfig" },
+    { "hrsh7th/cmp-nvim-lsp", requires = "nvim-lspconfig" },
     { "hrsh7th/cmp-path", after = "nvim-cmp" },
     { "hrsh7th/cmp-buffer", after = "nvim-cmp" },
     { "hrsh7th/cmp-cmdline", after = "nvim-cmp" },
@@ -44,3 +44,4 @@ plugin({ "windwp/nvim-autopairs", event = "InsertEnter", config = conf.auto_pair
 -- plugin({ "github/copilot.vim" })
 plugin({ "zbirenbaum/copilot.lua", event = "VimEnter", config = conf.copilot })
 plugin({ "zbirenbaum/copilot-cmp", after = { "copilot.lua" }, config = conf.copilot_cmp })
+plugin({ "quarto-dev/quarto-nvim", requires = { "jmbuhr/otter.nvim" }, config = conf.quarto })

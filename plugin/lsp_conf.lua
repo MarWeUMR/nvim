@@ -49,9 +49,8 @@ end
 
 local function formatting_filter(client)
 	local exceptions = ({
-		-- python = { "autopep8" },
-		sql = { "sqls" },
-		lua = { "sumneko_lua" },
+		-- python = { "black" },
+		 sql = { "sqls" },
 		proto = { "null-ls" },
 		-- typescript = { "black" },
 	})[vim.bo.filetype]

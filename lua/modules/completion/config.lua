@@ -39,8 +39,8 @@ function config.nvim_cmp()
   local function tab(fallback)
     if cmp.visible() and has_words_before() then
       cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
-    elseif require("luasnip").expand_or_locally_jumpable() then
-      require("luasnip").expand_or_jump()
+      -- elseif require("luasnip").expand_or_locally_jumpable() then
+      -- 	require("luasnip").expand_or_jump()
     else
       fallback()
     end
@@ -126,7 +126,7 @@ function config.lspsaga()
   local saga = require("lspsaga")
   saga.init_lsp_saga({
     symbol_in_winbar = {
-      enable = true,
+      enable = false,
     },
     code_action_lightbulb = {
       enable = false,
@@ -161,6 +161,27 @@ function config.copilot_cmp()
   require("copilot_cmp").setup({
     formatters = {
       insert_text = require("copilot_cmp.format").remove_existing,
+    },
+  })
+end
+
+function config.quarto()
+  require("quarto").setup({
+    debug = false,
+    closePreviewOnExit = true,
+    lspFeatures = {
+      enabled = false,
+      languages = { "julia" },
+      diagnostics = {
+        enabled = true,
+        triggers = { "BufEnter", "InsertLeave", "TextChanged" },
+      },
+      cmpSource = {
+        enabled = true,
+      },
+    },
+    keymap = {
+      hover = "K",
     },
   })
 end
