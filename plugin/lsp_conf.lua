@@ -10,19 +10,19 @@ local utils = require("utils")
 -- -----------------------------------------------------------------------------//
 --
 local FEATURES = {
-	DIAGNOSTICS = { name = "diagnostics" },
-	CODELENS = { name = "codelens", provider = "codeLensProvider" },
-	FORMATTING = { name = "formatting", provider = "documentFormattingProvider" },
-	REFERENCES = { name = "references", provider = "documentHighlightProvider" },
+  DIAGNOSTICS = { name = "diagnostics" },
+  CODELENS = { name = "codelens", provider = "codeLensProvider" },
+  FORMATTING = { name = "formatting", provider = "documentFormattingProvider" },
+  REFERENCES = { name = "references", provider = "documentHighlightProvider" },
 }
 
 ---@param bufnr integer
 ---@param capability string
 ---@return table[]
 local function clients_by_capability(bufnr, capability)
-	return vim.tbl_filter(function(c)
-		return c.server_capabilities[capability]
-	end, lsp.get_active_clients({ buffer = bufnr }))
+  return vim.tbl_filter(function(c)
+    return c.server_capabilities[capability]
+  end, lsp.get_active_clients({ buffer = bufnr }))
 end
 
 -- ---@param buf integer
@@ -38,37 +38,37 @@ end
 ---@param events table
 ---@return fun(feature: string, commands: fun(string): Autocommand[])
 local function augroup_factory(bufnr, client, events)
-	return function(feature, commands)
-		local provider, name = feature.provider, feature.name
-		if not provider or client.server_capabilities[provider] then
-			events[name].group_id = utils.augroup(fmt("LspCommands_%d_%s", bufnr, name), commands(provider))
-			table.insert(events[name].clients, client.id)
-		end
-	end
+  return function(feature, commands)
+    local provider, name = feature.provider, feature.name
+    if not provider or client.server_capabilities[provider] then
+      events[name].group_id = utils.augroup(fmt("LspCommands_%d_%s", bufnr, name), commands(provider))
+      table.insert(events[name].clients, client.id)
+    end
+  end
 end
 
 local function formatting_filter(client)
-	local exceptions = ({
-		-- python = { "black" },
-		 sql = { "sqls" },
-		proto = { "null-ls" },
-		-- typescript = { "black" },
-	})[vim.bo.filetype]
+  local exceptions = ({
+    -- python = { "black" },
+    sql = { "sqls" },
+    proto = { "null-ls" },
+    -- typescript = { "black" },
+  })[vim.bo.filetype]
 
-	if not exceptions then
-		return true
-	end
-	return not vim.tbl_contains(exceptions, client.name)
+  if not exceptions then
+    return true
+  end
+  return not vim.tbl_contains(exceptions, client.name)
 end
 
 ---@param opts table<string, any>
 local function format(opts)
-	opts = opts or {}
-	vim.lsp.buf.format({
-		bufnr = opts.bufnr,
-		async = opts.async,
-		filter = formatting_filter,
-	})
+  opts = opts or {}
+  vim.lsp.buf.format({
+    bufnr = opts.bufnr,
+    async = opts.async,
+    filter = formatting_filter,
+  })
 end
 
 --- Autocommands are created per buffer per feature, i.e. if buffer 8 attaches an LSP server
@@ -87,86 +87,86 @@ end
 ---@param client table<string, any>
 ---@param bufnr number
 local function setup_autocommands(client, bufnr)
-	if not client then
-		local msg = fmt("Unable to setup LSP autocommands, client for %d is missing", bufnr)
-		return vim.notify(msg, "error", { title = "LSP Setup" })
-	end
-	--
-	local events = vim.F.if_nil(vim.b.lsp_events, {
-		[FEATURES.CODELENS.name] = { clients = {}, group_id = nil },
-		[FEATURES.FORMATTING.name] = { clients = {}, group_id = nil },
-		[FEATURES.DIAGNOSTICS.name] = { clients = {}, group_id = nil },
-		[FEATURES.REFERENCES.name] = { clients = {}, group_id = nil },
-	})
+  if not client then
+    local msg = fmt("Unable to setup LSP autocommands, client for %d is missing", bufnr)
+    return vim.notify(msg, "error", { title = "LSP Setup" })
+  end
+  --
+  local events = vim.F.if_nil(vim.b.lsp_events, {
+    [FEATURES.CODELENS.name] = { clients = {}, group_id = nil },
+    [FEATURES.FORMATTING.name] = { clients = {}, group_id = nil },
+    [FEATURES.DIAGNOSTICS.name] = { clients = {}, group_id = nil },
+    [FEATURES.REFERENCES.name] = { clients = {}, group_id = nil },
+  })
 
-	local augroup = augroup_factory(bufnr, client, events)
+  local augroup = augroup_factory(bufnr, client, events)
 
-	-- augroup(FEATURES.DIAGNOSTICS, function()
-	-- 	return {
-	-- 		{
-	-- 			event = { "CursorHold" },
-	-- 			buffer = bufnr,
-	-- 			desc = "LSP: Show diagnostics",
-	-- 			command = function(args)
-	-- 				if vim.b.lsp_hover_win and api.nvim_win_is_valid(vim.b.lsp_hover_win) then
-	-- 					return
-	-- 				end
-	-- 				vim.diagnostic.open_float(args.buf, { scope = "cursor", focus = false })
-	-- 			end,
-	-- 		},
-	-- 	}
-	-- end)
+  -- augroup(FEATURES.DIAGNOSTICS, function()
+  -- 	return {
+  -- 		{
+  -- 			event = { "CursorHold" },
+  -- 			buffer = bufnr,
+  -- 			desc = "LSP: Show diagnostics",
+  -- 			command = function(args)
+  -- 				if vim.b.lsp_hover_win and api.nvim_win_is_valid(vim.b.lsp_hover_win) then
+  -- 					return
+  -- 				end
+  -- 				vim.diagnostic.open_float(args.buf, { scope = "cursor", focus = false })
+  -- 			end,
+  -- 		},
+  -- 	}
+  -- end)
 
-	augroup(FEATURES.FORMATTING, function(provider)
-		return {
-			{
-				event = "BufWritePre",
-				buffer = bufnr,
-				desc = "LSP: Format on save",
-				command = function(args)
-					if not vim.g.formatting_disabled and not vim.b.formatting_disabled then
-						local clients = clients_by_capability(args.buf, provider)
-						format({ bufnr = args.buf, async = #clients == 1 })
-					end
-				end,
-			},
-		}
-	end)
+  augroup(FEATURES.FORMATTING, function(provider)
+    return {
+      {
+        event = "BufWritePre",
+        buffer = bufnr,
+        desc = "LSP: Format on save",
+        command = function(args)
+          if not vim.g.formatting_disabled and not vim.b.formatting_disabled then
+            local clients = clients_by_capability(args.buf, provider)
+            format({ bufnr = args.buf, async = #clients == 1 })
+          end
+        end,
+      },
+    }
+  end)
 
-	augroup(FEATURES.CODELENS, function()
-		return {
-			{
-				event = { "BufEnter", "CursorHold", "InsertLeave" },
-				desc = "LSP: Code Lens",
-				buffer = bufnr,
-				command = function()
-					lsp.codelens.refresh()
-				end,
-			},
-		}
-	end)
-	--
-	augroup(FEATURES.REFERENCES, function()
-		return {
-			{
-				event = { "CursorHold", "CursorHoldI" },
-				buffer = bufnr,
-				desc = "LSP: References",
-				command = function()
-					lsp.buf.document_highlight()
-				end,
-			},
-			{
-				event = "CursorMoved",
-				desc = "LSP: References Clear",
-				buffer = bufnr,
-				command = function()
-					lsp.buf.clear_references()
-				end,
-			},
-		}
-	end)
-	vim.b[bufnr].lsp_events = events
+  augroup(FEATURES.CODELENS, function()
+    return {
+      {
+        event = { "BufEnter", "CursorHold", "InsertLeave" },
+        desc = "LSP: Code Lens",
+        buffer = bufnr,
+        command = function()
+          lsp.codelens.refresh()
+        end,
+      },
+    }
+  end)
+  --
+  augroup(FEATURES.REFERENCES, function()
+    return {
+      {
+        event = { "CursorHold", "CursorHoldI" },
+        buffer = bufnr,
+        desc = "LSP: References",
+        command = function()
+          lsp.buf.document_highlight()
+        end,
+      },
+      {
+        event = "CursorMoved",
+        desc = "LSP: References Clear",
+        buffer = bufnr,
+        command = function()
+          lsp.buf.clear_references()
+        end,
+      },
+    }
+  end)
+  vim.b[bufnr].lsp_events = events
 end
 
 -----------------------------------------------------------------------------//
@@ -177,67 +177,67 @@ end
 ---@param _ table lsp client
 ---@param bufnr number
 local function setup_mappings(_, bufnr)
-	local function with_desc(desc)
-		return { buffer = bufnr, desc = desc }
-	end
+  local function with_desc(desc)
+    return { buffer = bufnr, desc = desc }
+  end
 
-	utils.nnoremap("]c", function()
-		vim.diagnostic.goto_prev({ float = false })
-	end, with_desc("lsp: go to prev diagnostic"))
-	utils.nnoremap("[c", function()
-		vim.diagnostic.goto_next({ float = false })
-	end, with_desc("lsp: go to next diagnostic"))
+  utils.nnoremap("]c", function()
+    vim.diagnostic.goto_prev({ float = false })
+  end, with_desc("lsp: go to prev diagnostic"))
+  utils.nnoremap("[c", function()
+    vim.diagnostic.goto_next({ float = false })
+  end, with_desc("lsp: go to next diagnostic"))
 
-	-- vim.keymap.set({ "n", "x" }, "<leader>ca", lsp.buf.code_action, with_desc("lsp: code action"))
-	utils.nnoremap("<leader>lf", format, with_desc("lsp: format buffer"))
-	-- utils.nnoremap("gd", lsp.buf.definition, with_desc("lsp: definition"))
-	-- utils.nnoremap("gr", lsp.buf.references, with_desc("lsp: references"))
-	-- utils.nnoremap("K", lsp.buf.hover, with_desc("lsp: hover"))
-	-- utils.nnoremap("gI", lsp.buf.incoming_calls, with_desc("lsp: incoming calls"))
-	-- utils.nnoremap("gi", lsp.buf.implementation, with_desc("lsp: implementation"))
-	-- utils.nnoremap("<leader>gd", lsp.buf.type_definition, with_desc("lsp: go to type definition"))
-	-- utils.nnoremap("<leader>cl", lsp.codelens.run, with_desc("lsp: run code lens"))
-	-- utils.nnoremap("<leader>rn", lsp.buf.rename, with_desc("lsp: rename"))
+  -- vim.keymap.set({ "n", "x" }, "<leader>ca", lsp.buf.code_action, with_desc("lsp: code action"))
+  utils.nnoremap("<leader>lf", format, with_desc("lsp: format buffer"))
+  -- utils.nnoremap("gd", lsp.buf.definition, with_desc("lsp: definition"))
+  -- utils.nnoremap("gr", lsp.buf.references, with_desc("lsp: references"))
+  -- utils.nnoremap("K", lsp.buf.hover, with_desc("lsp: hover"))
+  -- utils.nnoremap("gI", lsp.buf.incoming_calls, with_desc("lsp: incoming calls"))
+  -- utils.nnoremap("gi", lsp.buf.implementation, with_desc("lsp: implementation"))
+  -- utils.nnoremap("<leader>gd", lsp.buf.type_definition, with_desc("lsp: go to type definition"))
+  -- utils.nnoremap("<leader>cl", lsp.codelens.run, with_desc("lsp: run code lens"))
+  -- utils.nnoremap("<leader>rn", lsp.buf.rename, with_desc("lsp: rename"))
 end
 
 local function on_attach(client, bufnr)
-	setup_autocommands(client, bufnr)
-	setup_mappings(client, bufnr)
+  setup_autocommands(client, bufnr)
+  setup_mappings(client, bufnr)
 end
 
 utils.augroup("LspSetupCommands", {
-	{
-		event = "LspAttach",
-		desc = "setup the language server autocommands",
-		command = function(args)
-			local bufnr = args.buf
-			-- if the buffer is invalid we should not try and attach to it
-			if not api.nvim_buf_is_valid(bufnr) or not args.data then
-				return
-			end
-			local client = lsp.get_client_by_id(args.data.client_id)
-			on_attach(client, bufnr)
-			-- if client_overrides[client.name] then client_overrides[client.name](client, bufnr) end
-		end,
-	},
-	{
-		event = "LspDetach",
-		desc = "Clean up after detached LSP",
-		command = function(args)
-			local client_id = args.data.client_id
-			if not vim.b.lsp_events or not client_id then
-				return
-			end
-			for _, state in pairs(vim.b.lsp_events) do
-				if #state.clients == 1 and state.clients[1] == client_id then
-					api.nvim_clear_autocmds({ group = state.group_id, buffer = args.buf })
-				end
-				vim.tbl_filter(function(id)
-					return id ~= client_id
-				end, state.clients)
-			end
-		end,
-	},
+  {
+    event = "LspAttach",
+    desc = "setup the language server autocommands",
+    command = function(args)
+      local bufnr = args.buf
+      -- if the buffer is invalid we should not try and attach to it
+      if not api.nvim_buf_is_valid(bufnr) or not args.data then
+        return
+      end
+      local client = lsp.get_client_by_id(args.data.client_id)
+      on_attach(client, bufnr)
+      -- if client_overrides[client.name] then client_overrides[client.name](client, bufnr) end
+    end,
+  },
+  {
+    event = "LspDetach",
+    desc = "Clean up after detached LSP",
+    command = function(args)
+      local client_id = args.data.client_id
+      if not vim.b.lsp_events or not client_id then
+        return
+      end
+      for _, state in pairs(vim.b.lsp_events) do
+        if #state.clients == 1 and state.clients[1] == client_id then
+          api.nvim_clear_autocmds({ group = state.group_id, buffer = args.buf })
+        end
+        vim.tbl_filter(function(id)
+          return id ~= client_id
+        end, state.clients)
+      end
+    end,
+  },
 })
 -----------------------------------------------------------------------------//
 -- Commands
@@ -245,7 +245,7 @@ utils.augroup("LspSetupCommands", {
 local command = utils.command
 
 command("LspFormat", function()
-	format({ bufnr = 0, async = false })
+  format({ bufnr = 0, async = false })
 end)
 --
 -- do
@@ -292,13 +292,13 @@ end)
 -- Signs
 -----------------------------------------------------------------------------//
 local function sign(opts)
-	fn.sign_define(opts.highlight, {
-		text = opts.icon,
-		texthl = opts.highlight,
-		numhl = opts.highlight .. "Nr",
-		culhl = opts.highlight .. "CursorNr",
-		linehl = opts.highlight .. "Line",
-	})
+  fn.sign_define(opts.highlight, {
+    text = opts.icon,
+    texthl = opts.highlight,
+    numhl = opts.highlight .. "Nr",
+    culhl = opts.highlight .. "CursorNr",
+    linehl = opts.highlight .. "Line",
+  })
 end
 
 sign({ highlight = "DiagnosticSignError", icon = " " })
@@ -358,11 +358,11 @@ sign({ highlight = "DiagnosticSignHint", icon = "⚑" })
 local max_width = math.min(math.floor(vim.o.columns * 0.7), 100)
 local max_height = math.min(math.floor(vim.o.lines * 0.3), 30)
 local icons = {
-	error = "", -- '✗'
-	warn = "",
-	warning = "",
-	info = "", -- 
-	hint = "", -- ⚑
+  error = "", -- '✗'
+  warn = "",
+  warning = "",
+  info = "", -- 
+  hint = "", -- ⚑
 }
 -- --- Save options for virtual text for future use
 -- ---@diagnostic disable-next-line: unused-local
@@ -376,23 +376,23 @@ local icons = {
 -- }
 --
 diagnostic.config({
-	signs = true,
-	underline = true,
-	update_in_insert = false,
-	severity_sort = true,
-	virtual_text = false,
-	float = {
-		max_width = max_width,
-		max_height = max_height,
-		-- border = border,
-		focusable = false,
-		source = "always",
-		prefix = function(diag, i, _)
-			local level = diagnostic.severity[diag.severity]
-			local prefix = fmt("%d. %s ", i, icons[level:lower()])
-			return prefix, "Diagnostic" .. level:gsub("^%l", string.upper)
-		end,
-	},
+  signs = true,
+  underline = true,
+  update_in_insert = false,
+  severity_sort = true,
+  virtual_text = false,
+  float = {
+    max_width = max_width,
+    max_height = max_height,
+    -- border = border,
+    focusable = false,
+    source = "always",
+    prefix = function(diag, i, _)
+      local level = diagnostic.severity[diag.severity]
+      local prefix = fmt("%d. %s ", i, icons[level:lower()])
+      return prefix, "Diagnostic" .. level:gsub("^%l", string.upper)
+    end,
+  },
 })
 --
 -- lsp.handlers["textDocument/hover"] = function(...)

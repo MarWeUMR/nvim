@@ -120,6 +120,19 @@ lspconfig.pyright.setup({
   },
 })
 
+lspconfig.intelephense.setup({
+  capabilities = capabilities,
+  handlers = handlers,
+  on_attach = on_attach,
+  settings = {
+    intelephense = {
+      files = {
+        maxSize = 5000000,
+      },
+    },
+  },
+})
+
 lspconfig.sumneko_lua.setup({
   handlers = handlers,
   on_attach = on_attach,
@@ -224,12 +237,12 @@ local rust_opts = {
     settings = {
       ["rust-analyzer"] = {
         cargo = {
-          features = { "pro" },
-          extraArgs = { "--all-features" },
+          -- features = { "pro" },
+          -- extraArgs = { "--all-features" },
         },
         checkOnSave = {
-          features = { "pro" },
-          extraArgs = { "--all-features" },
+          -- features = { "pro" },
+          -- extraArgs = { "--all-features" },
         },
       },
     },
@@ -283,7 +296,6 @@ lspconfig.eslint.setup({
   capabilities = capabilities,
   handlers = handlers,
   on_attach = require("modules.completion.eslint").on_attach,
-  settings = require("modules.completion.eslint").settings,
   settings = require("modules.completion.eslint").settings,
 })
 

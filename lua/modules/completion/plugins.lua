@@ -24,7 +24,8 @@ plugin({
 
 plugin({ "L3MON4D3/LuaSnip", event = "InsertCharPre", config = conf.lua_snip })
 
-plugin({ "simrat39/rust-tools.nvim" })
+plugin({ "nimr0d/rust-tools.nvim" })
+-- plugin({ "simrat39/rust-tools.nvim" })
 
 plugin({ "jose-elias-alvarez/typescript.nvim" })
 plugin({
@@ -44,4 +45,10 @@ plugin({ "windwp/nvim-autopairs", event = "InsertEnter", config = conf.auto_pair
 -- plugin({ "github/copilot.vim" })
 plugin({ "zbirenbaum/copilot.lua", event = "VimEnter", config = conf.copilot })
 plugin({ "zbirenbaum/copilot-cmp", after = { "copilot.lua" }, config = conf.copilot_cmp })
-plugin({ "quarto-dev/quarto-nvim", requires = { "jmbuhr/otter.nvim" }, config = conf.quarto })
+plugin({ "jmbuhr/otter.nvim", config = conf.otter })
+plugin({
+  "quarto-dev/quarto-nvim",
+  commit = "142234dea2555c793053970f98b6357be89d1319",
+  requires = { "jmbuhr/otter.nvim" },
+  config = conf.quarto,
+})
