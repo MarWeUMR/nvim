@@ -21,6 +21,14 @@ return {
   -- },
   {
     "onsails/lspkind.nvim",
+    config = function(_, opts)
+      local lspkind = require("lspkind")
+      lspkind.init({
+        symbol_map = {
+          Copilot = "",
+        },
+      })
+    end,
   },
   {
     "hrsh7th/nvim-cmp",
@@ -32,6 +40,7 @@ return {
       "saadparwaiz1/cmp_luasnip",
       "hrsh7th/cmp-cmdline",
       "hrsh7th/cmp-nvim-lsp-signature-help",
+      "zbirenbaum/copilot-cmp",
       -- "lukas-reineke/cmp-rg",
       -- { "tzachar/cmp-tabnine", build = "./install.sh" },
     },
@@ -106,7 +115,7 @@ return {
           {
             name = "nvim_lsp",
           },
-          -- { name = "cmp_tabnine" },
+          { name = "copilot" },
           { name = "buffer" },
           { name = "path" },
           { name = "nvim_lsp_signature_help" },
@@ -157,6 +166,15 @@ return {
     "zbirenbaum/copilot.lua",
     enabled = true,
     event = "VeryLazy",
-    config = true,
+    opts = {
+      suggestion = { enabled = false },
+      panel = { enabled = false },
+    },
+  },
+  {
+    "zbirenbaum/copilot-cmp",
+    opts = {
+      method = "getCompletionsCycling",
+    },
   },
 }
