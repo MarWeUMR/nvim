@@ -1,0 +1,19 @@
+{
+  "lspconfig": {
+    "rust-analyzer.cargo.features": [
+      "pro",
+      "xgboost"
+    ],
+    "rust-analyzer.diagnostics.experimental.enable": true,
+    "rust-analyzer.hover.actions.references.enable": true,
+    "rust-analyzer.lens.references.adt.enable": true,
+    "rust-analyzer.lens.references.enumVariant.enable": true,
+    "rust-analyzer.lens.references.trait.enable": true,
+    "rust-analyzer.semanticHighlighting.operator.specialization.enable": true,
+    "rust-analyzer.semanticHighlighting.punctuation.enable": true,
+    "rust-analyzer.semanticHighlighting.punctuation.separate.macro.bang": true,
+    "rust-analyzer.semanticHighlighting.punctuation.specialization.enable": true,
+    "rust-analyzer.check.command": "clippy",
+    "rust-analyzer.server.path": "/home/ubuntu/.vscode-server-insiders/extensions/rust-lang.rust-analyzer-0.3.1369-linux-x64/server/rust-analyzer"
+  }
+}
