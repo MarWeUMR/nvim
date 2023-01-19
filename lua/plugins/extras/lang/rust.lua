@@ -1,5 +1,24 @@
 return {
 
+  -- extend auto completion
+  {
+    "hrsh7th/nvim-cmp",
+    dependencies = {
+      {
+        "Saecki/crates.nvim",
+        event = { "BufRead Cargo.toml" },
+        config = true,
+      },
+    },
+    ---@param opts cmp.ConfigSchema
+    opts = function(_, opts)
+      local cmp = require("cmp")
+      opts.sources = cmp.config.sources(vim.list_extend(opts.sources, {
+        { name = "crates" },
+      }))
+    end,
+  },
+
   -- add rust to treesitter
   {
     "nvim-treesitter/nvim-treesitter",
@@ -43,9 +62,12 @@ return {
               adapter = require("rust-tools.dap").get_codelldb_adapter(codelldb_path, liblldb_path),
             },
             tools = {
-              hover_actions = {
-                auto_focus = false,
+              executor = require("rust-tools.executors").toggleterm,
+              runnables = {
+                use_telescope = true,
               },
+              autoSetHints = true,
+              hover_actions = { auto_focus = true },
               inlay_hints = {
                 auto = true,
                 show_parameter_hints = true,
@@ -54,15 +76,13 @@ return {
             settings = {
               ["rust-analyzer"] = {
                 cargo = {
-                  -- allFeatures = true,
-                  extraArgs = { "--all-features" },
+                  allFeatures = true,
                   loadOutDirsFromCheck = true,
                   runBuildScripts = true,
                 },
                 -- Add clippy lints for Rust.
                 checkOnSave = {
-                  extraArgs = { "--all-features" },
-                  command = "clippy --all-targets --all-features -- -D warnings",
+                  command = "clippy",
                 },
                 procMacro = {
                   enable = true,

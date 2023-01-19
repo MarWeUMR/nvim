@@ -10,7 +10,7 @@ return {
         -- "black",
         "isort",
         -- "flake8",
-        "rust-analyzer",
+        -- "rust-analyzer",
         "taplo",
         --"pyright",
         -- "python-lsp-server",
@@ -52,36 +52,6 @@ return {
   {
     "neovim/nvim-lspconfig",
 
-    opts = {
-      servers = {
-        -- ruff_lsp = {
-        --   settings = {
-        --     ["ruff-lsp"] = {
-        --       init_options = {
-        --         settings = {
-        --           -- Any extra CLI arguments for `ruff` go here.
-        --           args = {
-        --             ["line-length"] = 120,
-        --             ignore = "E501",
-        --           },
-        --         },
-        --       },
-        --     },
-        --   },
-        -- },
-        -- pylsp = {
-        --   settings = {
-        --     ["pylsp"] = {
-        --       plugins = {
-        --         pycodestyle = { enabled = true },
-        --         autopep8 = { enabled = true },
-        --         pylint = { enabled = true },
-        --       },
-        --     },
-        --   },
-        -- },
-      },
-    },
     keys = function()
       return {
         {
