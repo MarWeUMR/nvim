@@ -9,7 +9,7 @@ return {
   {
     "folke/tokyonight.nvim",
     lazy = false,
-    priority = 900,
+    priority = 1000,
     opts = {
       style = "storm",
       transparent = false,
@@ -28,6 +28,7 @@ return {
         local prompt = "#2d3149"
         hl.CursorLineNr = { fg = c.orange, bold = true }
         hl.LineNr = { fg = c.orange, bold = true }
+        hl.WinSeparator = { fg = c.purple }
         hl.LineNrAbove = { fg = c.fg_gutter }
         hl.LineNrBelow = { fg = c.fg_gutter }
         hl.TelescopeNormal = { bg = c.bg_dark, fg = c.fg_dark }
@@ -91,4 +92,18 @@ return {
       -- vim.cmd.colorscheme("onedark")
     end,
   },
+
+  { "LunarVim/horizon.nvim", lazy = false, priority = 1000 },
+  {
+    "projekt0n/github-nvim-theme",
+    lazy = false,
+    priority = 1000,
+  },
+  {
+    "shaunsingh/nord.nvim",
+    lazy = false,
+    priority = 1000,
+  },
+  { "rmehri01/onenord.nvim", lazy = false, priority = 1000 },
+  { "kaiuri/onigiri.nvim", lazy = false, priority = 1000 },
 }
