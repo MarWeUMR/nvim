@@ -27,6 +27,14 @@ end
 
 vim.opt.fillchars = Icons.fillchars
 vim.opt.scrolloff = 6
-vim.opt.signcolumn = "yes:1"
-
+vim.opt.laststatus = 3
+-- vim.opt.signcolumn = "yes:1"
+vim.opt.foldenable = true
+vim.opt.foldlevel = 99 -- was 1
+vim.opt.foldlevelstart = 99
+vim.opt.foldcolumn = "1"
+vim.opt.foldnestmax = 10
+vim.opt.listchars = Icons.listchars
 -- vim.g.python3_host_prog = "/home/ubuntu/.pyenv/versions/venv3916/bin/python"
+
+require("utils.statuscolumn")
