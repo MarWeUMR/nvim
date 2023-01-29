@@ -37,6 +37,42 @@ return {
         end,
         desc = "Find Plugin File",
       },
+      {
+        "<leader>fw",
+        function()
+          local function split_str(str)
+            local fields = {}
+            for field in str:gmatch("([^:]+)") do
+              fields[#fields + 1] = field
+            end
+            return fields
+          end
+
+          local builtins = require("telescope.builtin")
+          local function glow_opts(opts)
+            local previewers = require("telescope.previewers")
+            local delta = previewers.new_termopen_previewer({
+              get_command = function(entry)
+                local result_list = split_str(entry.value)
+                return { "glow", "-l", "/home/ubuntu/wiki/" .. result_list[1] }
+              end,
+            })
+            opts = opts or {}
+            opts.previewer = {
+              delta,
+              previewers.git_commit_message.new(opts),
+            }
+            return opts
+          end
+
+          local function glow_previewer(opts)
+            builtins.live_grep(glow_opts(opts))
+          end
+
+          glow_previewer({ cwd = "~/wiki" })
+        end,
+        desc = "Find in Wiki (Grep)",
+      },
       { "<leader>fg", require("lazyvim.util").telescope("live_grep"), desc = "Find in Files (Grep)" },
       { "<leader>fb", "<cmd>Telescope buffers<cr>", desc = "Buffers" },
       { "<leader>ff", require("lazyvim.util").telescope("find_files"), desc = "Find Files" },
