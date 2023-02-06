@@ -19,6 +19,12 @@ return {
   --     require("tabnine").setup(opts)
   --   end,
   -- },
+
+  {
+    "echasnovski/mini.pairs",
+    enabled = false,
+  },
+  { "windwp/nvim-autopairs", config = true, event = "InsertEnter" },
   {
     "onsails/lspkind.nvim",
     config = function(_, opts)
