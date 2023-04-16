@@ -147,6 +147,11 @@ local function setup_mappings(client, bufnr)
     { "n", "<leader>lr", lsp.buf.rename, desc = "rename", capability = provider.RENAME },
   }
 
+  if client.name == "rust_analyzer" then
+    table.insert(mappings, { "n", "<Leader>rr", "<CMD>RustRunnables<CR>", desc = "Rust Runnables" })
+    table.insert(mappings, { "n", "<C-k>", "<CMD>RustHoverActions<CR>", desc = "Rust Hover Actions" })
+  end
+
   mw.foreach(function(m)
     if
       (not m.exclude or not vim.tbl_contains(m.exclude, vim.bo[bufnr].ft))
