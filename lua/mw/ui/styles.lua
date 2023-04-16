@@ -38,9 +38,9 @@ mw.styles.icons = {
     light_shade_block = "░",
   },
   lsp = {
-    error = "", -- '✗'
-    warn = "",
-    info = "", --  
+    error = "🔥", --  ✗
+    warn = "",
+    info = "", --  
     hint = "", --  ⚑
   },
   git = {

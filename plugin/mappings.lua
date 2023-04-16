@@ -46,6 +46,7 @@ map("n", "<C-h>", "<C-w>h", { desc = "Go to left window" })
 map("n", "<C-j>", "<C-w>j", { desc = "Go to lower window" })
 map("n", "<C-k>", "<C-w>k", { desc = "Go to upper window" })
 map("n", "<C-l>", "<C-w>l", { desc = "Go to right window" })
+map("n", "<leader>|", "<C-w>v", { desc = "Split Window Right" })
 
 -----------------------------------------------------------------------------//
 -- Resize window using <ctrl> arrow keys

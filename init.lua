@@ -6,6 +6,7 @@ local data = fn.stdpath "data"
 ----------------------------------------------------------------------------------------------------
 g.mapleader = " " -- Remap leader key
 g.maplocalleader = " " -- Local leader is <Space>
+
 ----------------------------------------------------------------------------------------------------
 -- Global namespace
 ----------------------------------------------------------------------------------------------------
@@ -22,6 +23,7 @@ local namespace = {
 _G.mw = mw or namespace
 _G.map = vim.keymap.set
 _G.P = vim.print
+
 ----------------------------------------------------------------------------------------------------
 -- Settings
 ----------------------------------------------------------------------------------------------------
@@ -30,6 +32,7 @@ require "mw.utils"
 require "mw.ui.highlights"
 require "mw.ui.styles"
 require "mw.config.options"
+
 -------------------------------------------------------------------------------//
 -- INITIALIZE LAZY
 -------------------------------------------------------------------------------//
@@ -66,4 +69,4 @@ require("lazy").setup("mw.plugins", {
   },
 })
 
-mw.pcall("theme failed to load because", cmd.colorscheme, "onedark")
+mw.pcall("theme failed to load because", cmd.colorscheme, "tokyonight-storm")

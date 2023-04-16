@@ -13,32 +13,35 @@ opt.shortmess = {
   s = true,
   c = true,
   W = true, -- Don't show [w] or written when writing
+  I = true,
 }
 -----------------------------------------------------------------------------//
 -- Timings {{{1
 -----------------------------------------------------------------------------//
-o.updatetime = 300
+o.updatetime = 200
 o.timeout = true
-o.timeoutlen = 500
+o.timeoutlen = 200
 o.ttimeoutlen = 10
 -----------------------------------------------------------------------------//
 -- Window splitting and buffers {{{1
 -----------------------------------------------------------------------------//
-if mw.nightly() then o.splitkeep = 'screen' end
+if mw.nightly() then
+  o.splitkeep = "screen"
+end
 o.splitbelow = true
 o.splitright = true
-o.eadirection = 'hor'
+o.eadirection = "hor"
 -- exclude usetab as we do not want to jump to buffers in already open tabs
 -- do not use split or vsplit to ensure we don't open any new windows
-o.switchbuf = 'useopen,uselast'
+o.switchbuf = "useopen,uselast"
 opt.fillchars = {
-  eob = ' ', -- suppress ~ at EndOfBuffer
-  diff = '╱', -- alternatives = ⣿ ░ ─
-  msgsep = ' ', -- alternatives: ‾ ─
-  fold = ' ',
-  foldopen = '▽', -- '▼'
-  foldclose = '▷', -- '▶'
-  foldsep = ' ',
+  eob = " ", -- suppress ~ at EndOfBuffer
+  diff = "╱", -- alternatives = ⣿ ░ ─
+  msgsep = " ", -- alternatives: ‾ ─
+  fold = " ",
+  foldopen = "▽", -- '▼'
+  foldclose = "▷", -- '▶'
+  foldsep = " ",
 }
 -----------------------------------------------------------------------------//
 -- Diff {{{1
@@ -46,24 +49,26 @@ opt.fillchars = {
 -- Use in vertical diff mode, blank lines to keep sides aligned, Ignore whitespace changes
 opt.diffopt = opt.diffopt
   + {
-    'vertical',
-    'iwhite',
-    'hiddenoff',
-    'foldcolumn:0',
-    'context:4',
-    'algorithm:histogram',
-    'indent-heuristic',
+    "vertical",
+    "iwhite",
+    "hiddenoff",
+    "foldcolumn:0",
+    "context:4",
+    "algorithm:histogram",
+    "indent-heuristic",
   }
-if mw and mw.has('nvim-0.9') then opt.diffopt:append({ 'linematch:60' }) end
+if mw and mw.has "nvim-0.9" then
+  opt.diffopt:append { "linematch:60" }
+end
 -----------------------------------------------------------------------------//
 -- Format Options {{{1
 -----------------------------------------------------------------------------//
 opt.formatoptions = {
-  ['1'] = true,
-  ['2'] = true, -- Use indent from 2nd line of a paragraph
+  ["1"] = true,
+  ["2"] = true, -- Use indent from 2nd line of a paragraph
   q = true, -- continue comments with gq"
   c = true, -- Auto-wrap comments using textwidth
-  r = true, -- Continue comments when pressing Enter
+  r = false, -- Continue comments when pressing Enter
   n = true, -- Recognize numbered lists
   t = false, -- autowrap lines using text width value
   j = true, -- remove a comment leader when joining lines.
@@ -85,48 +90,48 @@ o.foldlevelstart = 999
 -- Grepprg {{{1
 -----------------------------------------------------------------------------//
 -- Use faster grep alternatives if possible
-if mw and not mw.falsy(fn.executable('rg')) then
+if mw and not mw.falsy(fn.executable "rg") then
   vim.o.grepprg = [[rg --glob "!.git" --no-heading --vimgrep --follow $*]]
-  opt.grepformat = opt.grepformat ^ { '%f:%l:%c:%m' }
-elseif mw and not mw.falsy(fn.executable('ag')) then
+  opt.grepformat = opt.grepformat ^ { "%f:%l:%c:%m" }
+elseif mw and not mw.falsy(fn.executable "ag") then
   vim.o.grepprg = [[ag --nogroup --nocolor --vimgrep]]
-  opt.grepformat = opt.grepformat ^ { '%f:%l:%c:%m' }
+  opt.grepformat = opt.grepformat ^ { "%f:%l:%c:%m" }
 end
 -----------------------------------------------------------------------------//
 -- Wild and file globbing stuff in command mode {{{1
 -----------------------------------------------------------------------------//
-o.wildcharm = ('\t'):byte()
-o.wildmode = 'list:full' -- Shows a menu bar as opposed to an enormous list
+o.wildcharm = ("\t"):byte()
+o.wildmode = "list:full" -- Shows a menu bar as opposed to an enormous list
 o.wildignorecase = true -- Ignore case when completing file names and directories
 opt.wildignore = {
-  '*.o',
-  '*.obj',
-  '*.dll',
-  '*.jar',
-  '*.pyc',
-  '*.rbc',
-  '*.class',
-  '*.gif',
-  '*.ico',
-  '*.jpg',
-  '*.jpeg',
-  '*.png',
-  '*.avi',
-  '*.wav',
-  '*.swp',
-  '.lock',
-  '.DS_Store',
-  'tags.lock',
+  "*.o",
+  "*.obj",
+  "*.dll",
+  "*.jar",
+  "*.pyc",
+  "*.rbc",
+  "*.class",
+  "*.gif",
+  "*.ico",
+  "*.jpg",
+  "*.jpeg",
+  "*.png",
+  "*.avi",
+  "*.wav",
+  "*.swp",
+  ".lock",
+  ".DS_Store",
+  "tags.lock",
 }
-opt.wildoptions = { 'pum', 'fuzzy' }
+opt.wildoptions = { "pum", "fuzzy" }
 o.pumblend = 0 -- Make popup window translucent
 -----------------------------------------------------------------------------//
 -- Display {{{1
 -----------------------------------------------------------------------------//
 o.conceallevel = 2
-o.breakindentopt = 'sbr'
+o.breakindentopt = "sbr"
 o.linebreak = true -- lines wrap at words rather than random characters
-o.signcolumn = 'yes:1'
+o.signcolumn = "yes:1"
 o.ruler = false
 o.cmdheight = 0
 o.showbreak = [[↪ ]] -- Options include -> '…', '↳ ', '→','↪ '
@@ -136,10 +141,10 @@ o.showbreak = [[↪ ]] -- Options include -> '…', '↳ ', '→','↪ '
 o.list = true -- invisible chars
 opt.listchars = {
   eol = nil,
-  tab = '  ', -- Alternatives: '▷▷',
-  extends = '…', -- Alternatives: … » ›
-  precedes = '░', -- Alternatives: … « ‹
-  trail = '•', -- BULLET (U+2022, UTF-8: E2 80 A2)
+  tab = "  ", -- Alternatives: '▷▷',
+  extends = "…", -- Alternatives: … » ›
+  precedes = "░", -- Alternatives: … « ‹
+  trail = "•", -- BULLET (U+2022, UTF-8: E2 80 A2)
 }
 -----------------------------------------------------------------------------//
 -- Indentation
@@ -155,13 +160,13 @@ o.shiftwidth = 2
 -- vim.o.debug = "msg"
 o.pumheight = 15
 o.confirm = true -- make vim prompt me to save before doing destructive things
-opt.completeopt = { 'menuone', 'noselect' }
+opt.completeopt = { "menuone", "noselect" }
 o.hlsearch = true
 o.autowriteall = true -- automatically :write before running commands and changing files
-opt.clipboard = { 'unnamedplus' }
+opt.clipboard = { "unnamedplus" }
 o.laststatus = 3
 o.termguicolors = true
-o.guifont = 'CartographCF Nerd Font Mono:h14,codicon'
+o.guifont = "CartographCF Nerd Font Mono:h14,codicon"
 -----------------------------------------------------------------------------//
 -- Emoji {{{1
 -----------------------------------------------------------------------------//
@@ -181,9 +186,11 @@ opt.guicursor = {
 -----------------------------------------------------------------------------//
 -- Title {{{1
 -----------------------------------------------------------------------------//
-function mw.modified_icon() return vim.bo.modified and icons.misc.circle or '' end
+function mw.modified_icon()
+  return vim.bo.modified and icons.misc.circle or ""
+end
 o.titlestring = '%{fnamemodify(getcwd(), ":t")}%( %{v:lua.mw.modified_icon()}%)'
-o.titleold = fn.fnamemodify(vim.loop.os_getenv('SHELL'), ':t')
+o.titleold = fn.fnamemodify(vim.loop.os_getenv "SHELL", ":t")
 o.title = true
 o.titlelen = 70
 -----------------------------------------------------------------------------//
@@ -194,21 +201,21 @@ o.showmode = false
 -- * help files since that will error if they are from a lazy loaded plugin
 -- * folds since they are created dynamically and might be missing on startup
 opt.sessionoptions = {
-  'globals',
-  'buffers',
-  'curdir',
-  'winpos',
-  'winsize',
-  'help',
-  'tabpages',
-  'terminal',
+  "globals",
+  "buffers",
+  "curdir",
+  "winpos",
+  "winsize",
+  "help",
+  "tabpages",
+  "terminal",
 }
-opt.viewoptions = { 'cursor', 'folds' } -- save/restore just these (with `:{mk,load}view`)
-o.virtualedit = 'block' -- allow cursor to move where there is no text in visual block mode
+opt.viewoptions = { "cursor", "folds" } -- save/restore just these (with `:{mk,load}view`)
+o.virtualedit = "block" -- allow cursor to move where there is no text in visual block mode
 -----------------------------------------------------------------------------//
 -- Jumplist
 -----------------------------------------------------------------------------//
-opt.jumpoptions = { 'stack' } -- make the jumplist behave like a browser stack
+opt.jumpoptions = { "stack" } -- make the jumplist behave like a browser stack
 -------------------------------------------------------------------------------
 -- BACKUP AND SWAPS {{{
 -------------------------------------------------------------------------------
@@ -228,16 +235,16 @@ o.sidescroll = 1
 -----------------------------------------------------------------------------//
 -- Spelling {{{1
 -----------------------------------------------------------------------------//
-opt.spellsuggest:prepend({ 12 })
-opt.spelloptions:append({ 'camel', 'noplainbuffer' })
-opt.spellcapcheck = '' -- don't check for capital letters at start of sentence
+opt.spellsuggest:prepend { 12 }
+opt.spelloptions:append { "camel", "noplainbuffer" }
+opt.spellcapcheck = "" -- don't check for capital letters at start of sentence
 -----------------------------------------------------------------------------//
 -- Mouse {{{1
 -----------------------------------------------------------------------------//
 o.mousefocus = true
 o.mousemoveevent = true
-opt.mousescroll = { 'ver:1', 'hor:6' }
+opt.mousescroll = { "ver:1", "hor:6" }
 -----------------------------------------------------------------------------//
 -- Allow project local vimrc files example, .nvim.lua or .nvimrc see :h exrc
-o.exrc = mw.has('nvim-0.9')
+o.exrc = mw.has "nvim-0.9"
 -- vim:foldmethod=marker

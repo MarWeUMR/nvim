@@ -7,6 +7,33 @@ return {
         -- your configuration comes here
         -- or leave it empty to use the default settings
         style = "storm",
+
+        styles = {
+          -- Style to be applied to different syntax groups
+          -- Value is any valid attr-list value for `:help nvim_set_hl`
+          comments = { italic = true },
+          keywords = { italic = true },
+          functions = { bold = true },
+          variables = {},
+          -- Background styles. Can be "dark", "transparent" or "normal"
+          sidebars = "dark", -- style for sidebars, see below
+          floats = "dark", -- style for floating windows
+        },
+        -- on_highlights = function(hl, c)
+        --   local prompt = "#2d3149"
+        --   hl.CursorLineNr = { fg = c.orange, bold = true }
+        --   -- hl.LineNr = { fg = c.orange, bold = true }
+        --   hl.WinSeparator = { fg = c.purple }
+        --   -- hl.LineNrAbove = { fg = c.fg_gutter }
+        --   -- hl.LineNrBelow = { fg = c.fg_gutter }
+        --   hl.TelescopeNormal = { bg = c.bg_dark, fg = c.fg_dark }
+        --   hl.TelescopeBorder = { bg = c.bg_dark, fg = c.bg_dark }
+        --   hl.TelescopePromptNormal = { bg = prompt }
+        --   hl.TelescopePromptBorder = { bg = prompt, fg = prompt }
+        --   hl.TelescopePromptTitle = { bg = c.fg_gutter, fg = c.orange }
+        --   hl.TelescopePreviewTitle = { bg = c.bg_dark, fg = c.bg_dark }
+        --   hl.TelescopeResultsTitle = { bg = c.bg_dark, fg = c.bg_dark }
+        -- end,
       }
     end,
   },

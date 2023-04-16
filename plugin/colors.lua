@@ -197,6 +197,35 @@ local function colorscheme_overrides()
       { NeoTreeIndentMarker = { link = "Comment" } },
       { NeoTreeRootName = { bold = true, italic = true, fg = "LightMagenta" } },
     },
+    -- TODO
+    ["tokyonight"] = {
+      { CursorLineNr = { fg = "orange", bold = true } },
+      -- { WinSeparator = { fg = "purple", bold = true, alter = -0.5 } },
+      -- { TelescopePromptTitle = { bg = "purple" } },
+      -- { TelescopePreviewTitle = { bg = "purple" } },
+      -- { TelescopeResultsTitle = { bg = "purple" } },
+      -- { TelescopeNormal = { fg = { from = "Normal", alter = -0.5 }, bg = { from = "Normal", alter = -0.25 } } },
+      -- {
+      --   TelescopeBorder = {
+      --     fg = { from = "Normal", alter = -0.5, attr = "bg" },
+      --     bg = { from = "Normal", alter = -0.5 },
+      --   },
+      -- },
+      -- {
+      --   TelescopePromptBorder = {
+      --     fg = { from = "Normal", alter = -0.5, attr = "bg" },
+      --     bg = { from = "Normal", alter = -0.5 },
+      --   },
+      -- },
+
+      --   hl.TelescopeNormal = { bg = c.bg_dark, fg = c.fg_dark }
+      --   hl.TelescopeBorder = { bg = c.bg_dark, fg = c.bg_dark }
+      --   hl.TelescopePromptNormal = { bg = prompt }
+      --   hl.TelescopePromptBorder = { bg = prompt, fg = prompt }
+      --   hl.TelescopePromptTitle = { bg = c.fg_gutter, fg = c.orange }
+      --   hl.TelescopePreviewTitle = { bg = c.bg_dark, fg = c.bg_dark }
+      --   hl.TelescopeResultsTitle = { bg = c.bg_dark, fg = c.bg_dark }
+    },
     ["*"] = {
       { Normal = { fg = "#C1C1C1" } },
       -----------------------------------------------------------------------------------------------

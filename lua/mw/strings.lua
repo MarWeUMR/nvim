@@ -1,6 +1,7 @@
 ----------------------------------------------------------------------------------------------------
 --  FORMAT STRINGS
 ----------------------------------------------------------------------------------------------------
+
 -- This is essentially a small library (for me) for working with vim format strings for things
 -- like the tabline, statusline, winbar and statuscolumn. Since there are so many things that work
 -- this way one small library to create these strings is useful.

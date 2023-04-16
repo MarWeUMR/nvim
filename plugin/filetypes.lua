@@ -9,13 +9,13 @@ settings {
     opt = { spell = false },
   },
 
-  fzf = {
-    function(args)
-      -- remove the default terminal mappings
-      vim.keymap.del("t", "<esc>", { buffer = args.buf })
-      vim.keymap.del("t", "jk", { buffer = args.buf })
-    end,
-  },
+  -- fzf = {
+  --   function(args)
+  --     -- remove the default terminal mappings
+  --     vim.keymap.del("t", "<esc>", { buffer = args.buf })
+  --     vim.keymap.del("t", "jk", { buffer = args.buf })
+  --   end,
+  -- },
   [{ "gitcommit", "gitrebase" }] = {
     bo = { bufhidden = "delete" },
     opt = {

@@ -53,8 +53,8 @@ return {
   },
 
   {
-
     "lewis6991/gitsigns.nvim",
+    event = "BufEnter",
     opts = function(_, opts)
       opts.signs = {
         add = { text = "▕" },

@@ -46,7 +46,7 @@ return {
           },
           diagnostics_update_in_insert = false,
           hover = { enabled = true, reveal = { "close" } },
-          separator_style = "slant", --| "slope" | "thick" | "thin" | { "any", "any" },
+          separator_style = "thick", -- "slant", --| "slope" | "thick" | "thin" | { "any", "any" },
           offsets = {
             {
               text = "EXPLORER",
