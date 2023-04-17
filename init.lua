@@ -16,6 +16,7 @@ local namespace = {
     winbar = { enable = true },
     statuscolumn = { enable = true },
   },
+  lsp = {},
 }
 
 -- This table is a globally accessible store to facilitating accessing

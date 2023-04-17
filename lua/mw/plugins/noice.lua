@@ -6,6 +6,7 @@ local ui, fold, falsy, augroup = mw.styles, mw.fold, mw.falsy, mw.augroup
 return {
   {
     "rcarriga/nvim-notify",
+    enabled = false,
     config = function()
       highlight.plugin("notify", {
         { NotifyERRORBorder = { bg = { from = "NormalFloat" } } },
@@ -24,7 +25,7 @@ return {
 
       notify.setup {
         timeout = 5000,
-        stages = "fade_in_slide_out",
+        stages = "static",
         top_down = false,
         background_colour = "NormalFloat",
         max_width = function()
@@ -69,6 +70,9 @@ return {
         backend = "cmp",
       },
       lsp = {
+        progress = {
+          enabled = false,
+        },
         documentation = {
           opts = {
             border = { style = border },

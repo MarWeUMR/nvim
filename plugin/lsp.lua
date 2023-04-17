@@ -132,8 +132,8 @@ end
 ---@param bufnr integer
 local function setup_mappings(client, bufnr)
   local mappings = {
-    { "n", "]c", prev_diagnostic(), desc = "go to prev diagnostic" },
-    { "n", "[c", next_diagnostic(), desc = "go to next diagnostic" },
+    { "n", "]d", prev_diagnostic(), desc = "go to prev diagnostic" },
+    { "n", "[d", next_diagnostic(), desc = "go to next diagnostic" },
     { { "n", "x" }, "<leader>la", lsp.buf.code_action, desc = "code action", capability = provider.CODEACTIONS },
     { "n", "<leader>lf", lsp.buf.format, desc = "format buffer", capability = provider.FORMATTING },
     -- stylua: ignore
@@ -146,11 +146,6 @@ local function setup_mappings(client, bufnr)
     { "n", "<leader>cl", lsp.codelens.run, desc = "run code lens", capability = provider.CODELENS },
     { "n", "<leader>lr", lsp.buf.rename, desc = "rename", capability = provider.RENAME },
   }
-
-  if client.name == "rust_analyzer" then
-    table.insert(mappings, { "n", "<Leader>rr", "<CMD>RustRunnables<CR>", desc = "Rust Runnables" })
-    table.insert(mappings, { "n", "<C-k>", "<CMD>RustHoverActions<CR>", desc = "Rust Hover Actions" })
-  end
 
   mw.foreach(function(m)
     if
@@ -180,6 +175,37 @@ local client_overrides = {
       end
     end,
   },
+
+  -- rust_analyzer = {
+  --   server = {
+  --
+  --     on_attach = function(_, bufnr)
+  --       vim.keymap.set("n", "<Leader>rr", "<CMD>RustRunnables<CR>", { buffer = bufnr })
+  --       vim.keymap.set("n", "<C-k>", "<CMD>RustHoverActions<CR>", { buffer = bufnr })
+  --     end,
+  --
+  --     -- standalone file support
+  --     -- setting it to false may improve startup time
+  --     standalone = false,
+  --
+  --     settings = {
+  --       -- https://github.com/rust-analyzer/rust-analyzer/blob/master/docs/user/generated_config.adoc
+  --       ["rust-analyzer"] = {
+  --         cargo = {
+  --           features = "all",
+  --         },
+  --         checkOnSave = true,
+  --         check = {
+  --           command = "check",
+  --           features = "all",
+  --         },
+  --         procMacro = {
+  --           enable = true,
+  --         },
+  --       },
+  --     },
+  --   },
+  -- },
 }
 
 ---@param client lsp.Client
@@ -235,6 +261,18 @@ augroup("LspSetupCommands", {
     end
   end,
 })
+
+---@param on_attach function
+function mw.lsp.custom_on_attach(on_attach)
+  vim.api.nvim_create_autocmd("LspAttach", {
+    callback = function(args)
+      local buffer = args.buf
+      local client = vim.lsp.get_client_by_id(args.data.client_id)
+      on_attach(client, buffer)
+    end,
+  })
+end
+
 -----------------------------------------------------------------------------//
 -- Commands
 -----------------------------------------------------------------------------//

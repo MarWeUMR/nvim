@@ -87,31 +87,8 @@ return {
 
   {
     "stevearc/dressing.nvim", -- Utilises Neovim UI hooks to manage inputs, selects etc
-    opts = {
-      input = {
-        default_prompt = "> ",
-        relative = "editor",
-        prefer_width = 50,
-        prompt_align = "center",
-        win_options = { winblend = 0 },
-      },
-      select = {
-        get_config = function(opts)
-          opts = opts or {}
-          local config = {
-            telescope = {
-              layout_config = {
-                width = 0.8,
-              },
-            },
-          }
-          if opts.kind == "legendary.nvim" then
-            config.telescope.sorter = require("telescope.sorters").fuzzy_with_index_bias {}
-          end
-          return config
-        end,
-      },
-    },
+    event = "VeryLazy",
+    config = true,
   },
   {
     "mbbill/undotree",
@@ -121,5 +98,64 @@ return {
       vim.g.undotree_TreeNodeShape = "◦" -- Alternative: '◉'
       vim.g.undotree_SetFocusWhenToggle = 1
     end,
+  },
+  {
+    "j-hui/fidget.nvim",
+    event = { "LspAttach" },
+    opts = {
+      text = {
+        spinner = {
+          "⊚∙∙∙∙",
+          "∙⊚∙∙∙",
+          "∙∙⊚∙∙",
+          "∙∙∙⊚∙",
+          "∙∙∙∙⊚",
+          "∙∙∙⊚∙",
+          "∙∙⊚∙∙",
+          "∙⊚∙∙∙",
+        },
+        done = "",
+        commenced = "Started",
+        completed = "Completed",
+      },
+      window = {
+        relative = "editor",
+        blend = 0,
+      },
+      fmt = {
+        stack_upwards = false,
+        fidget = function(fidget_name, spinner)
+          return string.format("%s %s", spinner, fidget_name)
+        end,
+        -- function to format each task line
+        task = function(task_name, message, percentage)
+          return string.format(
+            "%s%s [%s]",
+            message,
+            percentage and string.format(" (%s%%)", percentage) or "",
+            task_name
+          )
+        end,
+      },
+    },
+  },
+  {
+    "SmiteshP/nvim-navbuddy",
+    event = "VeryLazy",
+    dependencies = {
+      "neovim/nvim-lspconfig",
+      "SmiteshP/nvim-navic",
+      "MunifTanjim/nui.nvim",
+    },
+    opts = { lsp = { auto_attach = true } },
+    keys = {
+      {
+        "<Leader>o",
+        function()
+          require("nvim-navbuddy").open()
+        end,
+        desc = "Open Navbuddy",
+      },
+    },
   },
 }
