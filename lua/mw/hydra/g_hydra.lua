@@ -29,6 +29,12 @@ function M.g_hydra()
         border = "solid",
         position = "bottom-right",
       },
+      -- TODO:
+      -- find a way to make the timeout less anoying
+      on_enter = function()
+        vim.o.updatetime = 100
+        vim.o.timeoutlen = 100
+      end,
     },
     heads = {
       {
