@@ -103,3 +103,32 @@ map("n", "<leader>fg", "<cmd> Telescope live_grep <CR>", { desc = "live grep" })
 map("n", "<leader>fo", "<cmd> Telescope oldfiles <CR>", { desc = "find oldfiles" })
 map("n", "<leader>pt", "<cmd> Telescope terms <CR>", { desc = "pick hidden term" })
 map("n", "<leader>th", "<cmd> Telescope themes <CR>", { desc = "nvchad themes" })
+
+-----------------------------------------------------------------------------//
+-- HYDRA INVOCATIONS
+-----------------------------------------------------------------------------//
+
+local hy_ok, hy = pcall(require, "mw.hydra")
+if not hy_ok then
+  return
+end
+
+map("n", "g", function()
+  hy.hydras.g_hydra():activate()
+end, { desc = "g" })
+
+map("n", "m", function()
+  hy.hydras.m_hydra():activate()
+end, { desc = "m" })
+
+map("n", "+", function()
+  hy.hydras.bracketed_hydra("+"):activate()
+end, { desc = "]" })
+
+map("n", "ü", function()
+  hy.hydras.bracketed_hydra("ü"):activate()
+end, { desc = "[" })
+
+map("v", "m", function()
+  hy.hydras.m_hydra():activate()
+end, { desc = "m" })
