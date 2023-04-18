@@ -1,3 +1,6 @@
+local api, fn = vim.api, vim.fn
+local border, highlight = mw.styles.current.border, mw.highlight
+
 return {
   {
     "windwp/nvim-autopairs",
@@ -155,6 +158,93 @@ return {
           require("nvim-navbuddy").open()
         end,
         desc = "Open Navbuddy",
+      },
+    },
+  },
+  {
+    "echasnovski/mini.animate",
+    event = "VeryLazy",
+    opts = function()
+      -- don't use animate when scrolling with the mouse
+      -- local mouse_scrolled = false
+      -- for _, scroll in ipairs { "Up", "Down" } do
+      --   local key = "<ScrollWheel" .. scroll .. ">"
+      --   vim.keymap.set({ "", "i" }, key, function()
+      --     mouse_scrolled = true
+      --     return key
+      --   end, { expr = true })
+      -- end
+
+      local animate = require "mini.animate"
+      return {
+        resize = {
+          timing = animate.gen_timing.linear { duration = 100, unit = "total" },
+        },
+        scroll = {
+          timing = animate.gen_timing.linear { duration = 150, unit = "total" },
+          subscroll = animate.gen_subscroll.equal {
+            predicate = function(total_scroll)
+              if mouse_scrolled then
+                mouse_scrolled = false
+                return false
+              end
+              return total_scroll > 1
+            end,
+          },
+        },
+      }
+    end,
+    config = function(_, opts)
+      require("mini.animate").setup(opts)
+    end,
+  },
+  {
+    "anuvyklack/hydra.nvim",
+    event = "VeryLazy",
+  },
+  {
+    "cbochs/portal.nvim",
+    version = "*",
+    cmd = { "Portal" },
+    dependencies = { "cbochs/grapple.nvim" },
+    init = function()
+      highlight.plugin("portal", {
+        { PortalNormal = { link = "Normal" } },
+        { PortalBorder = { link = "Label" } },
+        { PortalTitle = { link = "Label" } },
+      })
+    end,
+    keys = {
+      { "<leader>jb", "<Cmd>Portal jumplist backward<CR>", desc = "jump: backwards" },
+      { "<leader>jf", "<Cmd>Portal jumplist forward<CR>", desc = "jump: forwards" },
+      { "<leader>jg", "<cmd>Portal grapple backward<cr>", desc = "jump: grapple" },
+    },
+    config = function()
+      require("portal").setup {
+        filter = function(c)
+          return vim.startswith(api.nvim_buf_get_name(c.buffer), fn.getcwd())
+        end,
+      }
+    end,
+  },
+  {
+    "cbochs/grapple.nvim",
+    cmd = { "Grapple", "GrapplePopup" },
+    opts = { popup_options = { border = border } },
+    keys = {
+      {
+        "<leader>mt",
+        function()
+          require("grapple").toggle()
+        end,
+        desc = "grapple: toggle mark",
+      },
+      {
+        "<leader>mm",
+        function()
+          require("grapple").popup_tags()
+        end,
+        desc = "grapple: menu",
       },
     },
   },

@@ -1,6 +1,8 @@
 local g, fn, opt, loop, env, cmd = vim.g, vim.fn, vim.opt, vim.loop, vim.env, vim.cmd
 local data = fn.stdpath "data"
 
+g.dotfiles = fn.expand "/home/ubuntu/.config"
+
 ----------------------------------------------------------------------------------------------------
 -- Leader bindings
 ----------------------------------------------------------------------------------------------------
