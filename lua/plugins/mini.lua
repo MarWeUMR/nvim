@@ -20,4 +20,9 @@ return {
       require("mini.move").setup()
     end,
   },
+
+  {
+    "echasnovski/mini.pairs",
+    enabled = false,
+  },
 }
