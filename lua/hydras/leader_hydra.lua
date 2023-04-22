@@ -22,7 +22,9 @@ local function create_hydra(mode)
  _O_ : Navbuddy
  _cp_ : Copilot
  _SE_ : Save & Exit
- _uD_ : Save & Exit
+ _uD_ : Lsp-Lines
+ _bb_ : Pick Buffer
+ _x_ : Trouble
 ]]
 
   local heads = {
@@ -30,6 +32,13 @@ local function create_hydra(mode)
       "cp",
       function()
         hy.hydras.copilot_hydra():activate()
+      end,
+      { exit = true, nowait = true },
+    },
+    {
+      "x",
+      function()
+        hy.hydras.trouble_hydra():activate()
       end,
       { exit = true, nowait = true },
     },
@@ -47,6 +56,7 @@ local function create_hydra(mode)
     { "e", "<CMD>Neotree toggle<CR>", { mode = { "n" }, exit = true } },
     { "o", "<CMD>AerialToggle<CR>", { mode = { "n" }, exit = true } },
     { "O", "<CMD>Navbuddy<CR>", { mode = { "n" }, exit = true } },
+    { "bb", "<CMD>BufferLinePick<CR>", { mode = { "n" }, exit = true } },
     {
       "l",
       function()

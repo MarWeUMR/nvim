@@ -3,6 +3,7 @@
 local hy = {}
 
 local g_hydra = require("hydras.g_hydra")
+local trouble_hydra = require("hydras.trouble_hydra")
 local git_hydra = require("hydras.git_hydra")
 local lsp_hydra = require("hydras.lsp_hydra")
 local toggles_hydra = require("hydras.toggles_hydra")
@@ -20,6 +21,7 @@ hy.hydras = {
   m_hydra = m_hydra.m_hydra,
   bracketed_hydra = bracketed_hydra.bracketed_hydra,
   leader_hydra = leader_hydra.leader_hydra,
+  trouble_hydra = trouble_hydra.trouble_hydra,
 }
 
 return hy
