@@ -4,24 +4,36 @@ local function create_hydra(mode)
   local Hydra = require("hydra")
 
   local hint = [[
- _f_: Toggle Format
+ _t_: Grapple toggle
+ _p_: Grapple popup tags
 ]]
 
   -- this adds the appropriate command to the hydra head. It depends on the mode from which it was called.
   local heads = {
-    { "f", "<leader>uf", { remap = true, mode = { mode }, exit = true } },
+    {
+      "t",
+      function()
+        require("grapple").toggle()
+      end,
+      { exit = true, desc = "Grapple toggle" },
+    },
+    {
+      "p",
+      function()
+        require("grapple").popup_tags()
+      end,
+      { exit = true, desc = "Grapple popup tags" },
+    },
     { "q", nil, { exit = true, nowait = true, desc = false } },
     { "<Esc>", nil, { exit = true, desc = false } },
   }
 
   return Hydra({
-    name = "Toggles",
+    name = "Portal/Grapple",
     mode = { mode },
-    body = "<leader>u",
     hint = hint,
     color = "teal",
     config = {
-      invoke_on_body = true,
       hint = {
         border = "solid",
         position = "middle-right",
@@ -31,7 +43,7 @@ local function create_hydra(mode)
   })
 end
 
-function M.toggles_hydra()
+function M.portal_hydra()
   return create_hydra("n")
 end
 

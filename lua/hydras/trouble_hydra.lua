@@ -24,7 +24,7 @@ local function create_hydra(mode)
     config = {
       hint = {
         border = "solid",
-        position = "bottom-right",
+        position = "middle-right",
       },
     },
     heads = heads,

@@ -131,6 +131,7 @@ return {
       })
     end,
   },
+
   {
     "mbbill/undotree",
     cmd = "UndotreeToggle",
@@ -140,52 +141,7 @@ return {
       vim.g.undotree_SetFocusWhenToggle = 1
     end,
   },
-  {
-    "cbochs/portal.nvim",
-    version = "*",
-    cmd = { "Portal" },
-    dependencies = { "cbochs/grapple.nvim" },
-    init = function()
-      highlight.plugin("portal", {
-        { PortalNormal = { link = "Normal" } },
-        { PortalBorder = { link = "Label" } },
-        { PortalTitle = { link = "Label" } },
-      })
-    end,
-    keys = {
-      { "<leader>jb", "<Cmd>Portal jumplist backward<CR>", desc = "jump: backwards" },
-      { "<leader>jf", "<Cmd>Portal jumplist forward<CR>", desc = "jump: forwards" },
-      { "<leader>jg", "<cmd>Portal grapple backward<cr>", desc = "jump: grapple" },
-    },
-    config = function()
-      require("portal").setup({
-        filter = function(c)
-          return vim.startswith(vim.api.nvim_buf_get_name(c.buffer), vim.fn.getcwd())
-        end,
-      })
-    end,
-  },
-  {
-    "cbochs/grapple.nvim",
-    cmd = { "Grapple", "GrapplePopup" },
-    opts = { popup_options = { border = "double" } },
-    keys = {
-      {
-        "<leader>mt",
-        function()
-          require("grapple").toggle()
-        end,
-        desc = "grapple: toggle mark",
-      },
-      {
-        "<leader>mm",
-        function()
-          require("grapple").popup_tags()
-        end,
-        desc = "grapple: menu",
-      },
-    },
-  },
+
   {
     "stevearc/aerial.nvim",
     event = "VeryLazy",
@@ -201,6 +157,7 @@ return {
       },
     },
   },
+
   {
     "b0o/incline.nvim",
     event = "BufReadPre",

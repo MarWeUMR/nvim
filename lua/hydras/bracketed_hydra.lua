@@ -19,7 +19,7 @@ function M.bracketed_hydra(key)
         invoke_on_body = true,
         hint = {
           border = "solid",
-          position = "bottom-right",
+          position = "middle-right",
         },
       },
       heads = {

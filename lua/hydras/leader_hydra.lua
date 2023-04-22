@@ -25,6 +25,7 @@ local function create_hydra(mode)
  _uD_ : Lsp-Lines
  _bb_ : Pick Buffer
  _x_ : Trouble
+ _P_ : Portal/Grapple
 ]]
 
   local heads = {
@@ -35,6 +36,14 @@ local function create_hydra(mode)
       end,
       { exit = true, nowait = true },
     },
+    {
+      "P",
+      function()
+        hy.hydras.portal_hydra():activate()
+      end,
+      { exit = true, nowait = true },
+    },
+
     {
       "x",
       function()
@@ -104,7 +113,7 @@ local function create_hydra(mode)
       invoke_on_body = true,
       hint = {
         border = "solid",
-        position = "bottom-right",
+        position = "middle-right",
       },
     },
   })

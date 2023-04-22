@@ -1,3 +1,5 @@
+local highlight = require("util.highlight_utils").highlight
+
 return {
 
   {
@@ -22,6 +24,54 @@ return {
       keymaps = {
         ["]w"] = "swap_with_left",
         ["[w"] = "swap_with_right",
+      },
+    },
+  },
+
+  {
+    "cbochs/portal.nvim",
+    version = "*",
+    cmd = { "Portal" },
+    dependencies = { "cbochs/grapple.nvim" },
+    init = function()
+      highlight.plugin("portal", {
+        { PortalNormal = { link = "Normal" } },
+        { PortalBorder = { link = "Label" } },
+        { PortalTitle = { link = "Label" } },
+      })
+    end,
+    keys = {
+      { "<C-o>", "<Cmd>Portal jumplist backward<CR>", desc = "jump: backwards" },
+      { "<C-i>", "<Cmd>Portal jumplist forward<CR>", desc = "jump: forwards" },
+      { "<leader>jg", "<cmd>Portal grapple backward<cr>", desc = "jump: grapple" },
+    },
+    config = function()
+      require("portal").setup({
+        filter = function(c)
+          return vim.startswith(vim.api.nvim_buf_get_name(c.buffer), vim.fn.getcwd())
+        end,
+      })
+    end,
+  },
+
+  {
+    "cbochs/grapple.nvim",
+    cmd = { "Grapple", "GrapplePopup" },
+    opts = { popup_options = { border = "double" } },
+    keys = {
+      {
+        "<leader>mt",
+        function()
+          require("grapple").toggle()
+        end,
+        desc = "grapple: toggle mark",
+      },
+      {
+        "<leader>mm",
+        function()
+          require("grapple").popup_tags()
+        end,
+        desc = "grapple: menu",
       },
     },
   },

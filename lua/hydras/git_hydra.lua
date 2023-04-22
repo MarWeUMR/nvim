@@ -29,7 +29,7 @@ function M.git_hydra()
     config = {
       color = "pink",
       invoke_on_body = true,
-      hint = { border = "solid", position = "bottom-right" },
+      hint = { border = "solid", position = "middle-right" },
       on_key = function()
         vim.wait(50)
       end,

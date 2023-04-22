@@ -11,6 +11,7 @@ local m_hydra = require("hydras.m_hydra")
 local bracketed_hydra = require("hydras.bracketed_hydra")
 local leader_hydra = require("hydras.leader_hydra")
 local copilot_hydra = require("hydras.copilot_hydra")
+local portal_hydra = require("hydras.portal_hydra")
 
 hy.hydras = {
   git_hydra = git_hydra.git_hydra,
@@ -22,6 +23,7 @@ hy.hydras = {
   bracketed_hydra = bracketed_hydra.bracketed_hydra,
   leader_hydra = leader_hydra.leader_hydra,
   trouble_hydra = trouble_hydra.trouble_hydra,
+  portal_hydra = portal_hydra.portal_hydra,
 }
 
 return hy
