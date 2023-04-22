@@ -52,4 +52,18 @@ return {
       })
     end,
   },
+  {
+
+    "lewis6991/gitsigns.nvim",
+    opts = function(_, opts)
+      opts.current_line_blame = true
+      opts.current_line_blame_formatter_opts = {
+        relative_time = true,
+      }
+      opts.current_line_blame_opts = {
+        delay = 50,
+      }
+      -- opts._extmark_signs = true
+    end,
+  },
 }
