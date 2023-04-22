@@ -125,4 +125,19 @@ function M.reqcall(require_path)
   })
 end
 
+function M.toggle_diagnostics()
+  local diagnostics_on = require("lsp_lines").toggle()
+  if diagnostics_on then
+    vim.diagnostic.config({
+      virtual_lines = true,
+      virtual_text = false,
+    })
+  else
+    vim.diagnostic.config({
+      virtual_text = { spacing = 4, prefix = "●" },
+      virtual_lines = false,
+    })
+  end
+end
+
 return M

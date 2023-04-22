@@ -53,7 +53,7 @@ function M.bracketed_hydra(key)
           end,
           { remap = true, mode = { "n" }, exit = true },
         },
-        { "d", (go_forward and "[d" or "]d"), { remap = true, mode = { "n" }, exit = true } },
+        { "d", (go_forward and "]d" or "[d"), { remap = true, mode = { "n" }, exit = true } },
         {
           "w",
           (go_forward and function()

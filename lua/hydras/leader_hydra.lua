@@ -4,6 +4,8 @@ local function create_hydra(mode)
   local Hydra = require("hydra")
   local hy = require("hydras")
 
+  local as = require("util.akinsho")
+
   local hint = [[
  _ff_: Find Files
  _gg_: LazyGit
@@ -20,6 +22,7 @@ local function create_hydra(mode)
  _O_ : Navbuddy
  _cp_ : Copilot
  _SE_ : Save & Exit
+ _uD_ : Save & Exit
 ]]
 
   local heads = {
@@ -27,6 +30,13 @@ local function create_hydra(mode)
       "cp",
       function()
         hy.hydras.copilot_hydra():activate()
+      end,
+      { exit = true, nowait = true },
+    },
+    {
+      "uD",
+      function()
+        as.toggle_diagnostics()
       end,
       { exit = true, nowait = true },
     },
