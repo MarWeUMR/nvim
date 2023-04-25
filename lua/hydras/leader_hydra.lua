@@ -26,6 +26,7 @@ local function create_hydra(mode)
  _bb_ : Pick Buffer
  _x_ : Trouble
  _P_ : Portal/Grapple
+ _q_ : Quickfix
 ]]
 
   local heads = {
@@ -66,6 +67,7 @@ local function create_hydra(mode)
     { "o", "<CMD>AerialToggle<CR>", { mode = { "n" }, exit = true } },
     { "O", "<CMD>Navbuddy<CR>", { mode = { "n" }, exit = true } },
     { "bb", "<CMD>BufferLinePick<CR>", { mode = { "n" }, exit = true } },
+    { "q", "<CMD>cope<CR>", { mode = { "n" }, exit = true } },
     {
       "l",
       function()
@@ -98,7 +100,7 @@ local function create_hydra(mode)
       "<leader>bd",
       { remap = true, mode = { "n" }, exit = true },
     },
-    { "q", nil, { exit = true, nowait = true, desc = false } },
+    -- { "q", nil, { exit = true, nowait = true, desc = false } },
     { "<Esc>", nil, { exit = true, desc = false } },
   }
 

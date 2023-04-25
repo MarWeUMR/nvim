@@ -241,15 +241,9 @@ return {
 
   {
     "kevinhwang91/nvim-bqf",
-    -- ft = "qf",
+    ft = "qf",
     config = function()
       highlight.plugin("bqf", { { BqfPreviewBorder = { fg = { from = "Comment" } } } })
-      -- require("bqf").setup({
-      --   -- make `drop` and `tab drop` to become preferred
-      --   func_map = {
-      --     filterr = "<M-d>",
-      --   },
-      -- })
     end,
   },
 }
