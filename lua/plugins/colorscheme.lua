@@ -1,5 +1,7 @@
 return {
   { "shaunsingh/oxocarbon.nvim" },
+  { "akinsho/horizon.nvim", lazy = false, priority = 1000 },
+  { "catppuccin/nvim", lazy = false, name = "catppuccin" },
   {
     "tokyonight.nvim",
     lazy = false,
@@ -9,6 +11,7 @@ return {
         style = "storm",
         sidebars = {
           "qf",
+          "aerial",
           "vista_kind",
           "terminal",
           "spectre_panel",
