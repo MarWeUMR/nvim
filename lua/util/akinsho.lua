@@ -140,4 +140,78 @@ function M.toggle_diagnostics()
   end
 end
 
+--- Autosize horizontal split to match its minimum content
+--- https://vim.fandom.com/wiki/Automatically_fitting_a_quickfix_window_height
+---@param min_height number
+---@param max_height number
+function M.adjust_split_height(min_height, max_height)
+  api.nvim_win_set_height(0, math.max(math.min(fn.line("$"), max_height), min_height))
+end
+
+---------------------------------------------------------------------------------
+-- Quickfix and Location List
+---------------------------------------------------------------------------------
+
+M.list = { qf = {}, loc = {} }
+
+---@param list_type "loclist" | "quickfix"
+---@return boolean
+local function is_list_open(list_type)
+  return M.find(function(win)
+    return not M.falsy(win[list_type])
+  end, fn.getwininfo()) ~= nil
+end
+
+local silence = { mods = { silent = true, emsg_silent = true } }
+
+---@param callback fun(...)
+local function preserve_window(callback, ...)
+  local win = api.nvim_get_current_win()
+  callback(...)
+  if win ~= api.nvim_get_current_win() then
+    cmd.wincmd("p")
+  end
+end
+
+function M.list.qf.toggle()
+  if is_list_open("quickfix") then
+    cmd.cclose(silence)
+  elseif #fn.getqflist() > 0 then
+    preserve_window(cmd.copen, silence)
+  end
+end
+
+function M.list.loc.toggle()
+  if is_list_open("loclist") then
+    cmd.lclose(silence)
+  elseif #fn.getloclist(0) > 0 then
+    preserve_window(cmd.lopen, silence)
+  end
+end
+
+-- @see: https://vi.stackexchange.com/a/21255
+-- using range-aware function
+function M.list.qf.delete(buf)
+  buf = buf or api.nvim_get_current_buf()
+
+  vim.bo.modifiable = true
+  local list = fn.getqflist()
+  local line = api.nvim_win_get_cursor(0)[1]
+  if api.nvim_get_mode().mode:match("[vV]") then
+    local first_line = fn.getpos("'<")[2]
+    local last_line = fn.getpos("'>")[2]
+    list = M.fold(function(accum, item, i)
+      if i < first_line or i > last_line then
+        accum[#accum + 1] = item
+      end
+      return accum
+    end, list)
+  else
+    table.remove(list, line)
+  end
+  -- replace items in the current list, do not make a new copy of it; this also preserves the list title
+  fn.setqflist({}, "r", { items = list })
+  fn.setpos(".", { buf, line, 1, 0 }) -- restore current line
+end
+
 return M
