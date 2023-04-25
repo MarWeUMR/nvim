@@ -53,7 +53,11 @@ function M.bracketed_hydra(key)
           end,
           { remap = true, mode = { "n" }, exit = true },
         },
-        { "d", (go_forward and "]d" or "[d"), { remap = true, mode = { "n" }, exit = true } },
+        {
+          "d",
+          (go_forward and "<cmd>Lspsaga diagnostic_jump_next<cr>" or "<cmd>Lspsaga diagnostic_jump_prev<cr>"),
+          { remap = true, mode = { "n" }, exit = true },
+        },
         {
           "w",
           (go_forward and function()
