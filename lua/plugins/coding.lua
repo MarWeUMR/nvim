@@ -8,17 +8,9 @@ return {
   },
 
   {
+    -- TODO:
+    -- implement 'abecodes/tabout.nvim'
     "hrsh7th/nvim-cmp",
-    dependencies = {
-      {
-        "abecodes/tabout.nvim", -- Tab out from parenthesis, quotes, brackets...
-        opts = {
-          tabkey = "<Tab>", -- key to trigger tabout, set to an empty string to disable
-          backwards_tabkey = "<S-Tab>", -- key to trigger backwards tabout, set to an empty string to disable
-          completion = true, -- We use tab for completion so set this to true
-        },
-      },
-    },
     ---@param opts cmp.ConfigSchema
     opts = function(_, opts)
       local has_words_before = function()
