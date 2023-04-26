@@ -57,6 +57,7 @@ return {
     "lewis6991/gitsigns.nvim",
     opts = function(_, opts)
       opts.current_line_blame = true
+      opts.trouble = false -- setqflist doesn't need to use trouble, nvim-bqf is preffered
       opts.current_line_blame_formatter_opts = {
         relative_time = true,
       }

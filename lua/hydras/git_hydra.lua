@@ -9,6 +9,7 @@ function M.git_hydra()
  _s_: stage hunk    _/_: show base file
  _p_: preview hunk  _S_: stage buffer
  _r_: reset hunk    _B_: blame show full
+ _H_: Hunks -> QF    
 ^
 ]]
 
@@ -90,6 +91,13 @@ function M.git_hydra()
       { "p", gitsigns.preview_hunk, { desc = "preview hunk" } },
       { "d", gitsigns.toggle_deleted, { nowait = true, desc = "toggle deleted" } },
       { "r", gitsigns.reset_hunk, { desc = "reset_hunk" } },
+      {
+        "H",
+        function()
+          gitsigns.setqflist("all")
+        end,
+        desc = "All Hunks -> QF",
+      },
       {
         "B",
         function()
