@@ -8,6 +8,22 @@ function M.bracketed_hydra(key)
     return
   end
 
+  local head_config = {
+    remap = true,
+    mode = { "n" },
+    exit = true,
+  }
+
+  local diagnostic = require("lspsaga.diagnostic")
+
+  local function goto_diagnostic(filter)
+    if filter == "next" then
+      diagnostic:goto_next({ severity = vim.lsp.protocol.DiagnosticSeverity.Error })
+    elseif filter == "prev" then
+      diagnostic:goto_prev({ severity = vim.lsp.protocol.DiagnosticSeverity.Error })
+    end
+  end
+
   local function create_bracketed_hydra(name, key, hint, go_forward)
     return Hydra({
       name = name,
@@ -34,29 +50,31 @@ function M.bracketed_hydra(key)
             end)
             return "<Ignore>"
           end,
-          { remap = true, exit = true },
+          vim.tbl_extend("keep", { desc = "hunk" }, head_config),
         },
         {
           "e",
           function()
-            vim.diagnostic[(go_forward and "goto_next" or "goto_prev")]({
-              severity = vim.lsp.protocol.DiagnosticSeverity.Error,
-            })
+            goto_diagnostic(go_forward and "next" or "prev")
           end,
-          { remap = true, exit = true },
+          vim.tbl_extend("keep", { desc = "error" }, head_config),
         },
-        { "f", (go_forward and "]m" or "[m"), { remap = true, mode = { "n" }, exit = true } },
+        {
+          "f",
+          (go_forward and "]m" or "[m"),
+          vim.tbl_extend("keep", { desc = "function" }, head_config),
+        },
         {
           "c",
           function()
             require("mini.bracketed").comment(go_forward and "forward" or "backward")
           end,
-          { remap = true, mode = { "n" }, exit = true },
+          vim.tbl_extend("keep", { desc = "comment" }, head_config),
         },
         {
           "d",
           (go_forward and "<cmd>Lspsaga diagnostic_jump_next<cr>" or "<cmd>Lspsaga diagnostic_jump_prev<cr>"),
-          { remap = true, mode = { "n" }, exit = true },
+          vim.tbl_extend("keep", { desc = "diagnostic" }, head_config),
         },
         {
           "w",
@@ -65,7 +83,7 @@ function M.bracketed_hydra(key)
           end or function()
             require("sibling-swap").swap_with_left()
           end),
-          { remap = true, mode = { "n" }, exit = true },
+          vim.tbl_extend("keep", { desc = "swap args" }, head_config),
         },
         { "q", nil, { exit = true, nowait = true, desc = false } },
         { "<Esc>", nil, { exit = true, desc = false } },
