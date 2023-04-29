@@ -11,7 +11,7 @@ function M.git_hydra()
  _s_: stage hunk    _/_: show base file
  _p_: preview hunk  _S_: stage buffer
  _r_: reset hunk    _B_: blame show full
- _H_: Hunks -> QF    
+ _H_: Hunks -> QF
 ^
 ]]
 
@@ -64,6 +64,7 @@ function M.git_hydra()
           end
           vim.schedule(function()
             gitsigns.next_hunk()
+            vim.api.nvim_feedkeys("zz", "n", false)
           end)
           return "<Ignore>"
         end,
@@ -78,6 +79,7 @@ function M.git_hydra()
           end
           vim.schedule(function()
             gitsigns.prev_hunk()
+            vim.api.nvim_feedkeys("zz", "n", false)
           end)
           return "<Ignore>"
         end,
