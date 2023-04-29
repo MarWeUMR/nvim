@@ -1,5 +1,7 @@
 local M = {}
 
+local get_changed_files = require("util.akinsho").get_changed_files
+
 function M.git_hydra()
   local git_hint = [[
 ^
@@ -94,9 +96,18 @@ function M.git_hydra()
       {
         "H",
         function()
-          gitsigns.setqflist("all")
+          local changed_files = get_changed_files()
+
+          -- Convert the changed files list into the format expected by setqflist
+          local qf_list = {}
+          for _, file in ipairs(changed_files) do
+            table.insert(qf_list, { filename = file, lnum = 1, col = 0, text = "Changed file" })
+          end
+
+          -- Populate the quickfix list with the changed files
+          vim.fn.setqflist(qf_list)
         end,
-        desc = "All Hunks -> QF",
+        { exit = true, desc = "Git Status -> QF" },
       },
       {
         "B",
