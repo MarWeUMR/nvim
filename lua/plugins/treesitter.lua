@@ -16,7 +16,6 @@ return {
       })
     end,
     opts = {
-
       multiline_threshold = 4,
       separator = { "─", "ContextBorder" }, -- alternatives: ▁ ─ ▄
       mode = "cursor",
@@ -43,3 +42,4 @@ return {
     },
   },
 }
+
