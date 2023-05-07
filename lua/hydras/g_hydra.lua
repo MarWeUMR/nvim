@@ -26,7 +26,7 @@ local function create_hydra(mode)
     },
     { "cc", "gcc", { remap = true, exit = true, nowait = true, desc = false } },
     { "g", "gg", { exit = true, nowait = true, desc = false } },
-    { "d", "<CMD>Glance definitions<CR>", { mode = { "n" }, exit = true } },
+    { "d", "<CMD>Lspsaga peek_definition<CR>", { mode = { "n" }, exit = true } },
     { "D", "gD", { remap = true, mode = { "v" }, exit = true } },
     { "r", "<CMD>Glance references<CR>", { remap = true, mode = { "n" }, exit = true } },
     { "y", "<CMD>Glance type_definitions<CR>", { remap = true, mode = { "n" }, exit = true } },
