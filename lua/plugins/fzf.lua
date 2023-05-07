@@ -1,8 +1,5 @@
 local akinsho = require("util.akinsho")
-
 local reqcall = akinsho.reqcall
--- local icons = ui.icons
-
 local fzf_lua = reqcall("fzf-lua")
 
 ------------------------------------------------------------------------------------------------------------------------
