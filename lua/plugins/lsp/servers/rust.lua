@@ -1,11 +1,23 @@
 -- correctly setup lspconfig
 return {
+
+  -- extend the lsp tool collection
   {
     "williamboman/mason.nvim",
     opts = function(_, opts)
       vim.list_extend(opts.ensure_installed, { "rust-analyzer", "taplo" })
     end,
   },
+
+  -- add rust to treesitter
+  {
+    "nvim-treesitter/nvim-treesitter",
+    opts = function(_, opts)
+      vim.list_extend(opts.ensure_installed, { "rust", "toml" })
+    end,
+  },
+
+  -- setup rust-tools
   {
     "neovim/nvim-lspconfig",
     dependencies = { "simrat39/rust-tools.nvim" },
@@ -14,6 +26,7 @@ return {
       setup = {
         rust_analyzer = function(_, opts)
           require("lazyvim.util").on_attach(function(client, buffer)
+            -- client.server_capabilities.semanticTokensProvider = nil
             -- stylua: ignore
             if client.name == "rust_analyzer" then
               vim.keymap.set("n", "K", "<CMD>RustHoverActions<CR>", { buffer = buffer })
