@@ -1,6 +1,9 @@
 local M = {}
+local akinsho = require("util.akinsho")
 
-local get_changed_files = require("util.akinsho").get_changed_files
+local get_changed_files = akinsho.get_changed_files
+local get_changed_files_latest_commit = akinsho.get_changed_files_latest_commit
+local update_base = akinsho.update_gitsigns_base
 
 function M.git_hydra()
   local git_hint = [[
@@ -11,7 +14,8 @@ function M.git_hydra()
  _s_: stage hunk    _/_: show base file
  _p_: preview hunk  _S_: stage buffer
  _r_: reset hunk    _B_: blame show full
- _H_: Hunks -> QF
+ _H_: Hunks -> QF   _t_: ~1 chngd. files -> QF
+ _0_: reset base
 ^
 ]]
 
@@ -91,10 +95,36 @@ function M.git_hydra()
         { desc = "stage hunk" },
       },
       { "u", gitsigns.undo_stage_hunk, { desc = "undo last stage" } },
+      {
+        "-",
+        function()
+          vim.schedule(function()
+            update_base()
+          end)
+        end,
+        { desc = "GS base step back" },
+      },
+      {
+        "t",
+        function()
+          local changed_files = get_changed_files_latest_commit()
+
+          -- Convert the changed files list into the format expected by setqflist
+          local qf_list = {}
+          for _, file in ipairs(changed_files) do
+            table.insert(qf_list, { filename = file, lnum = 1, col = 0, text = "Changed file" })
+          end
+
+          -- Populate the quickfix list with the changed files
+          vim.fn.setqflist(qf_list)
+        end,
+        { desc = "Changes ~1 -> QF", exit = true },
+      },
       { "S", gitsigns.stage_buffer, { desc = "stage buffer" } },
       { "p", gitsigns.preview_hunk, { desc = "preview hunk" } },
       { "d", gitsigns.toggle_deleted, { nowait = true, desc = "toggle deleted" } },
       { "r", gitsigns.reset_hunk, { desc = "reset_hunk" } },
+      { "0", gitsigns.reset_base, { desc = "reset base" } },
       {
         "H",
         function()
