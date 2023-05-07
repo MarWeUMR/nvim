@@ -1,9 +1,13 @@
 local M = {}
 local akinsho = require("util.akinsho")
 
-local get_changed_files = akinsho.get_changed_files
-local get_changed_files_latest_commit = akinsho.get_changed_files_latest_commit
-local update_base = akinsho.update_gitsigns_base
+local function populate_quickfix_list(changed_files)
+  local qf_list = {}
+  for _, file in ipairs(changed_files) do
+    table.insert(qf_list, { filename = file, lnum = 1, col = 0, text = "Changed file" })
+  end
+  vim.fn.setqflist(qf_list)
+end
 
 function M.git_hydra()
   local git_hint = [[
@@ -64,7 +68,6 @@ function M.git_hydra()
         function()
           if vim.wo.diff then
             return "]c"
-          else
           end
           vim.schedule(function()
             gitsigns.next_hunk()
@@ -79,7 +82,6 @@ function M.git_hydra()
         function()
           if vim.wo.diff then
             return "[c"
-          else
           end
           vim.schedule(function()
             gitsigns.prev_hunk()
@@ -99,7 +101,7 @@ function M.git_hydra()
         "-",
         function()
           vim.schedule(function()
-            update_base()
+            akinsho.update_gitsigns_base()
           end)
         end,
         { desc = "GS base step back" },
@@ -107,16 +109,8 @@ function M.git_hydra()
       {
         "t",
         function()
-          local changed_files = get_changed_files_latest_commit()
-
-          -- Convert the changed files list into the format expected by setqflist
-          local qf_list = {}
-          for _, file in ipairs(changed_files) do
-            table.insert(qf_list, { filename = file, lnum = 1, col = 0, text = "Changed file" })
-          end
-
-          -- Populate the quickfix list with the changed files
-          vim.fn.setqflist(qf_list)
+          local changed_files = akinsho.get_changed_files_latest_commit()
+          populate_quickfix_list(changed_files)
         end,
         { desc = "Changes ~1 -> QF", exit = true },
       },
@@ -128,16 +122,8 @@ function M.git_hydra()
       {
         "H",
         function()
-          local changed_files = get_changed_files()
-
-          -- Convert the changed files list into the format expected by setqflist
-          local qf_list = {}
-          for _, file in ipairs(changed_files) do
-            table.insert(qf_list, { filename = file, lnum = 1, col = 0, text = "Changed file" })
-          end
-
-          -- Populate the quickfix list with the changed files
-          vim.fn.setqflist(qf_list)
+          local changed_files = akinsho.get_changed_files()
+          populate_quickfix_list(changed_files)
         end,
         { exit = true, desc = "Git Status -> QF" },
       },
