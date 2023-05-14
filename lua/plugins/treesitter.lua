@@ -24,22 +24,14 @@ return {
 
   {
     "nvim-treesitter/nvim-treesitter",
-    dependencies = { "HiPhish/nvim-ts-rainbow2" },
+    dependencies = { { "luozhiya/nvim-ts-rainbow2", branch = "detach" } },
     opts = {
       rainbow = {
         enable = true,
-        disable = false,
         query = {
           "rainbow-parens",
-          tsx = function()
-            return nil
-          end,
-          javascript = function()
-            return nil
-          end,
         },
       },
     },
   },
 }
-

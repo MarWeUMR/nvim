@@ -15,7 +15,7 @@ local function create_hydra(mode)
  _rr_: RustRunnables
  _e_ : Neotree
  _l_ : LSP
- _u_ : Toggles
+ _T_ : Toggles
  _|_ : H-Split right
  _-_ : V-Split below
  _o_ : Aerial
@@ -76,7 +76,7 @@ local function create_hydra(mode)
       { exit = true, nowait = true, remap = true },
     },
     {
-      "u",
+      "T",
       function()
         hy.hydras.toggles_hydra():activate()
       end,

@@ -61,30 +61,17 @@ return {
 
   -- TODO: not yet working in this config
   -- investigate, what akinsho is doing differently
-  -- {
-  --   "lvimuser/lsp-inlayhints.nvim",
-  --   init = function()
-  --     akinsho.augroup("InlayHintsSetup", {
-  --       event = "LspAttach",
-  --       command = function(args)
-  --         local id = vim.tbl_get(args, "data", "client_id") --[[@as lsp.Client]]
-  --         if not id then
-  --           return
-  --         end
-  --         local client = vim.lsp.get_client_by_id(id)
-  --         require("lsp-inlayhints").on_attach(client, args.buf)
-  --       end,
-  --     })
-  --   end,
-  --   opts = {
-  --     inlay_hints = {
-  --       highlight = "Comment",
-  --       labels_separator = " ⏐ ",
-  --       parameter_hints = { prefix = "" },
-  --       type_hints = { prefix = "=> ", remove_colon_start = true },
-  --     },
-  --   },
-  -- },
+  {
+    "lvimuser/lsp-inlayhints.nvim",
+    opts = {
+      inlay_hints = {
+        highlight = "Comment",
+        labels_separator = " ⏐ ",
+        parameter_hints = { prefix = "" },
+        type_hints = { prefix = "=> ", remove_colon_start = true },
+      },
+    },
+  },
 
   {
     "DNLHC/glance.nvim",
@@ -130,4 +117,7 @@ return {
   },
   -- language specific extension modules
   { import = "plugins.lsp.servers.rust" },
+  { import = "plugins.lsp.servers.julia" },
+  { import = "plugins.lsp.servers.python" },
+  { import = "plugins.lsp.servers.null-ls" },
 }
