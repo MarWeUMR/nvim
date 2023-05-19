@@ -59,3 +59,19 @@ end, { desc = "leader" })
 map("v", "m", function()
   hy.hydras.m_hydra():activate()
 end, { desc = "m" })
+
+-----------------------------------------------------------------------------//
+-- TOGGLETERM MAPPINGS
+-- this allows to use 1<c-t> or 2<c-t> etc. to open multiple terminals
+-----------------------------------------------------------------------------//
+vim.api.nvim_exec(
+  [[
+  augroup ToggleTermMappings
+    autocmd!
+    autocmd TermEnter term://*toggleterm#* tnoremap <silent><c-t> <Cmd>exe v:count1 . "ToggleTerm"<CR>
+    autocmd TermEnter term://*toggleterm#* nnoremap <silent><c-t> <Cmd>exe v:count1 . "ToggleTerm"<CR>
+    autocmd TermEnter term://*toggleterm#* inoremap <silent><c-t> <Esc><Cmd>exe v:count1 . "ToggleTerm"<CR>
+  augroup END
+]],
+  false
+)
