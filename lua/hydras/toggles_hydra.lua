@@ -7,6 +7,7 @@ local function create_hydra(mode)
  _f_: Toggle Format
  _c_: Toggle Conceal
  _l_: Rel. LN
+ _w_: Line Wrap
  ]]
 
   -- this adds the appropriate command to the hydra head. It depends on the mode from which it was called.
@@ -14,6 +15,7 @@ local function create_hydra(mode)
     { "f", "<leader>uf", { remap = true, mode = { mode }, exit = true } },
     { "c", "<leader>uc", { remap = true, mode = { mode }, exit = true } },
     { "l", "<leader>ul", { remap = true, mode = { mode }, exit = true } },
+    { "w", "<leader>uw", { remap = true, mode = { mode }, exit = true } },
     { "q", nil, { exit = true, nowait = true, desc = false } },
     { "<Esc>", nil, { exit = true, desc = false } },
   }
