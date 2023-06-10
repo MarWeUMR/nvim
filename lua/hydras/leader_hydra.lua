@@ -67,6 +67,8 @@ local function create_hydra(mode)
     { "o", "<CMD>AerialToggle<CR>", { mode = { "n" }, exit = true } },
     { "O", "<CMD>Navbuddy<CR>", { mode = { "n" }, exit = true } },
     { "bb", "<CMD>BufferLinePick<CR>", { mode = { "n" }, exit = true } },
+    { "bl", "<CMD>BufferLineMoveNext<CR>", { mode = { "n" }, exit = true } },
+    { "bh", "<CMD>BufferLineMovePrev<CR>", { mode = { "n" }, exit = true } },
     { "q", "<CMD>cope<CR>", { mode = { "n" }, exit = true } },
     {
       "l",
