@@ -31,34 +31,36 @@ vim.keymap.set("v", "p", '"_dP')
 -- HYDRA INVOCATIONS
 -----------------------------------------------------------------------------//
 
-local hy_ok, hy = pcall(require, "hydras")
-if not hy_ok then
-  return
+if not vim.g.vscode then
+  local hy_ok, hy = pcall(require, "hydras")
+  if not hy_ok then
+    return
+  end
+
+  map("n", "g", function()
+    hy.hydras.g_hydra():activate()
+  end, { desc = "g" })
+
+  map("n", "m", function()
+    hy.hydras.m_hydra():activate()
+  end, { desc = "m" })
+
+  map("n", "+", function()
+    hy.hydras.bracketed_hydra("+"):activate()
+  end, { desc = "]" })
+
+  map("n", "ü", function()
+    hy.hydras.bracketed_hydra("ü"):activate()
+  end, { desc = "[" })
+
+  map("n", "<leader>", function()
+    hy.hydras.leader_hydra():activate()
+  end, { desc = "leader" })
+
+  map("v", "m", function()
+    hy.hydras.m_hydra():activate()
+  end, { desc = "m" })
 end
-
-map("n", "g", function()
-  hy.hydras.g_hydra():activate()
-end, { desc = "g" })
-
-map("n", "m", function()
-  hy.hydras.m_hydra():activate()
-end, { desc = "m" })
-
-map("n", "+", function()
-  hy.hydras.bracketed_hydra("+"):activate()
-end, { desc = "]" })
-
-map("n", "ü", function()
-  hy.hydras.bracketed_hydra("ü"):activate()
-end, { desc = "[" })
-
-map("n", "<leader>", function()
-  hy.hydras.leader_hydra():activate()
-end, { desc = "leader" })
-
-map("v", "m", function()
-  hy.hydras.m_hydra():activate()
-end, { desc = "m" })
 
 -----------------------------------------------------------------------------//
 -- TOGGLETERM MAPPINGS

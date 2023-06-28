@@ -12,6 +12,8 @@ local function create_hydra(mode)
  _fr_: Recent Files
  _fg_: Live Grep
  _bd_: Del. Buffer
+ _bl_: Push Buffer Right
+ _bh_: Push Buffer Left
  _rr_: RustRunnables
  _e_ : Neotree
  _l_ : LSP
@@ -21,8 +23,8 @@ local function create_hydra(mode)
  _o_ : Aerial
  _O_ : Navbuddy
  _cp_ : Copilot
+ _dv_ : DiffviewHy
  _SE_ : Save & Exit
- _uD_ : Lsp-Lines
  _bb_ : Pick Buffer
  _x_ : Trouble
  _P_ : Portal/Grapple
@@ -52,13 +54,6 @@ local function create_hydra(mode)
       end,
       { exit = true, nowait = true },
     },
-    {
-      "uD",
-      function()
-        as.toggle_diagnostics()
-      end,
-      { exit = true, nowait = true },
-    },
     { "SE", "<CMD>wqall<CR>", { mode = { "n" }, exit = true } },
     { "-", "<CMD>split<CR>", { mode = { "n" }, exit = true } },
     { "|", "<CMD>vsplit<CR>", { mode = { "n" }, exit = true } },
@@ -81,6 +76,13 @@ local function create_hydra(mode)
       "T",
       function()
         hy.hydras.toggles_hydra():activate()
+      end,
+      { exit = true, nowait = true, remap = true },
+    },
+    {
+      "dv",
+      function()
+        hy.hydras.diffview_hydra():activate()
       end,
       { exit = true, nowait = true, remap = true },
     },

@@ -3,6 +3,7 @@ local highlight = require("util.highlight_utils").highlight
 return {
   {
     "nvim-treesitter/nvim-treesitter-context",
+    enabled = false,
     event = "BufReadPre",
     init = function()
       highlight.plugin("treesitter-context", {

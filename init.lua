@@ -2,4 +2,6 @@
 
 require("config.lazy")
 
-require("util.akinsho").pcall("theme failed to load because", vim.cmd.colorscheme, "tokyonight")
+if not vim.g.vscode then
+  require("util.akinsho").pcall("theme failed to load because", vim.cmd.colorscheme, "tokyonight")
+end

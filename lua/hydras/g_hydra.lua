@@ -7,6 +7,7 @@ local function create_hydra(mode)
   local hint = [[
  _cc_: comment line
  _m_: git mode
+ _h_: LSP Finder
  _d_: peek definition
  _D_: go to definition
  _r_: peek references
@@ -26,13 +27,14 @@ local function create_hydra(mode)
     },
     { "cc", "gcc", { remap = true, exit = true, nowait = true, desc = false } },
     { "g", "gg", { exit = true, nowait = true, desc = false } },
+    { "h", "<CMD>Lspsaga lsp_finder<CR>", { exit = true, nowait = true, desc = false } },
     { "d", "<CMD>Lspsaga peek_definition<CR>", { mode = { "n" }, exit = true } },
-    { "D", "gD", { remap = true, mode = { "v" }, exit = true } },
+    { "D", vim.lsp.buf.definition, { remap = true, mode = { "v" }, exit = true } },
     { "r", "<CMD>Glance references<CR>", { remap = true, mode = { "n" }, exit = true } },
     { "y", "<CMD>Glance type_definitions<CR>", { remap = true, mode = { "n" }, exit = true } },
     { "i", "<CMD>Glance implementations<CR>", { remap = true, mode = { "n" }, exit = true } },
-    { "J", "<Cmd>TSJJoin<CR>", { remap = true, mode = { "n" }, exit = true } },
-    { "S", "<Cmd>TSJSplit<CR>", { remap = true, mode = { "n" }, exit = true } },
+    { "J", "<CMD>TSJJoin<CR>", { remap = true, mode = { "n" }, exit = true } },
+    { "S", "<CMD>TSJSplit<CR>", { remap = true, mode = { "n" }, exit = true } },
     { "q", nil, { exit = true, nowait = true, desc = false } },
     { "<Esc>", nil, { exit = true, desc = false } },
   }

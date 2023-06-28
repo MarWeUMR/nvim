@@ -1,5 +1,9 @@
 -- This module is used to facilitate a better activation of the hydra heads.
 
+if vim.g.vscode then
+  return
+end
+
 local hy = {}
 
 local g_hydra = require("hydras.g_hydra")
@@ -12,6 +16,7 @@ local bracketed_hydra = require("hydras.bracketed_hydra")
 local leader_hydra = require("hydras.leader_hydra")
 local copilot_hydra = require("hydras.copilot_hydra")
 local portal_hydra = require("hydras.portal_hydra")
+local diffview_hydra = require("hydras.diffview_hydra")
 
 hy.hydras = {
   git_hydra = git_hydra.git_hydra,
@@ -24,6 +29,7 @@ hy.hydras = {
   leader_hydra = leader_hydra.leader_hydra,
   trouble_hydra = trouble_hydra.trouble_hydra,
   portal_hydra = portal_hydra.portal_hydra,
+  diffview_hydra = diffview_hydra.diffview_hydra,
 }
 
 return hy

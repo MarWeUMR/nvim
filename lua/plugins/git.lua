@@ -10,12 +10,20 @@ return {
       local actions = require("diffview.actions")
 
       require("diffview").setup({
-        enhanced_diff_hl = true,
-
+        enhanced_diff_hl = false,
+        use_icons = true,
+        show_help_hints = true,
         file_panel = {
           listing_style = "list",
           win_config = {
             width = 40,
+          },
+        },
+        view = {
+          merge_tool = {
+            layout = "diff3_mixed",
+            disable_diagnostics = true,
+            winbar_info = true,
           },
         },
         keymaps = {

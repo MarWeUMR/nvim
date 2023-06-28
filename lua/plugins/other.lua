@@ -246,4 +246,8 @@ return {
       highlight.plugin("bqf", { { BqfPreviewBorder = { fg = { from = "Comment" } } } })
     end,
   },
+  {
+    "ActivityWatch/aw-watcher-vim",
+    event = "VeryLazy",
+  },
 }

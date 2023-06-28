@@ -19,7 +19,7 @@ function M.git_hydra()
  _p_: preview hunk  _S_: stage buffer
  _r_: reset hunk    _B_: blame show full
  _H_: Hunks -> QF   _t_: ~1 chngd. files -> QF
- _0_: reset base
+ _0_: reset base    _D_: Diffview
 ^
 ]]
 
@@ -96,6 +96,12 @@ function M.git_hydra()
         ":Gitsigns stage_hunk<CR>",
         { desc = "stage hunk" },
       },
+      {
+        "D",
+        ":DiffviewOpen<CR>",
+        { desc = "Diffview Open", exit = true },
+      },
+
       { "u", gitsigns.undo_stage_hunk, { desc = "undo last stage" } },
       {
         "-",

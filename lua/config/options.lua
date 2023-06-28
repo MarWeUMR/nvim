@@ -4,3 +4,4 @@
 
 vim.o.scrolloff = 8
 vim.o.timeoutlen = 100
+vim.o.fileformats = "unix,dos"

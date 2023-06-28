@@ -78,10 +78,26 @@ return {
 
   {
     "chrisgrieser/nvim-spider",
+    vscode = true,
     keys = {
       vim.keymap.set({ "n", "o", "x" }, "w", "<cmd>lua require('spider').motion('w')<CR>", { desc = "Spider-w" }),
       vim.keymap.set({ "n", "o", "x" }, "e", "<cmd>lua require('spider').motion('e')<CR>", { desc = "Spider-e" }),
       vim.keymap.set({ "n", "o", "x" }, "b", "<cmd>lua require('spider').motion('b')<CR>", { desc = "Spider-b" }),
+    },
+  },
+  { "ggandor/leap.nvim", enabled = false },
+  {
+    "folke/flash.nvim",
+    ---@type Flash.Config
+    keys = {
+      {
+        "r",
+        mode = "o",
+        function()
+          require("flash").remote()
+        end,
+        desc = "Remote Flash",
+      },
     },
   },
 }

@@ -4,6 +4,14 @@ return {
   {
     "neovim/nvim-lspconfig",
     init = function()
+      -- major performance problem. disable for now
+      local ok, wf = pcall(require, "vim.lsp._watchfiles")
+      if ok then
+        wf._watchfunc = function()
+          return function() end
+        end
+      end
+
       local keys = require("lazyvim.plugins.lsp.keymaps").get()
       -- change a keymap
       keys[#keys + 1] = {
@@ -45,6 +53,7 @@ return {
     ---@class PluginLspOpts
     opts = {
       ---@type lspconfig.options
+      inlay_hints = { enabled = true },
       servers = {},
     },
   },
@@ -55,20 +64,6 @@ return {
       ensure_installed = {
         "lua-language-server",
         "rust-analyzer",
-      },
-    },
-  },
-
-  -- TODO: not yet working in this config
-  -- investigate, what akinsho is doing differently
-  {
-    "lvimuser/lsp-inlayhints.nvim",
-    opts = {
-      inlay_hints = {
-        highlight = "Comment",
-        labels_separator = " ⏐ ",
-        parameter_hints = { prefix = "" },
-        type_hints = { prefix = "=> ", remove_colon_start = true },
       },
     },
   },
@@ -115,9 +110,22 @@ return {
       })
     end,
   },
+
+  {
+    "jose-elias-alvarez/null-ls.nvim",
+    opts = function(_, opts)
+      local nls = require("null-ls")
+      vim.list_extend(opts.sources, {
+        nls.builtins.formatting.stylua,
+        nls.builtins.formatting.shfmt,
+        nls.builtins.formatting.fish_indent,
+      })
+    end,
+  },
+
   -- language specific extension modules
   { import = "plugins.lsp.servers.rust" },
+  { import = "plugins.lsp.servers.lua" },
   { import = "plugins.lsp.servers.julia" },
   { import = "plugins.lsp.servers.python" },
-  { import = "plugins.lsp.servers.null-ls" },
 }
