@@ -147,51 +147,51 @@ return {
 
     require("fzf-lua").setup({
       "telescope",
-      winopts = {
-        preview = {
-          hidden = "nohidden",
-          vertical = "up:75%",
-          horizontal = "right:75%",
-          layout = "vertical",
-          flip_columns = 150,
-          default = "bat",
-        },
-
-        height = 0.9,
-        width = 0.9,
-      },
-      git = {
-        files = dropdown({
-          prompt = " Project Files: ",
-          path_shorten = false, -- this doesn't use any clever strategy unlike telescope so is somewhat useless
-        }),
-        branches = dropdown({
-          prompt = " Branches: ",
-        }),
-        status = {
-          prompt = " Git status: ",
-          preview_pager = "delta --diff-so-fancy --line-numbers --side-by-side --width=$FZF_PREVIEW_COLUMNS",
-        },
-        bcommits = {
-          prompt = " Buffer commits: ",
-          preview_pager = "delta --width=$FZF_PREVIEW_COLUMNS",
-        },
-        commits = {
-          prompt = " Git commits: ",
-          preview_pager = "delta --diff-so-fancy --line-numbers --side-by-side --width=$FZF_PREVIEW_COLUMNS",
-        },
-      },
-      keymap = {
-        fzf = {
-          -- Only valid with fzf previewers (bat/cat/git/etc)
-          ["alt-w"] = "toggle-preview-wrap",
-          ["alt-p"] = "toggle-preview",
-          ["alt-j"] = "preview-page-down",
-          ["alt-k"] = "preview-page-up",
-        },
-      },
+      -- winopts = {
+      --   preview = {
+      --     hidden = "nohidden",
+      --     vertical = "up:75%",
+      --     horizontal = "right:75%",
+      --     layout = "vertical",
+      --     flip_columns = 150,
+      --     default = "bat",
+      --   },
+      --
+      --   height = 0.9,
+      --   width = 0.9,
+      -- },
+      -- git = {
+      --   files = dropdown({
+      --     prompt = " Project Files: ",
+      --     path_shorten = false, -- this doesn't use any clever strategy unlike telescope so is somewhat useless
+      --   }),
+      --   branches = dropdown({
+      --     prompt = " Branches: ",
+      --   }),
+      --   status = {
+      --     prompt = " Git status: ",
+      --     preview_pager = "delta --diff-so-fancy --line-numbers --side-by-side --width=$FZF_PREVIEW_COLUMNS",
+      --   },
+      --   bcommits = {
+      --     prompt = " Buffer commits: ",
+      --     preview_pager = "delta --width=$FZF_PREVIEW_COLUMNS",
+      --   },
+      --   commits = {
+      --     prompt = " Git commits: ",
+      --     preview_pager = "delta --diff-so-fancy --line-numbers --side-by-side --width=$FZF_PREVIEW_COLUMNS",
+      --   },
+      -- },
+      -- keymap = {
+      --   fzf = {
+      --     -- Only valid with fzf previewers (bat/cat/git/etc)
+      --     ["alt-w"] = "toggle-preview-wrap",
+      --     ["alt-p"] = "toggle-preview",
+      --     ["alt-j"] = "preview-page-down",
+      --     ["alt-k"] = "preview-page-up",
+      --   },
+      -- },
     })
 
-    require("fzf-lua").register_ui_select(dropdown({ winopts = { height = 0.33, width = 0.25 } }))
+    -- require("fzf-lua").register_ui_select(dropdown({ winopts = { height = 0.33, width = 0.25 } }))
   end,
 }

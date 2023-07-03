@@ -4,6 +4,7 @@
 
 local Util = require("lazyvim.util")
 
+local fzf = require("fzf-lua")
 local toggle = Util.toggle
 
 local function map(mode, lhs, rhs, opts)
@@ -26,6 +27,14 @@ end, { desc = "Toggle Line Numbers" })
 
 -- paste same stuff over and over
 vim.keymap.set("v", "p", '"_dP')
+
+-----------------------------------------------------------------------------//
+-- FZF MAPPINGS
+-----------------------------------------------------------------------------//
+
+map("n", "<leader>.", function()
+  fzf.builtin()
+end, { desc = "Pop up fzf builtins" })
 
 -----------------------------------------------------------------------------//
 -- HYDRA INVOCATIONS

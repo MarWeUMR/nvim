@@ -4,11 +4,16 @@ function M.diffview_hydra()
   local diffview_hydra_hint = [[
   ^
   Diffview
- _L_: change layout     _d_: discard hunk 
- _K_: prev hunk         _a_: accept hunk
- _s_: show hunk         _o_: toggle orientation
- _p_: preview hunk      _w_: toggle width
- _c_: close diffview    _r_: refresh diffview
+            _L_: change layout
+ _b_: toggle files       _e_: focus files
+ 
+ _<TAB>_: next entry     _<S-TAB>_: prev entry
+ _x_: next conflict      _X_: prev. conflict
+ 
+ _O_: choose OURS        _T_: choose THEIRS
+ _B_: choose BASE        _A_: choose ALL
+
+            _D_: delete CONFLICTS
   ^
   ]]
 
@@ -21,6 +26,8 @@ function M.diffview_hydra()
     return
   end
 
+  local diffview_actions_ok, actions = pcall(require, "diffview.actions")
+
   return Hydra({
     name = "+diffview",
     hint = diffview_hydra_hint,
@@ -31,16 +38,18 @@ function M.diffview_hydra()
       hint = { border = "solid", position = "middle-right" },
     },
     heads = {
-      { "L", "g<C-x>", { desc = "change layout", remap = true, exit = true, nowait = true, desc = false } },
-      { "K", ":DiffviewPrevHunk<CR>", { desc = "previous hunk" } },
-      { "s", ":DiffviewShowHunk<CR>", { desc = "show hunk" } },
-      { "p", ":DiffviewPreviewHunk<CR>", { desc = "preview hunk" } },
-      { "d", ":DiffviewDiscardHunk<CR>", { desc = "discard hunk" } },
-      { "a", ":DiffviewAcceptHunk<CR>", { desc = "accept hunk" } },
-      { "o", ":DiffviewToggleOrientation<CR>", { desc = "toggle orientation" } },
-      { "w", ":DiffviewToggleWidth<CR>", { desc = "toggle width" } },
-      { "c", ":DiffviewClose<CR>", { exit = true, desc = "close diffview" } },
-      { "r", ":DiffviewRefresh<CR>", { desc = "refresh diffview" } },
+      { "<TAB>", actions.select_next_entry, { desc = "next entry" } },
+      { "<S-TAB>", actions.select_prev_entry, { desc = "prev entry" } },
+      { "L", actions.cycle_layout, { desc = "change layout" } },
+      { "O", actions.conflict_choose("ours"), { desc = "choose OURS (target branch)" } },
+      { "T", actions.conflict_choose("theirs"), { desc = "choose THEIRS (merging branch)" } },
+      { "B", actions.conflict_choose("base"), { desc = "choose BASE" } },
+      { "A", actions.conflict_choose("all"), { desc = "choose ALL" } },
+      { "D", actions.conflict_choose("none"), { desc = "delete conflict region" } },
+      { "b", actions.toggle_files, { desc = "toggle files panel" } },
+      { "e", actions.focus_files, { desc = "focus files panel" } },
+      { "x", actions.next_conflict, { desc = "next conflict" } },
+      { "X", actions.prev_conflict, { desc = "prev. conflict" } },
       { "q", nil, { exit = true, nowait = true, desc = false } },
       { "<Esc>", nil, { exit = true, nowait = true, desc = false } },
     },

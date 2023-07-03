@@ -6,6 +6,8 @@ local function create_hydra(mode)
 
   local as = require("util.akinsho")
 
+  local fzf = require("fzf-lua")
+
   local hint = [[
  _ff_: Find Files
  _gg_: LazyGit
@@ -29,6 +31,7 @@ local function create_hydra(mode)
  _x_ : Trouble
  _P_ : Portal/Grapple
  _q_ : Quickfix
+ _._ : FZF Builtins
 ]]
 
   local heads = {
@@ -103,6 +106,13 @@ local function create_hydra(mode)
       "bd",
       "<leader>bd",
       { remap = true, mode = { "n" }, exit = true },
+    },
+    {
+      ".",
+      function()
+        fzf.builtin()
+      end,
+      { mode = { "n" }, exit = true },
     },
     -- { "q", nil, { exit = true, nowait = true, desc = false } },
     { "<Esc>", nil, { exit = true, desc = false } },

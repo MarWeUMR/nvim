@@ -78,6 +78,7 @@ return {
 
   {
     "chrisgrieser/nvim-spider",
+    enabled = true,
     vscode = true,
     keys = {
       vim.keymap.set({ "n", "o", "x" }, "w", "<cmd>lua require('spider').motion('w')<CR>", { desc = "Spider-w" }),
