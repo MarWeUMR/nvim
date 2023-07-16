@@ -86,19 +86,4 @@ return {
       vim.keymap.set({ "n", "o", "x" }, "b", "<cmd>lua require('spider').motion('b')<CR>", { desc = "Spider-b" }),
     },
   },
-  { "ggandor/leap.nvim", enabled = false },
-  {
-    "folke/flash.nvim",
-    ---@type Flash.Config
-    keys = {
-      {
-        "r",
-        mode = "o",
-        function()
-          require("flash").remote()
-        end,
-        desc = "Remote Flash",
-      },
-    },
-  },
 }

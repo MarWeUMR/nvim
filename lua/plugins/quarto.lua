@@ -2,7 +2,7 @@ return {
 
   {
     "quarto-dev/quarto-nvim",
-    dev = false,
+    enabled = false,
     dependencies = {
       { "hrsh7th/nvim-cmp" },
       {

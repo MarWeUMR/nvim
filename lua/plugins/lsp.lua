@@ -54,7 +54,11 @@ return {
     opts = {
       ---@type lspconfig.options
       inlay_hints = { enabled = true },
-      servers = {},
+      servers = {
+
+        ansiblels = {},
+        marksman = {},
+      },
     },
   },
 
@@ -79,6 +83,7 @@ return {
 
   {
     "glepnir/lspsaga.nvim",
+    commit = "3fa4db0",
     event = "LspAttach",
     config = function()
       require("lspsaga").setup({
@@ -127,7 +132,8 @@ return {
   { import = "plugins.lsp.servers.rust" },
   { import = "plugins.lsp.servers.lua" },
   { import = "plugins.lsp.servers.julia" },
-  { import = "plugins.lsp.servers.python" },
+  -- { import = "plugins.lsp.servers.python" },
   { import = "plugins.lsp.servers.java" },
   { import = "plugins.lsp.servers.php" },
+  { import = "plugins.lsp.servers.yaml" },
 }
