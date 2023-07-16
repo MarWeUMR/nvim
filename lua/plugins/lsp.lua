@@ -56,7 +56,10 @@ return {
       inlay_hints = { enabled = true },
       servers = {
 
-        ansiblels = {},
+        ansiblels = {
+          filetypes = { "yaml", "yml", "ansible" },
+          single_file_support = false,
+        },
         marksman = {},
       },
     },
