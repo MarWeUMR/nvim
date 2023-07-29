@@ -32,6 +32,7 @@ local function create_hydra(mode)
  _P_ : Portal/Grapple
  _q_ : Quickfix
  _._ : FZF Builtins
+ _,_ : FZF Resume
 ]]
 
   local heads = {
@@ -114,6 +115,14 @@ local function create_hydra(mode)
       end,
       { mode = { "n" }, exit = true },
     },
+    {
+      ",",
+      function()
+        fzf.resume()
+      end,
+      { mode = { "n" }, exit = true },
+    },
+
     -- { "q", nil, { exit = true, nowait = true, desc = false } },
     { "<Esc>", nil, { exit = true, desc = false } },
   }

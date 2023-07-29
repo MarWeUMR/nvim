@@ -20,6 +20,7 @@ function M.git_hydra()
  _r_: reset hunk    _B_: blame show full
  _H_: Hunks -> QF   _t_: ~1 chngd. files -> QF
  _0_: reset base    _D_: Diffview
+ _c_: show changes
 ^
 ]]
 
@@ -91,6 +92,12 @@ function M.git_hydra()
         end,
         { expr = true, desc = "prev hunk" },
       },
+      {
+        "c",
+        ":FzfLua git_status<CR>",
+        { desc = "show changes" },
+      },
+
       {
         "s",
         ":Gitsigns stage_hunk<CR>",
