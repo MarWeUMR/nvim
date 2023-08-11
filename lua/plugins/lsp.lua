@@ -135,8 +135,6 @@ return {
   { import = "plugins.lsp.servers.rust" },
   { import = "plugins.lsp.servers.lua" },
   { import = "plugins.lsp.servers.julia" },
-  -- { import = "plugins.lsp.servers.python" },
   { import = "plugins.lsp.servers.java" },
   { import = "plugins.lsp.servers.php" },
-  { import = "plugins.lsp.servers.yaml" },
 }
