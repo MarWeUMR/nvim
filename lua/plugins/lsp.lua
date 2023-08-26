@@ -137,4 +137,5 @@ return {
   { import = "plugins.lsp.servers.julia" },
   { import = "plugins.lsp.servers.java" },
   { import = "plugins.lsp.servers.php" },
+  { import = "plugins.lsp.servers.nix" },
 }
