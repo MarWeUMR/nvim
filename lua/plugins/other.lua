@@ -34,10 +34,12 @@ return {
   },
   {
     "anuvyklack/hydra.nvim",
+    enabled = false,
     event = "VeryLazy",
   },
   {
     "folke/which-key.nvim",
+    enabled = false,
     config = function()
       require("which-key").setup({
         plugins = {
