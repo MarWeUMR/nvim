@@ -25,7 +25,7 @@ return {
 
   {
     "nvim-treesitter/nvim-treesitter",
-    dependencies = { { "luozhiya/nvim-ts-rainbow2", branch = "detach" } },
+    dependencies = { { "HiPhish/rainbow-delimiters.nvim" } },
     opts = {
       rainbow = {
         enable = true,
@@ -34,5 +34,21 @@ return {
         },
       },
     },
+  },
+  {
+    "HiPhish/rainbow-delimiters.nvim",
+    event = "VeryLazy",
+    config = function()
+      local rainbow_delimiters = require("rainbow-delimiters")
+
+      vim.g.rainbow_delimiters = {
+        strategy = {
+          [""] = rainbow_delimiters.strategy["global"],
+        },
+        query = {
+          [""] = "rainbow-delimiters",
+        },
+      }
+    end,
   },
 }
