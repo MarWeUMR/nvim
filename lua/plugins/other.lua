@@ -3,26 +3,6 @@ local highlight = require("util.highlight_utils").highlight
 return {
   "onsails/lspkind-nvim",
   {
-    "SmiteshP/nvim-navbuddy",
-    event = "VeryLazy",
-    dependencies = {
-      "neovim/nvim-lspconfig",
-      "SmiteshP/nvim-navic",
-      "MunifTanjim/nui.nvim",
-    },
-    opts = { lsp = { auto_attach = true } },
-    keys = {
-      {
-        "<Leader>O",
-        function()
-          require("nvim-navbuddy").open()
-        end,
-        desc = "Open Navbuddy",
-      },
-    },
-  },
-
-  {
     "max397574/better-escape.nvim",
     event = "InsertEnter",
     config = function()
