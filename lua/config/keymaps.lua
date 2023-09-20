@@ -32,9 +32,9 @@ vim.keymap.set("v", "p", '"_dP')
 -- FZF MAPPINGS
 -----------------------------------------------------------------------------//
 
-map("n", "<leader>.", function()
-  fzf.builtin()
-end, { desc = "Pop up fzf builtins" })
+-- map("n", "<leader>.", function()
+--   fzf.builtin()
+-- end, { desc = "FZF Builtins" })
 
 -----------------------------------------------------------------------------//
 -- HYDRA INVOCATIONS
