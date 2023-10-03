@@ -25,7 +25,7 @@ return {
 
   {
     "nvim-treesitter/nvim-treesitter",
-    dependencies = { { "luozhiya/nvim-ts-rainbow2", branch = "detach" } },
+    dependencies = { { "HiPhish/rainbow-delimiters.nvim" } },
     opts = {
       rainbow = {
         enable = true,
