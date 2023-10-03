@@ -2,6 +2,7 @@ local git = require("plugins.mini.clues.git")
 local bracketed = require("plugins.mini.clues.bracketed")
 local surround = require("plugins.mini.clues.surround")
 local diffview = require("plugins.mini.clues.diffview")
+local leader = require("plugins.mini.clues.leader")
 
 local function table_concat(t1, t2)
   for i = 1, #t2 do
@@ -15,6 +16,7 @@ my_clues = table_concat(my_clues, surround.generate_clues())
 my_clues = table_concat(my_clues, bracketed.generate_clues())
 my_clues = table_concat(my_clues, git.generate_clues())
 my_clues = table_concat(my_clues, diffview.generate_clues())
+my_clues = table_concat(my_clues, leader.generate_clues())
 
 return {
   {
@@ -24,7 +26,6 @@ return {
     config = function()
       local miniclue = require("mini.clue")
       miniclue.setup({
-
         clues = my_clues,
 
         triggers = {
@@ -76,7 +77,7 @@ return {
           { mode = "n", keys = "gm" },
         },
 
-        window = { config = { border = "double" }, delay = 100 },
+        window = { config = { border = "double", width = "auto" }, delay = 100 },
       })
     end,
   },

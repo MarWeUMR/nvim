@@ -19,6 +19,8 @@ M.generate_clues = function()
     { "e", "Focus Files Panel", "<leader>dv" },
     { "x", "Next Conflict", "<leader>dv" },
     { "X", "Previous Conflict", "<leader>dv" },
+    { "<tab>", "next entry", "<leader>dv" },
+    { "<S-tab>", "prev entry", "<leader>dv" },
   }
 
   local formatted_clues = {}

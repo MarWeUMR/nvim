@@ -30,6 +30,8 @@ M.set_keybindings = function()
   map("n", "<leader>dve", "<CMD>lua require('diffview.actions').focus_files()<CR>", { desc = "focus files panel" })
   map("n", "<leader>dvx", "<CMD>lua require('diffview.actions').next_conflict()<CR>", { desc = "next conflict" })
   map("n", "<leader>dvX", "<CMD>lua require('diffview.actions').prev_conflict()<CR>", { desc = "previous conflict" })
+  map("n", "<leader>dv<tab>", "<CMD>lua require('diffview.actions').select_next_entry()<CR>", { desc = "next entry" })
+  map("n", "<leader>dv<S-tab>", "<CMD>lua require('diffview.actions').select_prev_entry()<CR>", { desc = "prev entry" })
 end
 
 return M

@@ -4,6 +4,8 @@
 
 local git = require("plugins.mini.mappings.git")
 local diffview = require("plugins.mini.mappings.diffview")
+local leader = require("plugins.mini.mappings.leader")
+
 local map = require("util.akinsho").lazy_map
 
 vim.keymap.del("n", "<leader>qq")
@@ -11,6 +13,7 @@ vim.keymap.del("n", "<leader>l")
 
 git.set_keybindings()
 diffview.set_keybindings()
+leader.set_keybindings()
 
 local Util = require("lazyvim.util")
 
@@ -25,34 +28,6 @@ end, { desc = "Toggle Line Numbers" })
 
 -- paste same stuff over and over
 vim.keymap.set("v", "p", '"_dP')
-
-vim.keymap.set("n", "<leader>DV", "<CMD>DiffviewOpen<CR>")
-
------------------------------------------------------------------------------>>
----- BUFFERLINE MAPPINGS
-map("n", "<leader>bb", "<CMD>BufferLinePick<CR>", { desc = "Pick Buffer" })
-map("n", "<leader>bl", "<CMD>BufferLineMoveNext<CR>", { desc = "Push Buffer ->" })
-map("n", "<leader>bh", "<CMD>BufferLineMovePrev<CR>", { desc = "Push Buffer <-" })
------------------------------------------------------------------------------<<
-
------------------------------------------------------------------------------>>
----- FZF MAPPINGS
-map("n", "<leader>.", "<CMD>lua require('fzf-lua').builtin()<CR>", { desc = "FZF Builtins" })
-map("n", "<leader>,", "<CMD>lua require('fzf-lua').resume()<CR>", { desc = "FZF Resume" })
------------------------------------------------------------------------------<<
-
------------------------------------------------------------------------------>>
----- LEADER MAPPINGS
-map("n", "<leader>SE", ":wqall<CR>", { desc = "Save & Exit" })
-map("n", "<leader>-", ":split<CR>", { desc = "V-Split below" })
-map("n", "<leader>|", ":vsplit<CR>", { desc = "H-Split right" })
-map("n", "<leader>q", ":cope<CR>", { desc = "Quickfix" })
-map("n", "<leader>fg", ":Telescope live_grep<CR>", { desc = "Live Grep" })
-map("n", "<leader>ff", ":Telescope find_files<CR>", { desc = "Find Files" })
-map("n", "<leader>fr", ":Telescope oldfiles<CR>", { desc = "Recent Files" })
-map("n", "<leader>rr", ":RustRunnables<CR>", { desc = "Rust Runnables" })
-map("n", "<leader>gg", "<leader>gg", { desc = "LazyGit" })
------------------------------------------------------------------------------<<
 
 ----------------------------------------------------------------------------->>
 ---- TOGGLETERM MAPPINGS
