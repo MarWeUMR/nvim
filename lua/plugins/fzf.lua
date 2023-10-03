@@ -74,6 +74,7 @@ _G.fzf = { dropdown = dropdown, cursor_dropdown = cursor_dropdown }
 return {
 
   "ibhagwan/fzf-lua",
+  event = "VeryLazy",
   cmd = "FzfLua",
   dependencies = { "nvim-tree/nvim-web-devicons" },
   keys = {
@@ -119,24 +120,24 @@ return {
       end,
       desc = "buffer commits",
     },
-    {
-      "<leader>on",
-      function()
-        live_grep({ cwd = "~/obsidian-vault" })
-      end,
-      desc = "search within obsidian notes",
-    },
-    {
-      "<leader>oN",
-      function()
-        require("fzf-lua").fzf_exec("rg --files", {
-          cwd = "~/obsidian-vault",
-          preview = "python3 -m rich.markdown -c {}",
-          actions = require("fzf-lua").defaults.actions.files,
-        })
-      end,
-      desc = "search obsidian notes",
-    },
+    -- {
+    --   "<leader>on",
+    --   function()
+    --     live_grep({ cwd = "~/obsidian-vault" })
+    --   end,
+    --   desc = "search within obsidian notes",
+    -- },
+    -- {
+    --   "<leader>oN",
+    --   function()
+    --     require("fzf-lua").fzf_exec("rg --files", {
+    --       cwd = "~/obsidian-vault",
+    --       preview = "python3 -m rich.markdown -c {}",
+    --       actions = require("fzf-lua").defaults.actions.files,
+    --     })
+    --   end,
+    --   desc = "search obsidian notes",
+    -- },
   },
   config = function()
     local lsp_kind = require("lspkind")

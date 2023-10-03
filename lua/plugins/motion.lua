@@ -19,7 +19,7 @@ return {
     keys = { "]w", "[w" },
     dependencies = { "nvim-treesitter" },
     opts = {
-      use_default_keymaps = true,
+      use_default_keymaps = false,
       highlight_node_at_cursor = true,
       keymaps = {
         ["]w"] = "swap_with_left",
