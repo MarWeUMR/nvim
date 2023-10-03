@@ -119,18 +119,6 @@ return {
     end,
   },
 
-  {
-    "nvimtools/none-ls.nvim",
-    opts = function(_, opts)
-      local nls = require("none-ls")
-      vim.list_extend(opts.sources, {
-        nls.builtins.formatting.stylua,
-        nls.builtins.formatting.shfmt,
-        nls.builtins.formatting.fish_indent,
-      })
-    end,
-  },
-
   -- language specific extension modules
   { import = "plugins.lsp.servers.rust" },
   { import = "plugins.lsp.servers.lua" },
