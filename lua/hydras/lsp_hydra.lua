@@ -21,7 +21,7 @@ local function create_hydra(mode)
     {
       "f",
       function()
-        require("lazyvim.plugins.lsp.format").format()
+        require("lazyvim.util").format()
       end,
       { remap = true, mode = { mode }, exit = true },
     },
