@@ -72,7 +72,8 @@ return {
       opts.current_line_blame_opts = {
         delay = 50,
       }
-      -- opts._extmark_signs = true
+      -- temp fix for bug: 25.11.23
+      opts._extmark_signs = false
     end,
   },
 }
