@@ -19,5 +19,5 @@ if not vim.g.vscode then
   end
   Map("n", "<leader>GH", function()
     hy.hydras.git_hydra():activate()
-  end, { desc = "leader" })
+  end, { desc = "Git Hydra" })
 end

@@ -11,5 +11,12 @@ return {
         telescope.load_extension(ext)
       end
     end,
+    keys = {
+      {
+        "<leader>Q",
+        "<cmd> copen<cr>",
+        desc = "Open QF",
+      },
+    },
   },
 }

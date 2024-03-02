@@ -13,12 +13,12 @@ function M.git_hydra()
   local git_hint = [[
 ^
   Git
- _J_: next hunk     _d_: show deleted 
+ _J_: next hunk     _d_: toggle deleted
  _K_: prev hunk     _u_: undo last stage
  _s_: stage hunk    _/_: show base file
  _p_: preview hunk  _S_: stage buffer
  _r_: reset hunk    _B_: blame show full
- _H_: Hunks -> QF   _t_: ~1 chngd. files -> QF
+ _H_: Hunks -> QF   _t_: ~1 chngd. files -> QF  
  _0_: reset base    _D_: Diffview
  _c_: show changes
 ^
@@ -41,7 +41,7 @@ function M.git_hydra()
     config = {
       color = "pink",
       invoke_on_body = true,
-      hint = { border = "solid", position = "middle-right" },
+      hint = { style = "minimal", position = "middle-right" },
       on_key = function()
         vim.wait(50)
       end,
