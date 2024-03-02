@@ -1,7 +1,11 @@
 -- bootstrap lazy.nvim, LazyVim and your plugins
+require("core")
+
+local custom_init_path = vim.api.nvim_get_runtime_file("lua/custom/init.lua", false)[1]
+
+if custom_init_path then
+  dofile(custom_init_path)
+end
 
 require("config.lazy")
-
-if not vim.g.vscode then
-  require("util.akinsho").pcall("theme failed to load because", vim.cmd.colorscheme, "tokyonight")
-end
+require("base46").load_all_highlights()
