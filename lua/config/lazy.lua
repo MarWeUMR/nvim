@@ -26,25 +26,33 @@ if not vim.loop.fs_stat(lazypath) then
 
   --------- lazy.nvim ---------------
   -- bootstrap lazy.nvim
-  -- stylua: ignore
-  vim.fn.system({ "git", "clone", "--filter=blob:none", "https://github.com/folke/lazy.nvim.git", "--branch=stable", lazypath })
+  vim.fn.system({
+    "git",
+    "clone",
+    "--filter=blob:none",
+    "https://github.com/folke/lazy.nvim.git",
+    "--branch=stable",
+    lazypath,
+  })
 end
 vim.opt.rtp:prepend(vim.env.LAZY or lazypath)
 
 require("lazy").setup({
   spec = {
     {
-      -- "NvChad/base46",
-      dir = "/home/marwe/git/neovim_stuff/base46",
+      "MarWeUMR/base46",
       branch = "v3.0",
-      -- build = function()
-      --   require("base46").load_all_highlights()
-      -- end,
+      build = function()
+        require("base46").load_all_highlights()
+      end,
     },
     {
       "NvChad/ui",
       branch = "v3.0",
       lazy = false,
+      config = function()
+        require("nvchad")
+      end,
     },
     -- add LazyVim and import its plugins
     { "LazyVim/LazyVim", import = "lazyvim.plugins" },
