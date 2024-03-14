@@ -1,59 +1,13 @@
-local M = {}
-
-M.echo = function(str)
-  vim.cmd("redraw")
-  vim.api.nvim_echo({ { str, "Bold" } }, true, {})
-end
-
-local function shell_call(args)
-  local output = vim.fn.system(args)
-  assert(vim.v.shell_error == 0, "External call failed with error code: " .. vim.v.shell_error .. "\n" .. output)
-end
-
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-
 if not vim.loop.fs_stat(lazypath) then
-  ------------- base46 ---------------
-  local lazy_path = vim.fn.stdpath("data") .. "/lazy/base46"
-
-  M.echo("  Compiling base46 theme to bytecode ...")
-
-  local base46_repo = "https://github.com/MarWeUMR/base46"
-  shell_call({ "git", "clone", "--depth", "1", "-b", "v3.0", base46_repo, lazy_path })
-  vim.opt.rtp:prepend(lazy_path)
-
-  require("base46").compile()
-
-  --------- lazy.nvim ---------------
   -- bootstrap lazy.nvim
-  vim.fn.system({
-    "git",
-    "clone",
-    "--filter=blob:none",
-    "https://github.com/folke/lazy.nvim.git",
-    "--branch=stable",
-    lazypath,
-  })
+  -- stylua: ignore
+  vim.fn.system({ "git", "clone", "--filter=blob:none", "https://github.com/folke/lazy.nvim.git", "--branch=stable", lazypath })
 end
 vim.opt.rtp:prepend(vim.env.LAZY or lazypath)
 
 require("lazy").setup({
   spec = {
-    {
-      "MarWeUMR/base46",
-      branch = "v3.0",
-      build = function()
-        require("base46").load_all_highlights()
-      end,
-    },
-    {
-      "NvChad/ui",
-      branch = "v3.0",
-      lazy = false,
-      config = function()
-        require("nvchad")
-      end,
-    },
     -- add LazyVim and import its plugins
     { "LazyVim/LazyVim", import = "lazyvim.plugins" },
     -- import any extras modules here
@@ -72,7 +26,7 @@ require("lazy").setup({
     version = false, -- always use the latest git commit
     -- version = "*", -- try installing the latest stable version for plugins that support semver
   },
-  install = { colorscheme = { "habamax" } },
+  install = { colorscheme = { "tokyonight", "habamax" } },
   checker = { enabled = true }, -- automatically check for plugin updates
   performance = {
     rtp = {
