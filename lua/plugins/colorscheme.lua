@@ -10,7 +10,7 @@ return {
         styles = {
           comments = "italic",
           strings = "NONE",
-          keywords = "bold",
+          keywords = "bold,italic",
           functions = "bold",
           variables = "NONE",
           diagnostics = "underline",
