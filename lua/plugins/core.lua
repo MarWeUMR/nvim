@@ -1,8 +1,9 @@
 return {
+  -- better pairs implementation
+  { "echasnovski/mini.pairs", enabled = false },
   {
-    "LazyVim/LazyVim",
-    opts = {
-      colorscheme = "habamax",
-    },
+    "windwp/nvim-autopairs",
+    event = "InsertEnter",
+    config = true,
   },
 }
