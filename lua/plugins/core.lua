@@ -6,4 +6,10 @@ return {
     event = "InsertEnter",
     config = true,
   },
+  {
+    "LazyVim/LazyVim",
+    opts = {
+      colorscheme = "base-onenord",
+    },
+  },
 }
