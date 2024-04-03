@@ -30,8 +30,16 @@ return {
     },
   },
   {
-    "dgagn/diagflow.nvim",
-    event = "LspAttach",
-    opts = {},
+    "MeanderingProgrammer/markdown.nvim",
+    config = function()
+      require("render-markdown").setup({})
+    end,
+  },
+  {
+    "cbochs/portal.nvim",
+    keys = {
+      { "<leader>o", "<cmd>Portal jumplist backward<cr>", desc = "Portal backward" },
+      { "<leader>i", "<cmd>Portal jumplist backward<cr>", desc = "Portal forward" },
+    },
   },
 }
