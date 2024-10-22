@@ -1,0 +1,113 @@
+local function set_mason_lsp(servers)
+  local has_value = require("utils").has_value
+  local ensure_installed = vim.tbl_filter(function(d)
+    local to_exclude = { "pylance", "csharp_ls", "nginx_language_server" }
+    return not has_value(to_exclude, d)
+  end, servers)
+
+  local mason_lspconfig_status_ok, lsp_installer = pcall(require, "mason-lspconfig")
+  local mason_status_ok, mason = pcall(require, "mason")
+
+  if mason_lspconfig_status_ok and mason_status_ok then
+    -- require("mason").setup()
+    lsp_installer.setup({ ensure_installed = ensure_installed })
+  end
+end
+
+local function setup_lsps(servers, settings)
+  local lspconfig = require("lspconfig")
+  local configs = require("lspconfig.configs")
+  local utils = require("utils")
+
+  for _, k in ipairs(servers) do
+    local opts = {
+      capabilities = utils.capabilities,
+    }
+    if k == "pylance" then
+      require("pylance")
+    end
+    if settings[k] ~= nil then
+      opts = vim.tbl_deep_extend("force", settings[k], opts)
+    end
+    lspconfig[k].setup(opts)
+  end
+
+  require("go").setup()
+
+  -- setup_typescript()
+end
+
+local function config()
+  local servers = {
+    "pylance",
+  }
+
+  local settings = {
+    -- basedpyright = {
+    --   skip_install = true,
+    --   settings = {
+    --     verboseOutput = false,
+    --     autoImportCompletion = true,
+    --     basedpyright = {
+    --       disableOrganizeImports = true,
+    --       analysis = {
+    --         typeCheckingMode = "off",
+    --         autoSearchPaths = true,
+    --         useLibraryCodeForTypes = true,
+    --         diagnosticMode = "openFilesOnly",
+    --         indexing = true,
+    --       },
+    --     },
+    --   },
+    -- },
+
+    -- pylsp = {
+    --   settings = {
+    --     pylsp = {
+    --       plugins = {
+    --         flake8 = {
+    --           enabled = true,
+    --         },
+    --         jedi_completion = {
+    --           enabled = true,
+    --           fuzzy = true,
+    --         },
+    --         jedi_definition = {
+    --           enabled = true,
+    --         },
+    --         rope_autoimport = {
+    --           enabled = true,
+    --         },
+    --       },
+    --     },
+    --   },
+    -- },
+
+    pylance = {
+      settings = {
+        python = {
+          analysis = {
+            typeCheckingMode = "basic",
+            completeFunctionParens = true,
+            indexing = true,
+          },
+        },
+      },
+    },
+  }
+
+  set_mason_lsp(servers)
+  setup_lsps(servers, settings)
+end
+
+return {
+
+  {
+    "neovim/nvim-lspconfig",
+    config = config,
+    event = { "BufReadPre", "BufNewFile" },
+    dependencies = {
+      "kuator/some-python-plugin.nvim",
+    },
+  },
+}

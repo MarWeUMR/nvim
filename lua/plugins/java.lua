@@ -1,0 +1,67 @@
+return {
+  {
+    "stevearc/conform.nvim",
+    opts = {
+      log_level = vim.log.levels.ERROR,
+      formatters_by_ft = {
+        java = { "spotless" },
+        groovy = { "npm-groovy-lint" },
+      },
+      formatters = {
+        -- ["prettier"] = {
+        --   -- ...
+        -- },
+        ["markdownlint-cli2"] = {
+          args = function(ctx)
+            local args = { "$FILENAME", "--fix" }
+
+            -- get config file
+            local config_path = vim.fs.find("config.yaml", { path = vim.env.HOME .. "/.config/markdownlint" })[1]
+            local local_config = vim.fs.find({
+              ".markdownlint.json",
+              ".markdownlint.jsonc",
+              ".markdownlint.yaml",
+              ".markdownlint.yml",
+            }, { path = ctx.filename, upward = true })[1]
+
+            if local_config then
+              config_path = local_config
+            end
+
+            -- use config if it exists
+            if config_path then
+              vim.list_extend(args, { "--config", config_path })
+            end
+
+            return args
+          end,
+          -- append_args = function(self, ctx)
+          --   local root = require("conform.util").root_file({ "mkdocs.yml" })(self, ctx)
+          --   if root then
+          --     print(root .. "/markdownlint.yaml")
+          --     return {
+          --       "--config",
+          --       root .. "/markdownlint.yaml",
+          --     }
+          --   else
+          --     return {}
+          --   end
+          -- end,
+          cwd = require("conform.util").root_file({ "mkdocs.yml" }),
+        },
+        spotless = {
+          command = "mvn",
+          args = function(_, ctx)
+            return {
+              "-f",
+              "pom.xml",
+              "spotless:apply",
+              "-DspotlessFiles=" .. ctx.filename,
+            }
+          end,
+          stdin = false,
+        },
+      },
+    },
+  },
+}
