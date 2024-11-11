@@ -2,7 +2,7 @@
 local M = {}
 
 M.base46 = {
-  theme = "onenord",
+  theme = "palenight",
   integrations = { "telescope", "cmp", "trouble" },
 }
 
@@ -12,14 +12,22 @@ M.ui = {
     separator_style = "default",
   },
   telescope = { style = "borderless" },
-  tabufline = { enabled = false },
+  tabufline = { enabled = false, lazyload = true },
+  cmp = {
+    lspkind_text = true,
+    style = "atom", -- default/flat_light/flat_dark/atom/atom_colored
+    format_colors = {
+      tailwind = false,
+    },
+  },
 }
 
 M.nvdash = {
-  load_on_startup = true,
+  load_on_startup = false,
 }
 
 M.term = {
+  enable = false,
   winopts = { number = false, relativenumber = false },
   sizes = { vs = 0.5 },
   float = {
@@ -32,7 +40,7 @@ M.term = {
   },
 }
 
-M.lsp = { signature = true }
+M.lsp = { signature = false }
 
 M.cheatsheet = { theme = "simple" }
 
