@@ -1,10 +1,8 @@
 return {
   {
-    "nvimtools/hydra.nvim",
+    "cathyprime/hydra.nvim", -- temp fix, until hydra supports nvim nightly again
+    -- "nvimtools/hydra.nvim",
     event = "VeryLazy",
-    -- config = function()
-    --   require("plugins.hydra.hydra_init")
-    -- end,
     keys = {
       {
         "<leader>H",
