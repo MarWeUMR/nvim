@@ -4,7 +4,7 @@ end
 
 local HY = {}
 
-local git_hydra = require("hydras.git_hydra")
+local git_hydra = require("plugins.hydras.git_hydra")
 
 HY.hydras = {
   git_hydra = git_hydra.git_hydra,

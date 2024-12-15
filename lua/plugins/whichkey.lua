@@ -1,59 +1,55 @@
 return {
   {
     "folke/which-key.nvim",
+    enabled = true,
     event = "VeryLazy",
-    opts = {
-      preset = "classic",
-      layout = { align = "center" },
-      show_help = true,
-      -- spec = {
-      --   {
-      --     mode = { "n", "v" },
-      --     { "<leader>b", group = "bookmarks" },
-      --     { "<leader>c", group = "clear" },
-      --     { "<leader>f", group = "file" },
-      --     {
-      --       "<leader>h",
-      --       group = "local",
-      --       icon = {
-      --         icon = " ",
-      --         color = "blue",
-      --       },
-      --     },
-      --     { "<leader>l", group = "list" },
-      --     {
-      --       "<leader>n",
-      --       group = "no",
-      --       icon = { icon = " ", color = "red" },
-      --     },
-      --     { "<leader>p", group = "preview" },
-      --     { "<leader>r", group = "remote" },
-      --     { "<leader>s", group = "search" },
-      --     { "<leader>t", group = "test/toggle" },
-      --     { "<leader>v", group = "vcs" },
-      --     { "<leader>w", group = "window" },
-      --     { "<leader>x", group = "xray" },
-      --     { "[", group = "prev" },
-      --     { "]", group = "next" },
-      --     { "g", group = "goto" },
-      --   },
-      -- },
-      win = {
-        border = "solid",
-      },
-    },
-    keys = {
-      {
-        "<c-w><space>",
-        function()
-          require("which-key").show({ keys = "<c-w>", loop = true })
-        end,
-        desc = "Window Hydra Mode (which-key)",
-      },
-    },
-    config = function(_, opts)
-      local wk = require("which-key")
-      wk.setup(opts)
+    opts = function(_, opts)
+      opts.preset = "modern"
+      opts.debug = false
     end,
+    -- keys = {
+    --   {
+    --     "<leader>H",
+    --     function()
+    --       local git_hk, gitsigns = pcall(require, "gitsigns")
+    --
+    --       vim.cmd("mkview")
+    --       vim.cmd("silent! %foldopen!")
+    --       -- vim.bo.modifiable = false
+    --       gitsigns.toggle_signs(true)
+    --       gitsigns.toggle_linehl(true)
+    --       gitsigns.toggle_deleted(true)
+    --
+    --       -- vim.print("pre")
+    --       local wk = require("which-key")
+    --       vim.print(vim.inspect(wk.setup))
+    --       wk.show({ keys = "]", loop = true })
+    --       -- vim.print("post")
+    --
+    --       local cursor_pos = vim.api.nvim_win_get_cursor(0)
+    --       vim.cmd("loadview")
+    --       vim.api.nvim_win_set_cursor(0, cursor_pos)
+    --       vim.cmd("normal zv")
+    --       gitsigns.toggle_signs(true)
+    --       gitsigns.toggle_linehl(false)
+    --       gitsigns.toggle_deleted(false)
+    --     end,
+    --     desc = "Z mode (Hydra)",
+    --   },
+    --   -- {
+    --   --   "<leader>z",
+    --   --   function()
+    --   --     require("which-key").show({ keys = "z", loop = true })
+    --   --   end,
+    --   --   desc = "Z mode (Hydra)",
+    --   -- },
+    --   {
+    --     "<leader>v<Space>",
+    --     function()
+    --       require("which-key").show({ keys = "<leader>v", loop = true })
+    --     end,
+    --     desc = "Toggle Hydra mode",
+    --   },
+    -- },
   },
 }
