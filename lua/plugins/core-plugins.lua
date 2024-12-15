@@ -39,82 +39,39 @@ return {
         float = { border = "rounded", source = true },
       }
       require("lspconfig.ui.windows").default_options.border = "rounded"
+
       return opts
     end,
   },
-  -- {
-  --   "hrsh7th/nvim-cmp",
-  --   dependencies = { "lukas-reineke/cmp-rg" },
-  --   opts = function(_, opts)
-  --     table.insert(opts.sources, {
-  --       {
-  --         name = "rg",
-  --         -- keyword_length = 3 -- if performance is problematic
-  --       },
-  --       { name = "supermaven" },
-  --     })
-  --     opts.window = {
-  --       completion = {
-  --         border = "rounded",
-  --         -- winhighlight = "CursorLine:PmenuSel",
-  --         winhighlight = "Normal:Pmenu,FloatBorder:FloatBorder,CursorLine:PmenuSel,Search:Pmenu",
-  --         scrollbar = false,
-  --       },
-  --       documentation = {
-  --         border = "rounded",
-  --         -- winhighlight = ""
-  --         winhighlight = "Normal:Pmenu,FloatBorder:FloatBorder,CursorLine:PmenuSel,Search:Pmenu",
-  --         scrollbar = false,
-  --       },
-  --     }
-  --   end,
-  -- },
   {
-    "NeogitOrg/neogit",
-    dependencies = {
-      "nvim-lua/plenary.nvim", -- required
-      "sindrets/diffview.nvim", -- optional - Diff integration
-
-      -- Only one of these is needed, not both.
-      -- "nvim-telescope/telescope.nvim", -- optional
-      "ibhagwan/fzf-lua", -- optional
-    },
-    config = true,
+    "stevearc/conform.nvim",
+    opts = function(_, opts)
+      opts.log_level = vim.log.levels.DEBUG
+      opts.notify_on_error = true
+      opts.lsp_fallback = true
+    end,
   },
   {
-    "sindrets/diffview.nvim",
-    dependencies = "nvim-lua/plenary.nvim",
-    keys = {
-      {
-        "<leader>gdo",
-        "<cmd>DiffviewOpen<cr>",
-        desc = "Diff view Git Diff Open",
-      },
-
-      {
-        "<leader>gdc",
-        "<cmd>DiffviewClose<cr>",
-        desc = "Diff view Git Diff Close",
-      },
-    },
-  },
-  {
-    "neovim/nvim-lspconfig",
-    opts = {
-      servers = {
-
-        groovyls = {
-          filetypes = { "Jenkinsfile", "groovy" },
-          cmd = {
-            "java",
-            "-jar",
-            vim.fn.stdpath("data")
-              .. "/mason/packages/groovy-language-server/build/libs/groovy-language-server-all.jar",
-          },
+    "rachartier/tiny-inline-diagnostic.nvim",
+    event = "VeryLazy", -- Or `LspAttach`
+    priority = 1000, -- needs to be loaded in first
+    config = function()
+      require("tiny-inline-diagnostic").setup({
+        options = {
+          show_source = true,
+          use_icons_from_diagnostic = false,
+          multilines = true,
+          multiple_diag_under_cursor = true,
+          show_all_diags_on_cursorline = true,
+          enable_on_insert = false,
         },
-      },
-    },
+      })
+    end,
   },
+  {
+    "calops/hmts.nvim",
+  },
+
   { "folke/lazy.nvim", version = false },
   { "LazyVim/LazyVim", version = false },
 }

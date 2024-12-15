@@ -1,4 +1,9 @@
-vim.g.base46_cache = vim.fn.stdpath("data") .. "/base46_cache/"
+local myScheme = "tokyonight"
+
+if _G.USE_CHAD then
+  vim.g.base46_cache = vim.fn.stdpath("data") .. "/base46_cache/"
+  myScheme = "nvchad"
+end
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 
@@ -9,34 +14,35 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-require("lazy").setup({
-  spec = {
-    "nvim-lua/plenary.nvim",
-    {
-      "nvchad/ui",
-      dependencies = {
-        "nvchad/volt",
-      },
-      config = function()
-        require("nvchad")
-      end,
+local mySpec = {
+  "nvim-lua/plenary.nvim",
+  _G.USE_CHAD and {
+    "nvchad/ui",
+    dependencies = {
+      "nvchad/volt",
     },
-    {
-      "nvchad/base46",
-      lazy = true,
-      build = function()
-        require("base46").load_all_highlights()
-      end,
-    },
-    -- add LazyVim and import its plugins
-    { "LazyVim/LazyVim", import = "lazyvim.plugins", opts = { colorscheme = "nvchad" } },
-    -- import/override with your plugins
-    { import = "plugins" },
-    { import = "plugins.ai" },
+    config = function()
+      require("nvchad")
+    end,
+  } or {},
+  _G.USE_CHAD and {
+    "nvchad/base46",
+    lazy = true,
+    build = function()
+      require("base46").load_all_highlights()
+    end,
+  } or {},
 
-    -- DISABLED PLUGINS
-    { "nvim-lualine/lualine.nvim", enabled = false },
-  },
+  -- add LazyVim and import its plugins
+  { "LazyVim/LazyVim", import = "lazyvim.plugins", opts = { colorscheme = myScheme } },
+  -- import/override with your plugins
+  { import = "plugins" },
+  { import = "plugins.ai" },
+}
+
+-- merge both specs to one final table
+require("lazy").setup({
+  spec = mySpec,
   defaults = {
     -- By default, only LazyVim plugins will be lazy-loaded. Your custom plugins will load during startup.
     -- If you know what you're doing, you can set this to `true` to have all your custom plugins lazy-loaded by default.
@@ -46,7 +52,8 @@ require("lazy").setup({
     version = false, -- always use the latest git commit
     -- version = "*", -- try installing the latest stable version for plugins that support semver
   },
-  install = { colorscheme = { "nvchad" } },
+  install = { colorscheme = { myScheme } },
+  debug = false,
   -- install = { colorscheme = { "tokyonight", "habamax" } },
   checker = { enabled = true }, -- automatically check for plugin updates
   performance = {
@@ -66,6 +73,8 @@ require("lazy").setup({
   },
 })
 
-for _, v in ipairs(vim.fn.readdir(vim.g.base46_cache)) do
-  dofile(vim.g.base46_cache .. v)
+if _G.USE_CHAD then
+  for _, v in ipairs(vim.fn.readdir(vim.g.base46_cache)) do
+    dofile(vim.g.base46_cache .. v)
+  end
 end
