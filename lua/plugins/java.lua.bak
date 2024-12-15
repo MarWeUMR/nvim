@@ -2,7 +2,6 @@ return {
   {
     "stevearc/conform.nvim",
     opts = {
-      log_level = vim.log.levels.ERROR,
       formatters_by_ft = {
         java = { "spotless" },
         groovy = { "npm-groovy-lint" },
