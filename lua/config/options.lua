@@ -24,3 +24,26 @@ vim.o.spelllang = ""
 
 vim.g.ai_cmp = false
 -- vim.g.lazyvim_php_lsp = "intelephense"
+
+-- Make the clipboard work with SSH_TTY
+local function my_paste(reg)
+  return function(lines)
+    local content = vim.fn.getreg('"')
+    return vim.split(content, "\n")
+  end
+end
+
+if os.getenv("SSH_TTY") then
+  vim.opt.clipboard:append("unnamedplus")
+  vim.g.clipboard = {
+    name = "OSC 52",
+    copy = {
+      ["+"] = require("vim.ui.clipboard.osc52").copy("+"),
+      ["*"] = require("vim.ui.clipboard.osc52").copy("*"),
+    },
+    paste = {
+      ["+"] = my_paste("+"),
+      ["*"] = my_paste("*"),
+    },
+  }
+end
