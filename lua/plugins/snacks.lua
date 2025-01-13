@@ -28,6 +28,7 @@ return {
           wo = { wrap = true }, -- Wrap notifications
         },
       },
+      terminal = { enabled = true, win = { position = "float" } },
       zen = { enabled = true, toggles = { dim = false } },
     },
     keys = {
