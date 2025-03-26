@@ -1,7 +1,6 @@
 return {
   {
-    "cathyprime/hydra.nvim", -- temp fix, until hydra supports nvim nightly again
-    -- "nvimtools/hydra.nvim",
+    "nvimtools/hydra.nvim",
     event = "VeryLazy",
     keys = {
       {
