@@ -42,7 +42,7 @@ return {
           vim.bo.modifiable = false
           require("gitsigns").toggle_word_diff(true)
           require("gitsigns").toggle_linehl(true)
-          require("gitsigns").toggle_deleted(true)
+          require("gitsigns").preview_hunk_inline()
 
           require("which-key").show({ keys = "<Leader>gH", loop = true })
         end,

@@ -1,4 +1,14 @@
 return {
+  {
+    "akinsho/bufferline.nvim",
+    opts = function(_, opts)
+      opts.options = vim.tbl_deep_extend("force", opts.options, {
+        indicator = {
+          style = "underline",
+        },
+      })
+    end,
+  },
   { "ibhagwan/smartyank.nvim" },
   { "Glench/Vim-Jinja2-Syntax" },
   { "kevinhwang91/nvim-bqf" },
