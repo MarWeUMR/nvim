@@ -1,6 +1,7 @@
 return {
   {
     "lewis6991/gitsigns.nvim",
+    enabled = true,
     keys = {
       {
         "<leader>gH<ESC>",
@@ -38,15 +39,9 @@ return {
       {
         "<leader>gh<space>",
         function()
-          vim.cmd("mkview")
-          vim.bo.modifiable = false
-          require("gitsigns").toggle_word_diff(true)
-          require("gitsigns").toggle_linehl(true)
-          require("gitsigns").preview_hunk_inline()
-
-          require("which-key").show({ keys = "<Leader>gH", loop = true })
+          require("plugins.hydras.git_hydra").git_hydra():activate()
         end,
-        desc = "Git Hydra",
+        desc = "Git Hunk Hydra",
       },
     },
   },
@@ -59,28 +54,28 @@ return {
 
       -- Only one of these is needed, not both.
       -- "nvim-telescope/telescope.nvim", -- optional
-      "ibhagwan/fzf-lua", -- optional
+      -- "ibhagwan/fzf-lua", -- optional
     },
     config = true,
   },
-  {
-    "sindrets/diffview.nvim",
-    dependencies = "nvim-lua/plenary.nvim",
-    opts = function(_, opts)
-      opts.enhanced_diff_hl = true
-    end,
-    keys = {
-      {
-        "<leader>gdo",
-        "<cmd>DiffviewOpen<cr>",
-        desc = "Diff view Git Diff Open",
-      },
-
-      {
-        "<leader>gdc",
-        "<cmd>DiffviewClose<cr>",
-        desc = "Diff view Git Diff Close",
-      },
-    },
-  },
+  -- {
+  --   "sindrets/diffview.nvim",
+  --   dependencies = "nvim-lua/plenary.nvim",
+  --   opts = function(_, opts)
+  --     opts.enhanced_diff_hl = true
+  --   end,
+  --   keys = {
+  --     {
+  --       "<leader>gdo",
+  --       "<cmd>DiffviewOpen<cr>",
+  --       desc = "Diff view Git Diff Open",
+  --     },
+  --
+  --     {
+  --       "<leader>gdc",
+  --       "<cmd>DiffviewClose<cr>",
+  --       desc = "Diff view Git Diff Close",
+  --     },
+  --   },
+  -- },
 }

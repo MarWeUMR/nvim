@@ -69,10 +69,6 @@ return {
       })
     end,
   },
-  {
-    "calops/hmts.nvim",
-  },
-
   { "folke/lazy.nvim", version = false },
   { "LazyVim/LazyVim", version = false },
 }

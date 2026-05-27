@@ -6,6 +6,14 @@ return {
   --   },
   -- },
   {
+    "github-main-user/lytmode.nvim",
+    lazy = false,
+    priority = 1000,
+    config = function()
+      require("lytmode").setup()
+    end,
+  },
+  {
     "neanias/everforest-nvim",
     version = false,
     lazy = false,
@@ -117,6 +125,14 @@ return {
     name = "catppuccin",
     lazy = false,
     priority = 1000,
+    "catppuccin/nvim",
+    opts = function(_, opts)
+      local module = require("catppuccin.groups.integrations.bufferline")
+      if module then
+        module.get = module.get_theme
+      end
+      return opts
+    end,
     config = function()
       require("catppuccin").setup({
         flavour = "frappe", -- latte, frappe, macchiato, mocha
@@ -180,6 +196,7 @@ return {
     lazy = false,
     priority = 1000,
     opts = {
+      transparent = false,
       styles = {
         -- Style to be applied to different syntax groups
         -- Value is any valid attr-list value for `:help nvim_set_hl`
@@ -188,8 +205,8 @@ return {
         functions = { bold = true, italic = true },
         variables = {},
         -- Background styles. Can be "dark", "transparent" or "normal"
-        sidebars = "dark", -- style for sidebars, see below
-        floats = "dark", -- style for floating windows
+        sidebars = "transparent", -- style for sidebars, see below
+        floats = "transparent", -- style for floating windows
       },
     },
   },
@@ -256,29 +273,5 @@ return {
         light = "lotus",
       },
     },
-  },
-  {
-    "NTBBloodbath/sweetie.nvim",
-    priority = 1000, -- Ensure it loads first
-    config = function()
-      vim.g.sweetie = {
-
-        pumblend = {
-          enable = true,
-          transparency_amount = 20,
-        },
-        overrides = {
-          Comment = { italic = true },
-          CommentBold = { italic = false },
-          Keyword = { bold = true },
-          Boolean = { italic = false },
-          Class = { italic = false, bold = true },
-          -- Optional, just if you use Java and you do not want some extra italics
-          -- ["@type.java"] = { italic = false },
-          -- ["@type.qualifier.java"] = { italic = false },
-        },
-      }
-      vim.cmd.colorscheme("sweetie")
-    end,
   },
 }

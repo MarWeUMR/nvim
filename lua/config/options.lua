@@ -25,6 +25,8 @@ vim.o.spelllang = ""
 vim.g.ai_cmp = false
 -- vim.g.lazyvim_php_lsp = "intelephense"
 
+vim.o.diffopt = "filler,internal,closeoff,algorithm:histogram,context:5,linematch:60"
+
 -- Make the clipboard work with SSH_TTY
 local function my_paste(reg)
   return function(lines)

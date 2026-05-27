@@ -2,12 +2,23 @@
 local M = {}
 
 M.base46 = {
-  theme = "palenight",
+  theme = "jabuti",
+  -- transparency = true,
+
   integrations = { "telescope", "cmp", "trouble" },
+
+  -- hl_override = {
+  --   DiffAdd = {
+  --     -- pastel green
+  --     fg = "#000000",
+  --     bg = "#4b5632",
+  --   },
+  -- },
 }
 
 M.ui = {
   statusline = {
+    enabled = true,
     theme = "default",
     separator_style = "default",
   },

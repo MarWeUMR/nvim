@@ -16,7 +16,8 @@ function M.git_hydra()
  _J_: next hunk     _d_: show deleted
  _K_: prev hunk     _u_: undo last stage
  _s_: stage hunk    _/_: show base file
- _p_: preview hunk  _S_: stage buffer
+ _p_: preview hunk  _o_: mini.diff overlay
+ _S_: stage buffer
  _r_: reset hunk    _B_: blame show full
  _H_: Hunks -> QF   _t_: ~1 chngd. files -> QF
  _0_: reset base    _D_: Diffview
@@ -130,6 +131,13 @@ function M.git_hydra()
       },
       { "S", gitsigns.stage_buffer, { desc = "stage buffer" } },
       { "p", gitsigns.preview_hunk, { desc = "preview hunk" } },
+      {
+        "o",
+        function()
+          require("mini.diff").toggle_overlay(0)
+        end,
+        { desc = "mini.diff overlay" },
+      },
       { "d", gitsigns.toggle_deleted, { nowait = true, desc = "toggle deleted" } },
       { "r", gitsigns.reset_hunk, { desc = "reset_hunk" } },
       { "0", gitsigns.reset_base, { desc = "reset base" } },
